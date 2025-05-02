@@ -1,0 +1,75 @@
+body {
+    background-color: white;
+    margin: 0;
+    padding: 20px;
+    font-family: "Times New Roman", Times, serif;
+    font-style: italic;
+    font-size: 2rem;
+    
+}
+
+.main-title {
+    font-family: "Times New Roman", Times, serif;
+    color: red;
+    font-style: italic;
+    font-size: 5rem;
+    text-align: center;
+    margin: 2rem 0;
+    animation: scream 2s ease-in-out infinite;
+}
+
+.subtitle-links {
+    text-align: center;
+    font-size: 1rem;
+    margin-top: -1rem;
+}
+
+.subtitle-links details {
+    display: inline-block;
+    border: 1px solid black;
+    padding: 2px 8px;
+}
+
+.subtitle-links summary {
+    color: black;
+    cursor: pointer;
+    list-style: none;
+    outline: none;
+    text-align: center;
+}
+
+.subtitle-links details > *:not(summary) {
+    text-align: left;
+}
+
+.subtitle-links details[open] > *:not(summary) {
+    cursor: pointer;
+}
+
+.subtitle-links summary::-webkit-details-marker {
+    display: none;
+}
+
+.subtitle-links details[open] {
+    padding: 8px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.machine-list {
+    width: fit-content;
+    margin: 0 auto;
+    text-align: left;
+}
+
+@keyframes scream {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}

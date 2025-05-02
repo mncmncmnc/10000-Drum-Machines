@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Logic Gate Drum Machine</title>
+	<link rel="stylesheet" href="lg.css">
+	<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎵</text></svg>">
+</head>
+<body>
+	<div class="container">
+		<canvas id="connectionCanvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1;"></canvas>
+		<!-- Control Panel -->
+		<div class="control-panel">
+			<button id="playPauseBtn" class="control-btn">
+				<span class="play-icon">▶</span>
+				<span class="pause-icon hidden">⏸</span>
+			</button>
+			<div class="status-indicator">
+				<span class="status-text">Paused</span>
+			</div>
+			<button id="helpBtn" class="control-btn help-btn">?</button>
+			<a href="../../index.html" id="backBtn" class="control-btn back-btn">←</a>
+		</div>
+
+		<!-- Help Modal -->
+		<div id="helpModal" class="modal">
+			<div class="modal-content">
+				<span class="close-modal">&times;</span>
+				<p>This is a drum machine powered by <a href="https://en.wikipedia.org/wiki/Logic_gate"target="_blank">logic gates</a> interacting with signals from pulsing clocks. The interface consists of three main components:</p>
+				<ul>
+					<li><strong>Clocks:</strong> Four clock generators with adjustable BPM</li>
+					<li><strong>Logic Gates:</strong> Four configurable logic gates (AND, NAND, OR, NOR, XOR, XNOR, NOT)</li>
+					<li><strong>Instruments:</strong> Four sound outputs (kick, snare, hihat, clap)</li>
+				</ul>
+				<p>Connect and modify them to make crazy rhythms!</p>
+				<p>This tool was designed in Fall of 2019 and finally coded in Spring of 2025 (lol) by <a href="https://maxy.world/">Maxwell Neely-Cohen</a>. You can see the initial sketch (done in photoshop lol) <a href="1.0 Draft.png" target="_blank">here</a>, with a fancy MS-DOS-style GUI (that has not yet been implemented).</p>
+				<p>It was inspired by the genius <a href="https://100r.co/site/orca.html" target="_blank">live coding tool ORCA</a>, the wonderful <a href="https://cwandt.com/products/inlaid-logic" target="_blank">work of CW&T</a>, and some extremely niche ways to use modular synthesizers. </p>
+				<p>The sounds were designed and recorded from a <a href="https://www.vermona.com/en/products/drums-percussion/product/drm1-mkiii/" target="_blank"> Vermona DRM1 MKIII analog drum synthesizer</a>.</p>
+				<p>It is the first of the <a href="../../index.html">10,000 Drum Machines project</a>.</p>
+			</div>
+		</div>
+
+		<!-- Clock Row -->
+		<div class="row clock-row">
+			<div class="box clock" id="clock1">
+				<h3>Clock 1</h3>
+				<div class="bpm-control">
+					<label for="bpm1">BPM:</label>
+					<input type="number" id="bpm1" min="0" max="999" value="45">
+				</div>
+			</div>
+			<div class="box clock" id="clock2">
+				<h3>Clock 2</h3>
+				<div class="bpm-control">
+					<label for="bpm2">BPM:</label>
+					<input type="number" id="bpm2" min="0" max="999" value="330">
+				</div>
+			</div>
+			<div class="box clock" id="clock3">
+				<h3>Clock 3</h3>
+				<div class="bpm-control">
+					<label for="bpm3">BPM:</label>
+					<input type="number" id="bpm3" min="0" max="999" value="60">
+				</div>
+			</div>
+			<div class="box clock" id="clock4">
+				<h3>Clock 4</h3>
+				<div class="bpm-control">
+					<label for="bpm4">BPM:</label>
+					<input type="number" id="bpm4" min="0" max="999" value="9">
+				</div>
+			</div>
+		</div>
+
+		<!-- Gate Row -->
+		<div class="row gate-row">
+			<div class="box gate" id="gate1">
+				<h3>Gate 1</h3>
+				<div class="gate-controls">
+					<div class="gate-inputs">
+						<div class="input-select input-a">
+							<label for="gate1-inputA">A:</label>
+							<select id="gate1-inputA"></select>
+						</div>
+						<div class="input-select input-b">
+							<label for="gate1-inputB">B:</label>
+							<select id="gate1-inputB"></select>
+						</div>
+					</div>
+					<div class="gate-type">
+						<label for="gate1-type">Type:</label>
+						<select id="gate1-type">
+							<option value="AND">AND</option>
+							<option value="NAND">NAND</option>
+							<option value="OR">OR</option>
+							<option value="NOR">NOR</option>
+							<option value="XOR">XOR</option>
+							<option value="XNOR">XNOR</option>
+							<option value="NOT">NOT</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="box gate" id="gate2">
+				<h3>Gate 2</h3>
+				<div class="gate-controls">
+					<div class="gate-inputs">
+						<div class="input-select input-a">
+							<label for="gate2-inputA">A:</label>
+							<select id="gate2-inputA"></select>
+						</div>
+						<div class="input-select input-b">
+							<label for="gate2-inputB">B:</label>
+							<select id="gate2-inputB"></select>
+						</div>
+					</div>
+					<div class="gate-type">
+						<label for="gate2-type">Type:</label>
+						<select id="gate2-type">
+							<option value="AND">AND</option>
+							<option value="NAND">NAND</option>
+							<option value="OR">OR</option>
+							<option value="NOR">NOR</option>
+							<option value="XOR">XOR</option>
+							<option value="XNOR">XNOR</option>
+							<option value="NOT">NOT</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="box gate" id="gate3">
+				<h3>Gate 3</h3>
+				<div class="gate-controls">
+					<div class="gate-inputs">
+						<div class="input-select input-a">
+							<label for="gate3-inputA">A:</label>
+							<select id="gate3-inputA"></select>
+						</div>
+						<div class="input-select input-b">
+							<label for="gate3-inputB">B:</label>
+							<select id="gate3-inputB"></select>
+						</div>
+					</div>
+					<div class="gate-type">
+						<label for="gate3-type">Type:</label>
+						<select id="gate3-type">
+							<option value="AND">AND</option>
+							<option value="NAND">NAND</option>
+							<option value="OR">OR</option>
+							<option value="NOR">NOR</option>
+							<option value="XOR">XOR</option>
+							<option value="XNOR">XNOR</option>
+							<option value="NOT">NOT</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="box gate" id="gate4">
+				<h3>Gate 4</h3>
+				<div class="gate-controls">
+					<div class="gate-inputs">
+						<div class="input-select input-a">
+							<label for="gate4-inputA">A:</label>
+							<select id="gate4-inputA"></select>
+						</div>
+						<div class="input-select input-b">
+							<label for="gate4-inputB">B:</label>
+							<select id="gate4-inputB"></select>
+						</div>
+					</div>
+					<div class="gate-type">
+						<label for="gate4-type">Type:</label>
+						<select id="gate4-type">
+							<option value="AND">AND</option>
+							<option value="NAND">NAND</option>
+							<option value="OR">OR</option>
+							<option value="NOR">NOR</option>
+							<option value="XOR">XOR</option>
+							<option value="XNOR">XNOR</option>
+							<option value="NOT">NOT</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Instrument Row -->
+		<div class="row instrument-row">
+			<div class="box instrument" id="sound1">
+				<h3>Sound 1</h3>
+				<div class="instrument-control">
+					<label for="sound1-input">Input:</label>
+					<select id="sound1-input"></select>
+				</div>
+				<div class="instrument-control">
+					<label for="sound1-output">Output:</label>
+					<select id="sound1-output">
+						<option value="kick">Kick</option>
+						<option value="snare">Snare</option>
+						<option value="hihat">HiHat</option>
+						<option value="clap">Clap</option>
+					</select>
+				</div>
+			</div>
+			<div class="box instrument" id="sound2">
+				<h3>Sound 2</h3>
+				<div class="instrument-control">
+					<label for="sound2-input">Input:</label>
+					<select id="sound2-input"></select>
+				</div>
+				<div class="instrument-control">
+					<label for="sound2-output">Output:</label>
+					<select id="sound2-output">
+						<option value="kick">Kick</option>
+						<option value="snare">Snare</option>
+						<option value="hihat">HiHat</option>
+						<option value="clap">Clap</option>
+					</select>
+				</div>
+			</div>
+			<div class="box instrument" id="sound3">
+				<h3>Sound 3</h3>
+				<div class="instrument-control">
+					<label for="sound3-input">Input:</label>
+					<select id="sound3-input"></select>
+				</div>
+				<div class="instrument-control">
+					<label for="sound3-output">Output:</label>
+					<select id="sound3-output">
+						<option value="kick">Kick</option>
+						<option value="snare">Snare</option>
+						<option value="hihat">HiHat</option>
+						<option value="clap">Clap</option>
+					</select>
+				</div>
+			</div>
+			<div class="box instrument" id="sound4">
+				<h3>Sound 4</h3>
+				<div class="instrument-control">
+					<label for="sound4-input">Input:</label>
+					<select id="sound4-input"></select>
+				</div>
+				<div class="instrument-control">
+					<label for="sound4-output">Output:</label>
+					<select id="sound4-output">
+						<option value="kick">Kick</option>
+						<option value="snare">Snare</option>
+						<option value="hihat">HiHat</option>
+						<option value="clap">Clap</option>
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="lg.js"></script>
+</body>
+</html>

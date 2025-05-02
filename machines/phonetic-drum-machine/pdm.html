@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Typing/Phonetic Drum Machine</title>
+	<link rel="stylesheet" href="pdm.css">	
+</head>
+<body>
+	<div class="container">
+		<div class="button-container">
+			<button id="infoButton" class="info-button">?</button>
+			<a href="../../index.html" class="back-button">←</a>
+		</div>
+		<h1>Typing / Phonetic Drum Machine</h1>
+		<p class="instructions">
+			Type a drum sequence using these terms:<br>
+			<code>boom</code> (bass drum)
+			<code>chit</code> (snare)
+			<code>tick</code> (closed hi-hat)
+			<code>tiss</code> (open hi-hat)
+			<code>tcha</code> (clap)
+			<br>
+			
+			Use spaces to create rests. <br><br>  Examples:
+			<code>boom&nbsp;&nbsp;&nbsp;chit  boom boomboom chit&nbsp;&nbsp;&nbsp;</code>
+			<code>boom tiss chit tiss&nbsp;</code><br>
+			<!-- <code>boom boom tisstiss boom</code> -->
+			<!-- <code>boomtick boomtick boomtick boom&nbsp;&nbsp;</code> -->
+		</p>
+		<input type="text" id="sequence" placeholder="Type your sequence here" spellcheck="false">
+		<br>
+		<button id="play">Play</button>
+		<button id="stop">Stop</button>
+		<div class="tempo-control">
+			<label for="bpm">Tempo:</label>
+			<input type="range" id="bpm" name="bpm" min="30" max="240" value="120">
+		</div>
+	</div>
+
+	<!-- Info Modal -->
+	<div id="infoModal" class="modal">
+		<div class="modal-content">
+			<span class="close-button">&times;</span>
+			<div class="modal-body">
+				<p>This is a drum sequencer powered by typing out drum sounds as text and using spaces as a way to control rhythm.</p>
+					
+				<p>It was inspired by <a href="https://slab.org/" target="_blank">Alex Mclean</a>'s live coding language <a href="https://tidalcycles.org/" target="_blank">Tidal Cycles</a>, <a href="https://www.decontextualize.com/">Allison Parrish</a>'s work with <a href="https://github.com/aparrish/pincelate" target="_blank">phonemes</a>, conversations with <a href="https://franrojo.info/" target="_blank">Fran Rojo</a>, and <a href="https://samvonehren.com/" target="_blank">Sam Von Ehren</a>'s thoughts about typing games.</p>
+				<p>The sounds were designed and recorded from a <a href="https://www.vermona.com/en/products/drums-percussion/product/drm1-mkiii/" target="_blank"> Vermona DRM1 MKIII analog drum synthesizer</a>.</p>
+				<p>It was made by <a href="https://maxy.world/">Maxwell Neely-Cohen</a> in 2025 and is the second entry in the <a href="../../index.html">10,000 Drum Machines project</a>.</p>
+			</div>
+		</div>
+	</div>
+
+	<audio id="bass" src="sounds/bd.wav"></audio>
+	<audio id="snare" src="sounds/sd.wav"></audio>
+	<audio id="closedHiHat" src="sounds/ch.wav"></audio>
+	<audio id="openHiHat" src="sounds/oh.wav"></audio>
+	<script src="pdm.js"></script>
+</body>
+</html>
+
+
+

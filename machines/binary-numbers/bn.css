@@ -1,0 +1,224 @@
+body {
+    font-family: monospace;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-size: 1.5vw;
+    box-sizing: border-box;
+    overflow: hidden;  /* Prevent scrolling */
+}
+
+.controls {
+    margin-top: 2vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: calc(12vw + 8vw + 19.2vw + 3vw);
+    margin-left: auto;
+    margin-right: auto;
+    order: 2;
+}
+
+#playPause {
+    font-size: 1.5vw;
+    margin-left: -3vw;
+    background: none;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+#playPause:hover {
+    background: #e0e0e0;
+}
+
+#playPause:active {
+    background: black;
+    color: white;
+}
+
+.bpm-control {
+    display: inline-block;
+}
+
+.binary-spinner {
+    display: inline-flex;
+    position: relative;
+    width: 10.5vw;
+}
+
+#bpm {
+    width: calc(100% - 1.5vw);
+    font-size: 1.5vw;
+    font-family: monospace;
+    text-align: right;
+    padding-right: 0.5vw;
+    box-sizing: border-box;
+    letter-spacing: 0.1em;
+}
+
+.spinner-buttons {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    width: 1.5vw;
+}
+
+.spinner-up,
+.spinner-down {
+    height: 50%;
+    padding: 0;
+    border: none;
+    background: #f0f0f0;
+    cursor: pointer;
+    font-size: 0.8vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.spinner-up:hover,
+.spinner-down:hover {
+    background: #e0e0e0;
+}
+
+.drum-machine {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5vw;
+    width: 90vw;
+    align-items: center;
+    position: relative;
+    top: 1.5vw;  /* Reduced from 3vw to 1.5vw */
+    left: 3vw;
+}
+
+.tracks {
+    order: 1;
+}
+
+.track {
+    display: flex;
+    align-items: center;
+    gap: 1.5vw;
+    width: 100%;
+}
+
+.track-input {
+    width: 8vw;
+    font-size: 1.5vw;
+}
+
+.track-sequence {
+    display: flex;
+    gap: 0;
+    flex: 1;
+    justify-content: center;
+}
+
+.track-name {
+    width: 16vw;
+    text-align: left;
+    font-size: 1.5vw;
+    white-space: nowrap;
+}
+
+.step {
+    width: 1.2vw;
+    height: 3vw;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5vw;
+}
+
+.step.playing {
+    background: #4CAF50;
+    color: white;
+}
+
+.step.on {
+    color: #000;
+    font-weight: bold;
+}
+
+.corner-button {
+    position: fixed;
+    background: none;
+    border: 1px solid black;
+    width: 3vw;
+    height: 3vw;
+    font-size: 1.5vw;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    text-decoration: none;
+    color: inherit;
+}
+
+#helpButton {
+    bottom: 2vw;
+    left: 2vw;
+}
+
+#backButton {
+    bottom: 2vw;
+    right: 2vw;
+}
+
+.corner-button:hover {
+    background: #e0e0e0;
+    text-decoration: none;
+}
+
+.corner-button:active {
+    background: black;
+    color: white;
+    text-decoration: none;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.modal-content {
+    position: relative;
+    background-color: white;
+    margin: 10% auto;
+    padding: 2vw;
+    width: 70%;
+    max-width: 800px;
+    border: 1px solid black;
+}
+
+.close-button {
+    position: absolute;
+    right: 1vw;
+    top: 0.5vw;
+    font-size: 2vw;
+    cursor: pointer;
+}
+
+.close-button:hover {
+    color: #666;
+}
+
+.modal-body {
+    margin-top: 1vw;
+}
