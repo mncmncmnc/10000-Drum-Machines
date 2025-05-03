@@ -146,7 +146,7 @@ function createTracks() {
         track.innerHTML = `
             <input type="number" class="track-input" min="0" max="65535" value="${sound.defaultValue}">
             <div class="track-sequence" style="position: relative;">
-                <div class="error-message" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(255, 0, 0, 0.9); color: white; padding: 0.5vw; font-size: 1vw; z-index: 1;">enter a number</div>
+                <div class="error-message" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(255, 0, 0, 0.9); color: white; padding: 0.5vw; font-size: 1vw; z-index: 1; white-space: nowrap;">enter a number between 0-65535</div>
             </div>
             <div class="track-name">(${sound.name})</div>
         `;

@@ -96,10 +96,10 @@ function togglePlayPause() {
 // Load audio samples
 async function loadAudioSamples() {
     const samples = {
-        kick: 'sounds/kick.wav',
-        snare: 'sounds/snare.wav',
-        hihat: 'sounds/hihat.wav',
-        clap: 'sounds/clap.wav'
+        kick: 'lg-sounds/kick.wav',
+        snare: 'lg-sounds/snare.wav',
+        hihat: 'lg-sounds/hihat.wav',
+        clap: 'lg-sounds/clap.wav'
     };
 
     for (const [name, url] of Object.entries(samples)) {

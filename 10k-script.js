@@ -17,7 +17,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         list.appendChild(li);
     }
-
+    
+// Life expectancy countdown in modal
     // Calculate days remaining until target date
     const daysLeftElement = document.getElementById('days-left');
     const targetDate = new Date('2061-06-03'); // 60 days later than previous date

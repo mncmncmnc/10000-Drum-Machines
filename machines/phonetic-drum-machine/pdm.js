@@ -27,11 +27,11 @@ const audioBuffers = {
 async function loadAudioBuffers() {
 	try {
 		const sounds = {
-			boom: 'sounds/bd.wav',
-			chit: 'sounds/sd.wav',
-			tick: 'sounds/ch.wav',
-			tiss: 'sounds/oh.wav',
-			tcha: 'sounds/cp.wav'
+			boom: 'pdm-sounds/bd.wav',
+			chit: 'pdm-sounds/sd.wav',
+			tick: 'pdm-sounds/ch.wav',
+			tiss: 'pdm-sounds/oh.wav',
+			tcha: 'pdm-sounds/cp.wav'
 		};
 
 		for (const [key, url] of Object.entries(sounds)) {

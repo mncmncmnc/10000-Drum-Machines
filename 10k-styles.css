@@ -52,7 +52,7 @@ body {
 
 .subtitle-links details[open] {
     padding: 8px;
-    max-width: 600px;
+    max-width: 700px;
     margin: 0 auto;
 }
 
@@ -60,6 +60,13 @@ body {
     width: fit-content;
     margin: 0 auto;
     text-align: left;
+}
+
+.attribution {
+    color: #666;
+    font-size: 0.4em;
+    display: block;
+    margin-top: 2px;
 }
 
 @keyframes scream {
