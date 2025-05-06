@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extremely Long Term Drum Machine</title>
+    <link rel="stylesheet" href="longterm.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="controls">
+                <button id="playPauseBtn">Play</button>
+            </div>
+            <h1>Extremely Long-Term Drum Machine</h1>
+            <div class="nav-buttons">
+                <button id="helpBtn" class="nav-btn">?</button>
+                <a href="../../index.html" class="nav-btn">←</a>
+            </div>
+            <div class="mobile-buttons">
+                <button id="playPauseBtn-mobile">Play</button>
+                <button id="helpBtn-mobile" class="nav-btn">?</button>
+                <a href="../../index.html" class="nav-btn">←</a>
+            </div>
+        </div>
+
+        <div class="tracks">
+            <div class="track" data-duration="hour">
+                <div class="track-info">
+                    <h2>Hour</h2>
+                    <div class="countdown">--:--:--</div>
+                </div>
+                <div class="track-controls">
+                    <div class="control-group">
+                        <label>sound:</label>
+                        <select class="sound-select"></select>
+                    </div>
+                    <div class="control-group">
+                        <label># of triggers:</label>
+                        <select class="trigger-count"></select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="track" data-duration="day">
+                <div class="track-info">
+                    <h2>Day</h2>
+                    <div class="countdown">--:--:--</div>
+                </div>
+                <div class="track-controls">
+                    <div class="control-group">
+                        <label>sound:</label>
+                        <select class="sound-select"></select>
+                    </div>
+                    <div class="control-group">
+                        <label># of triggers:</label>
+                        <select class="trigger-count"></select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="track" data-duration="week">
+                <div class="track-info">
+                    <h2>Week</h2>
+                    <div class="countdown">--:--:--</div>
+                </div>
+                <div class="track-controls">
+                    <div class="control-group">
+                        <label>sound:</label>
+                        <select class="sound-select"></select>
+                    </div>
+                    <div class="control-group">
+                        <label># of triggers:</label>
+                        <select class="trigger-count"></select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="track" data-duration="month">
+                <div class="track-info">
+                    <h2>Month</h2>
+                    <div class="countdown">--:--:--</div>
+                </div>
+                <div class="track-controls">
+                    <div class="control-group">
+                        <label>sound:</label>
+                        <select class="sound-select"></select>
+                    </div>
+                    <div class="control-group">
+                        <label># of triggers:</label>
+                        <select class="trigger-count"></select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="track" data-duration="year">
+                <div class="track-info">
+                    <h2>Year</h2>
+                    <div class="countdown">--:--:--</div>
+                </div>
+                <div class="track-controls">
+                    <div class="control-group">
+                        <label>sound:</label>
+                        <select class="sound-select"></select>
+                    </div>
+                    <div class="control-group">
+                        <label># of triggers:</label>
+                        <select class="trigger-count"></select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="track" data-duration="decade">
+                <div class="track-info">
+                    <h2>Decade</h2>
+                    <div class="countdown">--:--:--</div>
+                </div>
+                <div class="track-controls">
+                    <div class="control-group">
+                        <label>sound:</label>
+                        <select class="sound-select"></select>
+                    </div>
+                    <div class="control-group">
+                        <label># of triggers:</label>
+                        <select class="trigger-count"></select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="track" data-duration="century">
+                <div class="track-info">
+                    <h2>Century</h2>
+                    <div class="countdown">--:--:--</div>
+                </div>
+                <div class="track-controls">
+                    <div class="control-group">
+                        <label>sound:</label>
+                        <select class="sound-select"></select>
+                    </div>
+                    <div class="control-group">
+                        <label># of triggers:</label>
+                        <select class="trigger-count"></select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="track" data-duration="millennium">
+                <div class="track-info">
+                    <h2>Millennium</h2>
+                    <div class="countdown">--:--:--</div>
+                </div>
+                <div class="track-controls">
+                    <div class="control-group">
+                        <label>sound:</label>
+                        <select class="sound-select"></select>
+                    </div>
+                    <div class="control-group">
+                        <label># of triggers:</label>
+                        <select class="trigger-count"></select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="helpModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-body">
+                <p>This is a drum machine inspired by John Cage's 1987 composition <a href="https://en.wikipedia.org/wiki/As_Slow_as_Possible" target="_blank"><i>As Slow as Possible</i></a> aka <i>ORGAN2/ASLSP</i>, and its <a href="https://www.theguardian.com/music/2024/feb/04/john-cage-gig-2640-german-church-halberstadt-st-burchardi-" target="_blank">639 year performance</a> at St. Burchardi church in Halberstadt, Germany.</p>
+                <br>
+                <p>The sounds are recorded from a Roland TR-808, sourced from this very cool <a href="http://machines.hyperreal.org/"target="blank_">website from 1996</a>.</p>
+                <br>
+                <p>It is the fourth entry in the <a href="../../index.html">10,000 Drum Machines project</a> by <a href="https://maxy.world/">Maxwell Neely-Cohen</a>.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="longterm.js"></script>
+</body>
+</html> 

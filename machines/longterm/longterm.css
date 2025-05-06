@@ -1,0 +1,330 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: monospace, sans-serif;
+}
+
+body {
+    background-color: black;
+    color: white;
+    padding: 2rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border: 3px ridge #999;
+    padding: 2rem;
+    background: #111;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+h1 {
+    margin: 0;
+    font-size: 1.4rem;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    text-align: center;
+}
+
+.controls {
+    margin-right: 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+#playPauseBtn {
+    background: black;
+    color: white;
+    border: 2px solid white;
+    padding: 0.5rem 2rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+#playPauseBtn:hover {
+    background: white;
+    color: black;
+}
+
+.tracks {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+@keyframes flash {
+    0% { border-color: white; }
+    50% { border-color: #ffd700; }
+    100% { border-color: white; }
+}
+
+.track {
+    border: 1px solid white;
+    padding: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.track.flash {
+    animation: flash 0.5s ease-in-out;
+}
+
+.track-info {
+    min-width: 180px;
+    flex: 1;
+}
+
+.track-info h2 {
+    margin-bottom: 0.25rem;
+    font-size: 1.3rem;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.countdown {
+    font-size: 0.95rem;
+    font-family: monospace;
+}
+
+.track-controls {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.control-group label {
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.sound-select, .trigger-count {
+    background: black;
+    color: white;
+    border: 1px solid white;
+    padding: 0.4rem;
+}
+
+.sound-select {
+    min-width: 120px;
+}
+
+.trigger-count {
+    min-width: 80px;
+}
+
+/* Style the select dropdowns */
+.sound-select option, .trigger-count option {
+    background: black;
+    color: white;
+    padding: 0.4rem;
+}
+
+.nav-buttons {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: flex;
+    gap: 0.5rem;
+    z-index: 1;
+}
+
+.nav-btn {
+    background: black;
+    color: white;
+    border: 2px solid white;
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    padding: 0;
+}
+
+.nav-btn:hover {
+    background: white;
+    color: black;
+}
+
+.mobile-buttons {
+    display: none;
+}
+
+.mobile-buttons #playPauseBtn-mobile {
+    background: black;
+    color: white;
+    border: 2px solid white;
+    padding: 0.5rem 2rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.mobile-buttons #playPauseBtn-mobile:hover {
+    background: white;
+    color: black;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 1rem;
+    }
+
+    .container {
+        padding: 1rem;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+        gap: 0.5rem;
+    }
+
+    h1 {
+        position: static;
+        transform: none;
+        order: 1;
+    }
+
+    .controls, .nav-buttons {
+        display: none;
+    }
+
+    .mobile-buttons {
+        display: flex;
+        order: 2;
+        justify-content: center;
+        gap: 0.5rem;
+        align-items: center;
+    }
+
+    .track {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .track-info {
+        width: 100%;
+    }
+
+    .track-controls {
+        width: 100%;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+
+    .control-group {
+        flex: 1;
+        min-width: 140px;
+    }
+
+    .sound-select {
+        width: 100%;
+    }
+
+    .trigger-count {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .track-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .control-group {
+        width: 100%;
+    }
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.modal-content {
+    background-color: black;
+    margin: 15% auto;
+    padding: 2rem;
+    border: 2px solid white;
+    width: 80%;
+    max-width: 600px;
+    position: relative;
+}
+
+.close {
+    color: white;
+    float: right;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: -1rem;
+    margin-right: -1rem;
+}
+
+.close:hover {
+    color: #999;
+}
+
+.modal-body {
+    color: white;
+    margin-top: 1rem;
+}
+
+.modal-body a {
+    color: #ffd700;  /* Gold color */
+    text-decoration: none;
+}
+
+.modal-body a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .modal-content {
+        margin: 20% auto;
+        width: 90%;
+        padding: 1.5rem;
+    }
+}

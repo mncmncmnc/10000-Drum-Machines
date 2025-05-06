@@ -12,10 +12,12 @@ body {
     font-family: "Times New Roman", Times, serif;
     color: red;
     font-style: italic;
-    font-size: 5rem;
+    font-size: clamp(2.5rem, 8vw, 5rem);
     text-align: center;
     margin: 2rem 0;
     animation: scream 2s ease-in-out infinite;
+    padding: 0 1rem;
+    word-wrap: break-word;
 }
 
 .subtitle-links {
