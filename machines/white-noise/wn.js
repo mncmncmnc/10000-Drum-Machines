@@ -18,7 +18,6 @@ const synths = [
         envelope: new Tone.AmplitudeEnvelope({
             attack: 0.005,
             decay: 0.05,
-            sustain: 0.3,
             release: 0.1
         }),
         isDrone: false,
@@ -37,7 +36,6 @@ const synths = [
         envelope: new Tone.AmplitudeEnvelope({
             attack: 0.01,
             decay: 0.2,
-            sustain: 0.4,
             release: 0.3
         }),
         isDrone: false,
@@ -56,7 +54,6 @@ const synths = [
         envelope: new Tone.AmplitudeEnvelope({
             attack: 0.02,
             decay: 0.15,
-            sustain: 0.2,
             release: 0.4
         }),
         isDrone: false,
@@ -75,7 +72,6 @@ const synths = [
         envelope: new Tone.AmplitudeEnvelope({
             attack: 0.03,
             decay: 0.3,
-            sustain: 0.1,
             release: 0.5
         }),
         isDrone: false,
@@ -237,10 +233,6 @@ document.addEventListener('DOMContentLoaded', () => {
         
         synthEl.querySelector('.decay').addEventListener('input', (e) => {
             synth.envelope.decay = parseFloat(e.target.value);
-        });
-        
-        synthEl.querySelector('.sustain').addEventListener('input', (e) => {
-            synth.envelope.sustain = parseFloat(e.target.value);
         });
         
         synthEl.querySelector('.release').addEventListener('input', (e) => {
