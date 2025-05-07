@@ -12,7 +12,7 @@ body {
     font-family: "Times New Roman", Times, serif;
     color: red;
     font-style: italic;
-    font-size: clamp(3.5rem, 8vw, 5rem);
+    font-size: clamp(3.5rem, 10vw, 6rem);
     text-align: center;
     margin: 2rem 0;
     animation: scream 2s ease-in-out infinite;
