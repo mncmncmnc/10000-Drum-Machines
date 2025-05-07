@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>White Noise (Drum) Machine</title>
+    <link rel="stylesheet" href="wn.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="container">
+            <div class="header">
+                <h1>White Noise (Drum) Machine</h1>
+                <div class="header-buttons">
+                    <button class="info-button">?</button>
+                    <a href="../../index.html" class="back-button">←</a>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div id="infoModal" class="modal">
+                <div class="modal-content">
+                    <span class="close-button">&times;</span>
+                    <div class="modal-body">
+                        <br>
+                        <br>
+                        <p>Shape <a href="https://en.wikipedia.org/wiki/White_noise"target=_blank>white</a>, <a href="https://en.wikipedia.org/wiki/Pink_noise"target=_blank>pink</a>, and <a href="https://en.wikipedia.org/wiki/Brownian_noise"target=_blank>brown</a> noise into sequence-able sounds, or let them drone...</p>
+                        <br>
+                        <p>This drum machine was inspired by white noise machines in medical offices, the <a href="https://www.perfectcircuit.com/signal/learning-synthesis-noise"target=_blank>use of noise in analog synthesis</a>, the choreographic practice of <a href="https://www.instagram.com/juliadance__/"target=_blank>Julia Antinozzi</a>, and the amazing instruments designed by <a href="https://www.jmtsynth.com/"target=_blank>JMT Synth</a>.</p>
+                        <br>
+                        <p>It is the fifth entry in the <a href="../../index.html">10,000 Drum Machines project</a> by <a href="https://maxy.world/">Maxwell Neely-Cohen</a>.</p>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="synths">
+                <div class="synth" id="synth1">
+                    <h3>Noise Generator 1</h3>
+                    <div class="mode-selector">
+                        <label>
+                            <input type="radio" name="mode1" value="trigger" checked> Trigger
+                        </label>
+                        <label>
+                            <input type="radio" name="mode1" value="drone"> Drone
+                        </label>
+                    </div>
+                    <div class="controls">
+                        <button class="trigger">Trigger</button>
+                        <div class="params">
+                            <label>Noise Type:
+                                <select class="noise-type">
+                                    <option value="white" selected>White</option>
+                                    <option value="pink">Pink</option>
+                                    <option value="brown">Brown</option>
+                                </select>
+                            </label>
+                            <label>Filter:
+                                <input type="range" class="filter" min="20" max="20000" value="2000">
+                            </label>
+                            <div class="sidechain-control" style="display: none;">
+                                <label>
+                                    <input type="checkbox" class="sidechain"> Sidechain
+                                </label>
+                            </div>
+                            <div class="envelope-params">
+                                <label>Attack:
+                                    <input type="range" class="attack" min="0.001" max="1" step="0.001" value="0.005">
+                                </label>
+                                <label>Decay:
+                                    <input type="range" class="decay" min="0.001" max="1" step="0.001" value="0.05">
+                                </label>
+                                <label>Sustain:
+                                    <input type="range" class="sustain" min="0" max="1" step="0.01" value="0.3">
+                                </label>
+                                <label>Release:
+                                    <input type="range" class="release" min="0.001" max="2" step="0.001" value="0.1">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="synth" id="synth2">
+                    <h3>Noise Generator 2</h3>
+                    <div class="mode-selector">
+                        <label>
+                            <input type="radio" name="mode2" value="trigger" checked> Trigger
+                        </label>
+                        <label>
+                            <input type="radio" name="mode2" value="drone"> Drone
+                        </label>
+                    </div>
+                    <div class="controls">
+                        <button class="trigger">Trigger</button>
+                        <div class="params">
+                            <label>Noise Type:
+                                <select class="noise-type">
+                                    <option value="white">White</option>
+                                    <option value="pink" selected>Pink</option>
+                                    <option value="brown">Brown</option>
+                                </select>
+                            </label>
+                            <label>Filter:
+                                <input type="range" class="filter" min="20" max="20000" value="500">
+                            </label>
+                            <div class="sidechain-control" style="display: none;">
+                                <label>
+                                    <input type="checkbox" class="sidechain"> Sidechain
+                                </label>
+                            </div>
+                            <div class="envelope-params">
+                                <label>Attack:
+                                    <input type="range" class="attack" min="0.001" max="1" step="0.001" value="0.01">
+                                </label>
+                                <label>Decay:
+                                    <input type="range" class="decay" min="0.001" max="1" step="0.001" value="0.2">
+                                </label>
+                                <label>Sustain:
+                                    <input type="range" class="sustain" min="0" max="1" step="0.01" value="0.4">
+                                </label>
+                                <label>Release:
+                                    <input type="range" class="release" min="0.001" max="2" step="0.001" value="0.3">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="synth" id="synth3">
+                    <h3>Noise Generator 3</h3>
+                    <div class="mode-selector">
+                        <label>
+                            <input type="radio" name="mode3" value="trigger" checked> Trigger
+                        </label>
+                        <label>
+                            <input type="radio" name="mode3" value="drone"> Drone
+                        </label>
+                    </div>
+                    <div class="controls">
+                        <button class="trigger">Trigger</button>
+                        <div class="params">
+                            <label>Noise Type:
+                                <select class="noise-type">
+                                    <option value="white">White</option>
+                                    <option value="pink">Pink</option>
+                                    <option value="brown" selected>Brown</option>
+                                </select>
+                            </label>
+                            <label>Filter:
+                                <input type="range" class="filter" min="20" max="20000" value="8000">
+                            </label>
+                            <div class="sidechain-control" style="display: none;">
+                                <label>
+                                    <input type="checkbox" class="sidechain"> Sidechain
+                                </label>
+                            </div>
+                            <div class="envelope-params">
+                                <label>Attack:
+                                    <input type="range" class="attack" min="0.001" max="1" step="0.001" value="0.02">
+                                </label>
+                                <label>Decay:
+                                    <input type="range" class="decay" min="0.001" max="1" step="0.001" value="0.15">
+                                </label>
+                                <label>Sustain:
+                                    <input type="range" class="sustain" min="0" max="1" step="0.01" value="0.2">
+                                </label>
+                                <label>Release:
+                                    <input type="range" class="release" min="0.001" max="2" step="0.001" value="0.4">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="synth" id="synth4">
+                    <h3>Noise Generator 4</h3>
+                    <div class="mode-selector">
+                        <label>
+                            <input type="radio" name="mode4" value="trigger" checked> Trigger
+                        </label>
+                        <label>
+                            <input type="radio" name="mode4" value="drone"> Drone
+                        </label>
+                    </div>
+                    <div class="controls">
+                        <button class="trigger">Trigger</button>
+                        <div class="params">
+                            <label>Noise Type:
+                                <select class="noise-type">
+                                    <option value="white">White</option>
+                                    <option value="pink" selected>Pink</option>
+                                    <option value="brown">Brown</option>
+                                </select>
+                            </label>
+                            <label>Filter:
+                                <input type="range" class="filter" min="20" max="20000" value="300">
+                            </label>
+                            <div class="sidechain-control" style="display: none;">
+                                <label>
+                                    <input type="checkbox" class="sidechain"> Sidechain
+                                </label>
+                            </div>
+                            <div class="envelope-params">
+                                <label>Attack:
+                                    <input type="range" class="attack" min="0.001" max="1" step="0.001" value="0.03">
+                                </label>
+                                <label>Decay:
+                                    <input type="range" class="decay" min="0.001" max="1" step="0.001" value="0.3">
+                                </label>
+                                <label>Sustain:
+                                    <input type="range" class="sustain" min="0" max="1" step="0.01" value="0.1">
+                                </label>
+                                <label>Release:
+                                    <input type="range" class="release" min="0.001" max="2" step="0.001" value="0.5">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sequencer">
+                <div class="sequencer-header">
+                    <div class="sequencer-title-controls">
+                        <h3>Sequencer</h3>
+                        <div class="sequencer-buttons">
+                            <button id="playStop" class="play-button">Play</button>
+                            <button id="randomize">Randomize</button>
+                            <button id="clear">Clear</button>
+                        </div>
+                    </div>
+                    <div class="sequencer-params">
+                        <label>BPM:
+                            <input type="number" id="bpm" min="30" max="300" value="120">
+                        </label>
+                        <label>Swing:
+                            <input type="range" id="swing" min="0" max="100" value="0">
+                            <span class="swing-value">0%</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="sequencer-grid">
+                    <div class="grid-labels">
+                        <div class="label">Noise 1</div>
+                        <div class="label">Noise 2</div>
+                        <div class="label">Noise 3</div>
+                        <div class="label">Noise 4</div>
+                    </div>
+                    <div class="grid-container">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="wn.js"></script>
+</body>
+</html> 
