@@ -20,7 +20,7 @@ body {
     max-width: 1200px;
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 32px;
     position: relative;
 }
 
@@ -192,7 +192,7 @@ input[type="number"] {
     justify-content: center;
     align-items: center;
     gap: 15px;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     padding: 10px;
     background-color: #ffffff;
     border: 2px solid #000000;
