@@ -278,14 +278,6 @@ class LogicGate {
     }
 
     setupTypeSelect() {
-        const gateTypes = ['AND', 'NAND', 'OR', 'NOR', 'XOR', 'XNOR', 'NOT'];
-        gateTypes.forEach(type => {
-            const option = document.createElement('option');
-            option.value = type;
-            option.textContent = type;
-            this.typeSelect.appendChild(option);
-        });
-
         this.typeSelect.addEventListener('change', () => {
             this.type = this.typeSelect.value;
             this.updateGateIcon(this.type);
