@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knight's Tour Drum Sequencer</title>
+    <link rel="stylesheet" href="kn.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="title-controls-container">
+            <h1>Knight's Tour Drum Sequencer</h1>
+            <div class="controls">
+                <button id="playPause">Play</button>
+                <div class="tempo-control">
+                    <label for="tempo">Tempo (BPM):</label>
+                    <input type="range" id="tempo" min="60" max="300" value="120">
+                    <span id="tempoValue">120</span>
+                </div>
+                <div class="path-control">
+                    <label for="showPaths">
+                        <input type="checkbox" id="showPaths" checked>
+                        Show Knight Paths
+                    </label>
+                    <div class="header-buttons">
+                        <button class="info-button">?</button>
+                        <a href="../../index.html" class="back-button">←</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div id="infoModal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <div class="modal-body">
+
+                    <p>This is a drum machine based on chess <a href="https://en.wikipedia.org/wiki/Knight%27s_tour"target="_blank">Knight's Tours</a> to generate patterns. Audio effects based on rank and file can also be applied.</p>
+                    <br>
+                    <p>This is the eighth entry in the <a href="../../index.html">10,000 Drum Machines project</a> by <a href="https://maxy.world/">Maxwell Neely-Cohen</a>. If you want to contribute a drum machine, please reach out!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="board-container">
+            <div id="chessboard"></div>
+            <div class="knight-controls">
+                <div class="knight-control" data-knight="0">
+                    <div class="knight-header">
+                        <h3>Knight 1<span class="color-swatch"></span></h3>
+                        <select class="sound-select">
+                            <option value="bassdrumBD0075.WAV">Bass Drum</option>
+                            <option value="snareSD7550.WAV">Snare</option>
+                            <option value="closedhatCH.WAV">Closed Hat</option>
+                            <option value="openhatOH10.WAV">Open Hat</option>
+                            <option value="cowbellCB.WAV">Cowbell</option>
+                            <option value="highcongaHC50.WAV">High Conga</option>
+                            <option value="midcongaMC50.WAV">Mid Conga</option>
+                            <option value="lowcongaLC50.WAV">Low Conga</option>
+                        </select>
+                    </div>
+                    <label>Speed Multiplier: <input type="range" class="speed" min="0.1" max="2" step="0.1" value="1.8"><span class="speed-value">1.8x</span></label>
+                </div>
+                <div class="knight-control" data-knight="1">
+                    <div class="knight-header">
+                        <h3>Knight 2<span class="color-swatch"></span></h3>
+                        <select class="sound-select">
+                            <option value="snareSD7550.WAV">Snare</option>
+                            <option value="bassdrumBD0075.WAV">Bass Drum</option>
+                            <option value="closedhatCH.WAV">Closed Hat</option>
+                            <option value="openhatOH10.WAV">Open Hat</option>
+                            <option value="cowbellCB.WAV">Cowbell</option>
+                            <option value="highcongaHC50.WAV">High Conga</option>
+                            <option value="midcongaMC50.WAV">Mid Conga</option>
+                            <option value="lowcongaLC50.WAV">Low Conga</option>
+                        </select>
+                    </div>
+                    <label>Speed Multiplier: <input type="range" class="speed" min="0.1" max="2" step="0.1" value="0.5"><span class="speed-value">0.5x</span></label>
+                </div>
+                <div class="knight-control" data-knight="2">
+                    <div class="knight-header">
+                        <h3>Knight 3<span class="color-swatch"></span></h3>
+                        <select class="sound-select">
+                            <option value="closedhatCH.WAV">Closed Hat</option>
+                            <option value="bassdrumBD0075.WAV">Bass Drum</option>
+                            <option value="snareSD7550.WAV">Snare</option>
+                            <option value="openhatOH10.WAV">Open Hat</option>
+                            <option value="cowbellCB.WAV">Cowbell</option>
+                            <option value="highcongaHC50.WAV">High Conga</option>
+                            <option value="midcongaMC50.WAV">Mid Conga</option>
+                            <option value="lowcongaLC50.WAV">Low Conga</option>
+                        </select>
+                    </div>
+                    <label>Speed Multiplier: <input type="range" class="speed" min="0.1" max="2" step="0.1" value="0.75"><span class="speed-value">0.75x</span></label>
+                </div>
+                <div class="knight-control" data-knight="3">
+                    <div class="knight-header">
+                        <h3>Knight 4<span class="color-swatch"></span></h3>
+                        <select class="sound-select">
+                            <option value="cowbellCB.WAV">Cowbell</option>
+                            <option value="bassdrumBD0075.WAV">Bass Drum</option>
+                            <option value="snareSD7550.WAV">Snare</option>
+                            <option value="closedhatCH.WAV">Closed Hat</option>
+                            <option value="openhatOH10.WAV">Open Hat</option>
+                            <option value="highcongaHC50.WAV">High Conga</option>
+                            <option value="midcongaMC50.WAV">Mid Conga</option>
+                            <option value="lowcongaLC50.WAV">Low Conga</option>
+                        </select>
+                    </div>
+                    <label>Speed Multiplier: <input type="range" class="speed" min="0.1" max="2" step="0.1" value="0.2"><span class="speed-value">0.2x</span></label>
+                </div>
+                <div class="effects-legend">
+                    <h3>Effects</h3>
+                    <div class="effect-info">
+                        <div class="effect">
+                            <strong>Rank (Left → Right):</strong>
+                            <select class="effect-select" data-dimension="rank">
+                                <option value="none">None</option>
+                                <option value="pan">Panning</option>
+                                <option value="filter">Pitch</option>
+                                <option value="reverb">Reverb</option>
+                                <option value="delay">Delay</option>
+                                <option value="distortion">Distortion</option>
+                            </select>
+                        </div>
+                        <div class="effect">
+                            <strong>File (Top → Bottom):</strong>
+                            <select class="effect-select" data-dimension="file">
+                                <option value="none">None</option>
+                                <option value="filter">Pitch</option>
+                                <option value="pan">Panning</option>
+                                <option value="reverb">Reverb</option>
+                                <option value="delay">Delay</option>
+                                <option value="distortion">Distortion</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="kn.js"></script>
+</body>
+</html> 

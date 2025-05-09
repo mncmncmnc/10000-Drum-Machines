@@ -1,0 +1,444 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Times New Roman", Times, serif;
+    line-height: 1.6;
+    background-color: #fff;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #000000;
+    font-size: 3.5rem;
+    line-height: 1.2;
+    padding-right: 0;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+button {
+    padding: 0.5rem 1.5rem;
+    font-size: 1rem;
+    background: white;
+    color: black;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#playPause {
+    background: black;
+    color: white;
+}
+
+#playPause:hover {
+    background: #333;
+}
+
+button:hover {
+    background: #f0f0f0;
+}
+
+.tempo-control {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.board-container {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    justify-content: center;
+    width: 100%;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    flex-wrap: wrap;
+}
+
+#chessboard {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 1px;
+    background-color: #333;
+    padding: 1px;
+    width: min(600px, 90vw);
+    height: min(600px, 90vw);
+    flex-shrink: 0;
+}
+
+.square {
+    background-color: #fff;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    position: relative;
+    border: 1px solid #ddd;
+}
+
+.tour-complete {
+    position: absolute;
+    bottom: 2px;
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+    opacity: 0;
+    animation: flashAndBounce 2s ease-out;
+    pointer-events: none;
+    z-index: 1000;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes flashAndBounce {
+    0% { 
+        opacity: 0;
+        transform: translateY(0);
+    }
+    20% { 
+        opacity: 1;
+        transform: translateY(0);
+    }
+    40% {
+        opacity: 1;
+        transform: translateY(-4px);
+    }
+    60% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    80% {
+        opacity: 1;
+        transform: translateY(-2px);
+    }
+    100% { 
+        opacity: 0;
+        transform: translateY(0);
+    }
+}
+
+/* Simple black and white chessboard pattern */
+.square:nth-child(2n+1):nth-child(-n+8),
+.square:nth-child(2n):nth-child(n+9):nth-child(-n+16),
+.square:nth-child(2n+1):nth-child(n+17):nth-child(-n+24),
+.square:nth-child(2n):nth-child(n+25):nth-child(-n+32),
+.square:nth-child(2n+1):nth-child(n+33):nth-child(-n+40),
+.square:nth-child(2n):nth-child(n+41):nth-child(-n+48),
+.square:nth-child(2n+1):nth-child(n+49):nth-child(-n+56),
+.square:nth-child(2n):nth-child(n+57):nth-child(-n+64) {
+    background-color: #000;
+    color: #fff;
+}
+
+.square:nth-child(2n):nth-child(-n+8),
+.square:nth-child(2n+1):nth-child(n+9):nth-child(-n+16),
+.square:nth-child(2n):nth-child(n+17):nth-child(-n+24),
+.square:nth-child(2n+1):nth-child(n+25):nth-child(-n+32),
+.square:nth-child(2n):nth-child(n+33):nth-child(-n+40),
+.square:nth-child(2n+1):nth-child(n+41):nth-child(-n+48),
+.square:nth-child(2n):nth-child(n+49):nth-child(-n+56),
+.square:nth-child(2n+1):nth-child(n+57):nth-child(-n+64) {
+    background-color: #fff;
+    color: #000;
+}
+
+.knight {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.5rem;
+    transition: all 0.2s ease;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 2px rgba(0,0,0,0.5));
+    z-index: 2;
+}
+
+.knight-0 { 
+    color: #e74c3c;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+.knight-1 { 
+    color: #2ecc71;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+.knight-2 { 
+    color: #f1c40f;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+.knight-3 { 
+    color: #e67e22;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.knight-controls {
+    flex: 0 0 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: min(350px, 90vw);
+}
+
+.knight-control {
+    background-color: white;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    width: 350px;
+}
+
+.knight-control h3 {
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.knight-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.knight-header h3 {
+    margin: 0;
+    min-width: 80px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.color-swatch {
+    width: 16px;
+    height: 16px;
+    border: 1px solid rgba(0,0,0,0.2);
+    display: inline-block;
+}
+
+/* Color swatches for each knight */
+.knight-control[data-knight="0"] .color-swatch { background-color: #e74c3c; }
+.knight-control[data-knight="1"] .color-swatch { background-color: #2ecc71; }
+.knight-control[data-knight="2"] .color-swatch { background-color: #f1c40f; }
+.knight-control[data-knight="3"] .color-swatch { background-color: #e67e22; }
+
+.sound-select {
+    width: 90px;
+    padding: 0.25rem;
+    border: 1px solid #ddd;
+    background-color: white;
+}
+
+.knight-control label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+}
+
+input[type="range"] {
+    width: 120px;
+    margin: 0 0.5rem;
+}
+
+.path-control {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.path-control label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.knight-path {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.knight-path-0 { stroke: #e74c3c; }
+.knight-path-1 { stroke: #2ecc71; }
+.knight-path-2 { stroke: #f1c40f; }
+.knight-path-3 { stroke: #e67e22; }
+
+.effects-legend {
+    background-color: white;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    width: 350px;
+}
+
+.effects-legend h3 {
+    margin: 0 0 0.5rem 0;
+    color: #333;
+    font-size: 1rem;
+}
+
+.effect-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.effect {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.effect strong {
+    color: #666;
+    min-width: 140px;
+}
+
+.effect-select {
+    width: 90px;
+    padding: 0.25rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1000px) {
+    .board-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .knight-controls {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .knight-control {
+        width: min(350px, calc(50% - 1rem));
+    }
+
+    .effects-legend {
+        width: 100%;
+        max-width: 700px;
+    }
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 15px;
+    }
+
+    .controls {
+        gap: 1rem;
+    }
+
+    .knight-control {
+        width: 100%;
+    }
+
+    .tempo-control {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    input[type="range"] {
+        width: 100px;
+    }
+
+    /* Ensure the canvas for paths scales with the board */
+    canvas {
+        width: min(600px, 90vw) !important;
+        height: min(600px, 90vw) !important;
+    }
+}
+
+.header {
+    display: none;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.modal-content {
+    position: relative;
+    background: white;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid black;
+    width: 80%;
+    max-width: 600px;
+}
+
+.close-button {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.info-button, .back-button {
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.info-button:hover, .back-button:hover {
+    background: #f0f0f0;
+}
+
+.back-button {
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+    line-height: 1;
+}
