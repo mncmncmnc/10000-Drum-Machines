@@ -1,0 +1,226 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: monospace;
+  margin: 0;
+  padding: 2vw;
+  background: #fff;
+  color: #000;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.drum-machine {
+  width: 100%;
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+#playPause {
+  font-size: 1rem;
+  padding: 0.4rem 1.2rem;
+  min-width: 6rem;
+  border: 1px solid black;
+  background: none;
+  cursor: pointer;
+}
+
+#playPause:hover {
+  background: #eee;
+}
+
+.bpm-control {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-grow: 1;
+  justify-content: flex-end;
+}
+
+#bpm {
+  width: 100%;
+  max-width: 40vw;
+  height: 1rem;
+  background: #ddd;
+  border-radius: 0.75rem;
+  appearance: none;
+  cursor: pointer;
+}
+
+#bpm::-webkit-slider-thumb,
+.track-input::-webkit-slider-thumb {
+  appearance: none;
+  width: 1rem;
+  height: 1rem;
+  background: black;
+  border-radius: 50%;
+}
+
+#bpm::-moz-range-thumb,
+.track-input::-moz-range-thumb {
+  width: 1rem;
+  height: 1rem;
+  background: black;
+  border: none;
+  border-radius: 50%;
+}
+
+#decimalBpm {
+  font-size: 1.2rem;
+}
+
+.track {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed #ccc;
+}
+
+.track-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 2;
+  min-width: 250px;
+}
+
+.clear-button,
+.random-button {
+  font-size: 1rem;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid black;
+  background: none;
+  cursor: pointer;
+}
+
+.clear-button:hover,
+.random-button:hover {
+  background: #e0e0e0;
+}
+
+.clear-button:active,
+.random-button:active {
+  background: black;
+  color: white;
+}
+
+.track-input {
+  flex-grow: 1;
+  height: 1rem;
+  background: #ddd;
+  border-radius: 0.75rem;
+  appearance: none;
+  cursor: pointer;
+}
+
+.track-sequence {
+  display: flex;
+  gap: 0.15rem;
+  justify-content: center;
+  font-size: 1rem;
+  flex: 1;
+}
+
+.step {
+  width: 1.5rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc;
+  background: white;
+  text-align: center;
+}
+
+.step.playing {
+  background: #4CAF50;
+  color: white;
+}
+
+.step.on {
+  font-weight: bold;
+}
+
+.track-name {
+  font-size: 1rem;
+  min-width: 2.5rem;
+  text-align: left;
+  flex-shrink: 0;
+}
+
+.corner-button {
+  position: fixed;
+  background: none;
+  border: 1px solid black;
+  width: 3rem;
+  height: 3rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  text-decoration: none;
+  color: inherit;
+}
+
+#helpButton {
+  bottom: 2rem;
+  left: 2rem;
+}
+
+#backButton {
+  bottom: 2rem;
+  right: 2rem;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  margin: 5% auto;
+  padding: 2rem;
+  width: 90%;
+  max-width: 700px;
+  border: 1px solid black;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.close-button {
+  position: absolute;
+  right: 1rem;
+  top: 0.5rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
