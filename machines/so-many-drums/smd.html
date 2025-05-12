@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>So many drums</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #111;
+      color: #eee;
+      padding: 20px;
+      display: flex;
+      gap: 20px;
+    }
+    .left-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .right-panel {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    h1 {
+      font-size: 24px;
+      margin: 0;
+    }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 20px;
+    }
+    .channels {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .channel {
+      border: 1px solid #444;
+      padding: 10px;
+      border-radius: 5px;
+      background: #222;
+    }
+    .step {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      margin: 1px;
+      background: #444;
+    }
+    .step.playing-muted {
+      background: #666;
+    }
+    .step.playing-normal {
+      background: orange;
+    }
+    .step.playing-solo {
+      background: red;
+    }
+    button {
+      padding: 5px 10px;
+      margin: 2px;
+    }
+    .length-buttons button.active {
+      background: #0f0;
+    }
+    .volume-pan {
+      display: flex;
+      gap: 5px;
+      margin-top: 5px;
+      align-items: center;
+    }
+    .volume-pan label {
+      font-size: 12px;
+    }
+    .big-knob {
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      border: 5px solid #666;
+      background: #222;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      user-select: none;
+      cursor: grab;
+    }
+    .big-knob-indicator {
+      position: absolute;
+      width: 4px;
+      height: 140px;
+      background: #fff;
+      top: 50%;
+      left: 50%;
+      transform-origin: center bottom;
+      transform: rotate(0deg) translate(-50%, -100%);
+      z-index: 0;
+    }
+    .knob-display {
+      position: absolute;
+      width: 75%;
+      height: 75%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: bold;
+      z-index: 1;
+    }
+    .knob-buttons {
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+    }
+    .corner-button {
+      position: fixed;
+      background: none;
+      border: 1px solid white;
+      width: 3rem;
+      height: 3rem;
+      font-size: 1.5rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      text-decoration: none;
+      color: inherit;
+    }
+    #helpButton {
+      bottom: 2rem;
+      left: 2rem;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+    }
+    .modal-content {
+      background-color: black;
+      margin: 5% auto;
+      padding: 2rem;
+      width: 90%;
+      max-width: 700px;
+      border: 1px solid white;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+    .close-button {
+      position: absolute;
+      right: 1rem;
+      top: 0.5rem;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+@media (max-width: 768px) {
+  body {
+    flex-direction: column;
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .left-panel, .right-panel {
+    width: 100%;
+  }
+
+  .right-panel {
+    order: 1;
+    align-items: center;
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .left-panel {
+    order: 2;
+    align-items: center;
+  }
+
+  .big-knob {
+    width: 200px;
+    height: 200px;
+  }
+
+  .knob-buttons {
+    margin-top: 10px;
+  }
+
+  .channels {
+    grid-template-columns: 1fr;
+  }
+
+  .knob-display {
+    font-size: 24px;
+  }
+}
+  </style>
+</head>
+<body>
+  <button id="helpButton" class="corner-button">?</button>
+  <a class="corner-button" href="../../index.html" id="backButton">←</a>
+
+  <div class="left-panel">
+    <div class="big-knob" id="bigKnob">
+      <div class="big-knob-indicator" id="knobIndicator"></div>
+      <div class="knob-display"><div id="seedDisplay">0</div></div>
+    </div>
+    <div class="knob-buttons">
+      <button onclick="adjustSeed(1)">&#x25B2;</button>
+      <button onclick="adjustSeed(-1)">&#x25BC;</button>
+    </div>
+  </div>
+  <div class="right-panel">
+    <h1>So many drums</h1>
+    <div class="controls">
+      <div class="knob-group">
+        <input type="range" min="40" max="160" value="120" id="bpmKnob" />
+        <div>BPM: <span id="bpmDisplay">120</span></div>
+      </div>
+      <div class="length-buttons">
+        Length:
+        <button onclick="setStepLength(4)">4</button>
+        <button onclick="setStepLength(8)">8</button>
+        <button onclick="setStepLength(16)" class="active">16</button>
+      </div>
+      <button id="playToggle">Play</button>
+    </div>
+    <div class="channels" id="channels"></div>
+  </div>
+
+  <script>
+    const engines = [ "sine_drop", "tone_noise", "cymbal", "fm", "am", "additive", "resonant", "karplus", "grain", "logistic", "bytebeat", "wavefold", "feedback_fm", "wavetable"];
+
+    const bpmKnob = document.getElementById("bpmKnob");
+    const bpmDisplay = document.getElementById("bpmDisplay");
+    const channelsDiv = document.getElementById("channels");
+    const playToggle = document.getElementById("playToggle");
+    const lengthButtons = document.querySelectorAll(".length-buttons button");
+    const bigKnob = document.getElementById("bigKnob");
+    const seedDisplay = document.getElementById("seedDisplay");
+    const knobIndicator = document.getElementById("knobIndicator");
+
+    let playing = false;
+    let currentStep = 0;
+    let stepLength = 16;
+    let intervalId = null;
+    const channels = [];
+    let bpm = 120;
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    let seedValue = 0;
+
+    function rand(seed) {
+      let x = Math.sin(seed++) * 10000;
+      return x - Math.floor(x);
+    }
+
+    function reseedChannels(seedVal) {
+      for (let i = 0; i < 8; i++) {
+        const engine = engines[Math.floor(rand(seedVal + i) * engines.length)];
+        const pattern = Math.floor(rand(seedVal + i * 10) * 65536);
+        const sampleIndex = Math.floor(rand(seedVal + i * 100) * 64);
+        const samplePath = `drum_sounds/${engine}/drum_${String(sampleIndex + 1).padStart(3, '0')}_${engine}.wav`;
+        if (!channels[i]) {
+          channels.push({ engine, pattern, muted: true, solo: false, samplePath, volume: 0.7, pan: (Math.random() * 2 - 1) });
+        } else {
+          channels[i].engine = engine;
+          channels[i].pattern = pattern;
+          channels[i].samplePath = samplePath;
+        }
+      }
+      renderChannels();
+    }
+
+    function renderChannels() {
+      channelsDiv.innerHTML = "";
+      channels.forEach((ch, i) => {
+        const div = document.createElement("div");
+        div.className = "channel";
+        const steps = document.createElement("div");
+        for (let j = 0; j < stepLength; j++) {
+          const s = document.createElement("div");
+          s.className = "step";
+          const isActive = (ch.pattern >> (15 - j)) & 1;
+          if (isActive) {
+            if (ch.solo) s.classList.add("playing-solo");
+            else if (ch.muted) s.classList.add("playing-muted");
+            else s.classList.add("playing-normal");
+          }
+          steps.appendChild(s);
+        }
+        const name = document.createElement("div");
+        name.textContent = `Engine: ${ch.engine}`;
+        const muteBtn = document.createElement("button");
+        muteBtn.textContent = ch.muted ? "Unmute" : "Mute";
+        muteBtn.onclick = () => {
+          ch.muted = !ch.muted;
+          muteBtn.textContent = ch.muted ? "Unmute" : "Mute";
+          renderChannels();
+        };
+        const soloBtn = document.createElement("button");
+        soloBtn.textContent = ch.solo ? "Unsolo" : "Solo";
+        soloBtn.onclick = () => {
+          const alreadySolo = ch.solo;
+          channels.forEach((c) => (c.solo = false));
+          if (!alreadySolo) ch.solo = true;
+          renderChannels();
+        };
+        const volumePan = document.createElement("div");
+        volumePan.className = "volume-pan";
+        volumePan.innerHTML = `
+          <label>Vol<input type="range" min="0" max="1" step="0.01" value="${ch.volume}" onchange="channels[${i}].volume = parseFloat(this.value)"></label>
+          <label>Pan<input type="range" min="-1" max="1" step="0.01" value="${ch.pan}" onchange="channels[${i}].pan = parseFloat(this.value)"></label>
+        `;
+        div.appendChild(name);
+        div.appendChild(muteBtn);
+        div.appendChild(soloBtn);
+        div.appendChild(volumePan);
+        div.appendChild(steps);
+        channelsDiv.appendChild(div);
+      });
+    }
+
+    function playSample(path, volume = 1.0, pan = 0.0) {
+      fetch(path)
+        .then((res) => res.arrayBuffer())
+        .then((data) => audioCtx.decodeAudioData(data))
+        .then((buffer) => {
+          const source = audioCtx.createBufferSource();
+          source.buffer = buffer;
+          const gainNode = audioCtx.createGain();
+          gainNode.gain.value = volume;
+          const panNode = audioCtx.createStereoPanner();
+          panNode.pan.value = pan;
+          source.connect(gainNode).connect(panNode).connect(audioCtx.destination);
+          source.start();
+        })
+        .catch((e) => console.warn("Audio error:", e));
+    }
+
+    function step() {
+      channels.forEach((ch) => {
+        const soloed = channels.some((c) => c.solo);
+        const shouldPlay = ((ch.pattern >> (15 - currentStep)) & 1) && ((!ch.muted && !soloed) || ch.solo);
+        if (shouldPlay) playSample(ch.samplePath, ch.volume, ch.pan);
+      });
+      currentStep = (currentStep + 1) % stepLength;
+    }
+
+    function setStepLength(len) {
+      stepLength = len;
+      lengthButtons.forEach((btn) => btn.classList.remove("active"));
+      lengthButtons.forEach((btn) => {
+        if (parseInt(btn.textContent) === len) btn.classList.add("active");
+      });
+      renderChannels();
+    }
+
+    bpmKnob.addEventListener("input", () => {
+      bpm = parseInt(bpmKnob.value);
+      bpmDisplay.textContent = bpm;
+      if (playing) {
+        clearInterval(intervalId);
+        intervalId = setInterval(step, 60000 / bpm / 4);
+      }
+    });
+
+    playToggle.onclick = () => {
+      playing = !playing;
+      playToggle.textContent = playing ? "Pause" : "Play";
+      if (playing) {
+        currentStep = 0;
+        intervalId = setInterval(step, 60000 / bpm / 4);
+      } else {
+        clearInterval(intervalId);
+      }
+    };
+
+    function updateKnobFromAngle(angle) {
+      const seed = Math.round((angle / 360) * 9999);
+      seedValue = seed;
+      seedDisplay.textContent = seedValue;
+      knobIndicator.style.transform = `translate(-50%, -100%) rotate(${angle}deg)`;
+      reseedChannels(seedValue);
+    }
+
+    function startKnobInteraction(startX, startY) {
+      const rect = bigKnob.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+
+      function moveHandler(me) {
+        const clientX = me.touches ? me.touches[0].clientX : me.clientX;
+        const clientY = me.touches ? me.touches[0].clientY : me.clientY;
+
+        const dx = clientX - centerX;
+        const dy = clientY - centerY;
+        const angle = (Math.atan2(dy, dx) * 180) / Math.PI + 90;
+        lastAngle = (angle + 360) % 360;
+        updateKnobFromAngle(lastAngle);
+      }
+
+      function endHandler() {
+        window.removeEventListener("mousemove", moveHandler);
+        window.removeEventListener("mouseup", endHandler);
+        window.removeEventListener("touchmove", moveHandler);
+        window.removeEventListener("touchend", endHandler);
+      }
+
+      window.addEventListener("mousemove", moveHandler);
+      window.addEventListener("mouseup", endHandler);
+      window.addEventListener("touchmove", moveHandler);
+      window.addEventListener("touchend", endHandler);
+    }
+
+    bigKnob.addEventListener("mousedown", (e) => {
+      startKnobInteraction(e.clientX, e.clientY);
+    });
+
+    bigKnob.addEventListener("touchstart", (e) => {
+      startKnobInteraction(e.touches[0].clientX, e.touches[0].clientY);
+    });
+
+    bpm = Math.floor(40 + Math.random() * 120);
+    bpmKnob.value = bpm;
+    bpmDisplay.textContent = bpm;
+    reseedChannels(0);
+
+    function adjustSeed(delta) {
+      seedValue = Math.max(0, Math.min(9999, seedValue + delta));
+      seedDisplay.textContent = seedValue;
+      const angle = (seedValue / 9999) * 360;
+      knobIndicator.style.transform = `translate(-50%, -100%) rotate(${angle}deg)`;
+      reseedChannels(seedValue);
+    }
+
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowUp") {
+        adjustSeed(1);
+      } else if (e.key === "ArrowDown") {
+        adjustSeed(-1);
+      }
+    });
+  </script>
+
+  <div id="helpModal" class="modal">
+    <div class="modal-content">
+      <span class="close-button" id="closeModal">&times;</span>
+      <div class="modal-body">
+        <p><strong>About this drum machine:</strong></p>
+        <p>“So Many Drums” is a stupid 8-channel drum sequencer using a library of 1,024 unique sounds.</p>
+        <p>Big Knob: Sets a random seed (0–9999) that picks sounds and sets patterns. Adjust by dragging, using ▲/▼, or arrow keys.</p>
+        <p>Channels: Each has mute/solo buttons, and volume/pan controls that persist as you move the big knob.</p>
+        <p>Steps: Orange = active, Grey = muted, Red = soloed.</p>
+        <p>Sounds are generated by the python script in the repo. This machine is by <a href="https://www.musicthing.co.uk/">Tom Whitwell / Music Thing Modular</a> and is part of the <a href="/">10,000 Drum Machines</a> series by <a href="https://maxy.world/" target="_blank">Maxwell Neely-Cohen</a>.</p>
+      </div>
+    </div>
+  </div>
+  <script>
+    const helpModal = document.getElementById('helpModal');
+    document.getElementById('helpButton').onclick = () => helpModal.style.display = 'block';
+    document.getElementById('closeModal').onclick = () => helpModal.style.display = 'none';
+    window.onclick = e => { if (e.target === helpModal) helpModal.style.display = 'none'; };
+  </script>
+</body>
+</html>
