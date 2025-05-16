@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>10k Drum Machines</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="stylesheet" href="10k-styles.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <h1 class="main-title">!&nbsp;10,000 Drum Machines&nbsp;!</h1>
@@ -25,6 +25,15 @@
             </div>
         </details>
     </div>
+
+    <div class="sort-controls">
+
+        <select id="sort-select">
+            <option value="original">Original Order</option>
+            <option value="recent">Most Recent</option>
+            <option value="random">Random</option>
+        </select>
+    </div>
     <br>
     <ol class="machine-list">
         <li><a href="machines/logic-gates/lg.html">Logic Gate Drum Machine</a><span class="attribution">By Maxwell Neely-Cohen</span></li>
@@ -41,6 +50,6 @@
 
     </ol>
 
-    <script src="10k-script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html> 

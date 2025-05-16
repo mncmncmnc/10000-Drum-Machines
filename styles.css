@@ -75,6 +75,26 @@ body {
     color: inherit;
 }
 
+.sort-controls {
+    text-align: center;
+    margin: 1rem 0;
+    font-size: 1rem;
+}
+
+.sort-controls select {
+    font-family: "Times New Roman", Times, serif;
+    font-style: italic;
+    font-size: 1rem;
+    padding: 2px 8px;
+    border: 1px solid black;
+    background: white;
+    cursor: pointer;
+}
+
+.sort-controls label {
+    margin-right: 0.5rem;
+}
+
 @keyframes scream {
     0% {
         transform: scale(1);
