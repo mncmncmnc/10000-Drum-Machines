@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>(white album) noise machine</title>
+    <link rel="stylesheet" href="wa.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/6.6.4/wavesurfer.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/6.6.4/plugin/wavesurfer.regions.min.js"></script>
+</head>
+<body>
+    <div id="drum-machine">
+        <div id="main-container">
+            <div id="controls-panel">
+                <div id="tracks-container">
+                    <div class="track">
+                        <div class="waveform" id="waveform1"></div>
+                        <div class="sample-controls">
+                            <div class="controls-left">
+                                <div class="control-pair"><label>Pitch</label><div class="slider-container"><input type="range" class="pitch" min="-12" max="12" step="1" value="0"></div></div>
+                                <div class="control-pair"><label>Volume</label><div class="slider-container"><input type="range" class="volume" min="-40" max="0" step="1" value="-10"></div></div>
+                            </div>
+                            <div class="track-buttons">
+                                <button class="reverse">Reverse</button>
+                                <button class="mute">Mute</button>
+                                <button class="solo">Solo</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="track">
+                        <div class="waveform" id="waveform2"></div>
+                        <div class="sample-controls">
+                            <div class="controls-left">
+                                <div class="control-pair"><label>Pitch</label><div class="slider-container"><input type="range" class="pitch" min="-12" max="12" step="1" value="0"></div></div>
+                                <div class="control-pair"><label>Volume</label><div class="slider-container"><input type="range" class="volume" min="-40" max="0" step="1" value="-10"></div></div>
+                            </div>
+                            <div class="track-buttons">
+                                <button class="reverse">Reverse</button>
+                                <button class="mute">Mute</button>
+                                <button class="solo">Solo</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="track">
+                        <div class="waveform" id="waveform3"></div>
+                        <div class="sample-controls">
+                            <div class="controls-left">
+                                <div class="control-pair"><label>Pitch</label><div class="slider-container"><input type="range" class="pitch" min="-12" max="12" step="1" value="0"></div></div>
+                                <div class="control-pair"><label>Volume</label><div class="slider-container"><input type="range" class="volume" min="-40" max="0" step="1" value="-10"></div></div>
+                            </div>
+                            <div class="track-buttons">
+                                <button class="reverse">Reverse</button>
+                                <button class="mute">Mute</button>
+                                <button class="solo">Solo</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="track">
+                        <div class="waveform" id="waveform4"></div>
+                        <div class="sample-controls">
+                            <div class="controls-left">
+                                <div class="control-pair"><label>Pitch</label><div class="slider-container"><input type="range" class="pitch" min="-12" max="12" step="1" value="0"></div></div>
+                                <div class="control-pair"><label>Volume</label><div class="slider-container"><input type="range" class="volume" min="-40" max="0" step="1" value="-10"></div></div>
+                            </div>
+                            <div class="track-buttons">
+                                <button class="reverse">Reverse</button>
+                                <button class="mute">Mute</button>
+                                <button class="solo">Solo</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="sequencer-panel">
+                <div class="sequencer-grid" data-track="0"></div>
+                <div class="sequencer-grid" data-track="1"></div>
+                <div class="sequencer-grid" data-track="2"></div>
+                <div class="sequencer-grid" data-track="3"></div>
+            </div>
+        </div>
+        <div id="transport-controls">
+            <div class="transport-row">
+                <div class="transport-main">
+                    <button id="play">Play</button>
+                    <button id="stop">Stop</button>
+                    <button id="refresh">Refresh Sounds</button>
+                    <button id="random-sequence">Random Sequence</button>
+                </div>
+                <div class="control-group">
+                    <label for="tempo">BPM</label>
+                    <div class="number-control">
+                        <input type="number" id="tempo" min="60" max="180" value="120">
+                    </div>
+                </div>
+                <div class="swing-control">
+                    <label for="swing">Swing</label>
+                    <div class="number-control">
+                        <input type="number" id="swing" min="0" max="100" value="0">
+                        <span id="swing-display">%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal and Navigation -->
+    <div class="top-nav">
+        <button id="info-button">?</button>
+        <a href="../../index.html" id="back-button">←</a>
+    </div>
+    
+    <div id="info-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-body">
+               <p>This machine loads four random slices of The White Album for you to modify and place within a rhythmic sequence.</p>
+               <br>
+               <p>It is inspired by and dedicated to the late artist <a href="https://www.rutherfordchang.com/"target="_blank">Rutherford Chang</a> and his incredible <a href="https://www.rutherfordchang.com/white.html" target="_blank">We Buy White Albums</a> project, and the work of <a href="https://en.wikipedia.org/wiki/The_Grey_Album" target="_blank">Danger Mouse</a>.
+               <br>
+               <br>
+               <p>It is part of the <a href="../../index.html">10,000 Drum Machines project</a> by <a href="https://maxy.world/">Maxwell Neely-Cohen</a>.</p>
+               <br>
+            </div>
+        </div>
+    </div>
+
+    <script src="wa.js"></script>
+</body>
+</html> 

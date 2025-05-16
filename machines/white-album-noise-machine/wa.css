@@ -1,0 +1,616 @@
+:root {
+    --base-size: 1vw;
+    --border: 1px solid black;
+    --color-black: black;
+    --color-gray: #666;
+    --color-light-gray: #f5f5f5;
+    --color-lighter-gray: #e0e0e0;
+    --color-white: white;
+    --color-green: #00ff00;
+    --spacing-xs: calc(var(--base-size) * 0.1);
+    --spacing-sm: calc(var(--base-size) * 0.2);
+    --spacing-md: calc(var(--base-size) * 0.3);
+    --spacing-lg: calc(var(--base-size) * 0.5);
+    --font-size-sm: calc(var(--base-size) * 0.7);
+    --font-size-base: calc(var(--base-size) * 1);
+    --font-size-lg: calc(var(--base-size) * 1.2);
+    --font-size-xl: calc(var(--base-size) * 1.5);
+    --transition-speed: 0.1s;
+}
+
+/* Reset & Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Helvetica, sans-serif;
+}
+
+html, body {
+    height: 100%;
+    min-height: 100vh;
+}
+
+body {
+    color: var(--color-black);
+    padding: var(--spacing-lg);
+    max-width: 100vw;
+    overflow-x: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Main Layout */
+#drum-machine {
+    width: fit-content;
+    margin: 0 auto;
+    border: var(--border);
+    padding: 0 12px;
+}
+
+#main-container {
+    padding: 0;
+    display: flex;
+    gap: 12px;
+    box-sizing: border-box;
+}
+
+#controls-panel,
+#sequencer-panel {
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#controls-panel {
+    width: calc(var(--base-size) * 30);
+    min-width: calc(var(--base-size) * 30);
+    display: flex;
+    flex-direction: column;
+    padding: 15px 0;
+}
+
+#sequencer-panel {
+    width: calc(var(--base-size) * 40);
+    min-width: calc(var(--base-size) * 40);
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    padding: 15px 0 0 0;
+    overflow: hidden;
+}
+
+#tracks-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 12px;
+    height: fit-content;
+}
+
+/* Track & Waveform */
+.track {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 48px;
+    min-height: 48px;
+    padding-bottom: 12px;
+    flex-shrink: 0;
+}
+
+.track:last-child {
+    padding-bottom: 0;
+}
+
+.waveform {
+    width: 100%;
+    height: 20px;
+    min-height: 20px;
+    border: var(--border);
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.waveform canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.wavesurfer-region {
+    background: rgba(0, 255, 0, 0.2) !important;
+    border: none !important;
+}
+
+.wavesurfer-handle {
+    background: #00ff00 !important;
+    width: 4px !important;
+    height: 100% !important;
+    cursor: ew-resize !important;
+}
+
+/* Sample Controls */
+.sample-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: calc(var(--base-size) * 0.1);
+    padding: calc(var(--base-size) * 0.1) 0;
+    height: 28px;
+    min-height: 28px;
+    flex-shrink: 0;
+}
+
+.controls-left {
+    display: flex;
+    flex-direction: row;
+    gap: calc(var(--base-size) * 0.3);
+}
+
+.control-pair {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.control-pair label {
+    font-size: calc(var(--base-size) * 0.7);
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+    padding-right: calc(var(--base-size) * 0.5);
+}
+
+/* Sliders (shared) */
+.slider-container {
+    position: relative;
+    width: calc(var(--base-size) * 6);
+    height: calc(var(--base-size) * 1.2);
+    border: var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 calc(var(--base-size) * 0.3);
+}
+
+.slider-container input[type="range"] {
+    flex: 1 1 auto;
+    width: 100%;
+    background: transparent;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 2px;
+    background: #666;
+}
+
+.slider-container input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background: #666;
+    border: var(--border);
+    cursor: pointer;
+}
+
+.slider-container input[type="range"]::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    background: #666;
+    border: var(--border);
+    cursor: pointer;
+}
+
+.slider-container input[type="range"]::-ms-thumb {
+    width: 12px;
+    height: 12px;
+    background: #666;
+    border: var(--border);
+    cursor: pointer;
+}
+
+.slider-container input[type="range"]:focus {
+    outline: none;
+}
+
+.slider-container span {
+    position: absolute;
+    right: calc(var(--base-size) * 0.5);
+    font-size: calc(var(--base-size) * 1);
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+/* Track Buttons */
+.track-buttons {
+    display: flex;
+    gap: calc(var(--base-size) * 0.1);
+}
+
+.track-buttons button, button {
+    padding: calc(var(--base-size) * 0.2) calc(var(--base-size) * 0.4);
+    border: var(--border);
+    background: none;
+    cursor: pointer;
+    font-size: calc(var(--base-size) * 1);
+    white-space: nowrap;
+    transition: background-color 0.1s ease;
+}
+
+.track-buttons button.active {
+    background: #666;
+    color: #fff;
+}
+
+button:hover {
+    background: #f5f5f5;
+}
+
+button:active {
+    background: #e0e0e0;
+    transition: background-color 0s;
+}
+
+/* Label Styles (shared for all controls) */
+.control-group label,
+.swing-control label {
+    width: calc(var(--base-size) * 2.5);
+    font-size: calc(var(--base-size) * 1);
+    font-weight: normal;
+    margin-right: 0.3em;
+    white-space: nowrap;
+}
+
+/* Transport Controls */
+#transport-controls {
+    margin-top: calc(var(--base-size) * 0.5);
+    padding: calc(var(--base-size) * 0.3);
+    width: 100%;
+    border-top: var(--border);
+}
+
+.transport-row {
+    display: flex;
+    align-items: center;
+    gap: calc(var(--base-size) * 0.5);
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.transport-main {
+    display: flex;
+    gap: calc(var(--base-size) * 0.3);
+    align-items: center;
+}
+
+.transport-main button {
+    flex: 0 0 auto;
+}
+
+.control-group,
+.swing-control {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 4px;
+}
+
+.swing-control {
+    margin-left: 1em;
+}
+
+#tempo, #swing {
+    padding: calc(var(--base-size) * 0.2) calc(var(--base-size) * 0.4);
+    border: var(--border);
+    background: none;
+    font-size: calc(var(--base-size) * 1);
+    box-sizing: border-box;
+    min-width: 0;
+    height: auto;
+    border-radius: 0;
+    text-align: center;
+}
+
+#tempo-display, #swing-display {
+    font-size: inherit;
+    white-space: nowrap;
+    min-width: 30px;
+    text-align: left;
+    margin-left: 4px;
+    background: none;
+    display: inline-block;
+}
+
+#refresh {
+    margin: 0;
+    padding: calc(var(--base-size) * 0.2) calc(var(--base-size) * 0.4);
+    width: auto;
+}
+
+#random-sequence {
+    white-space: nowrap;
+    min-width: calc(var(--base-size) * 8);
+}
+
+/* Sequencer Grid */
+.sequencer-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(16, minmax(0, 1fr));
+    gap: 4px;
+    padding: 4px;
+    border: var(--border);
+    min-height: 48px;
+    box-sizing: border-box;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.sequencer-grid:first-child {
+    margin-top: 0;
+}
+
+.sequencer-grid:last-child {
+    margin-bottom: 0;
+}
+
+.step {
+    aspect-ratio: 1;
+    border: var(--border);
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.1s ease;
+    box-sizing: border-box;
+}
+
+.step:hover {
+    background: #f5f5f5;
+}
+
+.step.active {
+    background: black;
+}
+
+.step.current {
+    border: 2px solid #666;
+}
+
+/* Number Controls */
+.number-control {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.number-control input[type="number"] {
+    width: 60px;
+    height: 24px;
+    border: 1px solid black;
+    text-align: center;
+    padding: 0 4px;
+}
+
+.number-control span {
+    margin-left: 4px;
+}
+
+
+#transport-controls .slider-container { border: none !important; }
+
+#play {
+    min-width: 4.5em;
+    text-align: center;
+}
+
+/* Modal and Navigation */
+.top-nav {
+    position: fixed;
+    top: calc(var(--base-size) * 0.5);
+    right: calc(var(--base-size) * 0.5);
+    display: flex;
+    gap: calc(var(--base-size) * 0.5);
+    z-index: 1000;
+}
+
+#info-button,
+#back-button {
+    width: calc(var(--base-size) * 2);
+    height: calc(var(--base-size) * 2);
+    border: var(--border);
+    background: none;
+    cursor: pointer;
+    font-size: calc(var(--base-size) * 1.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: black;
+    padding: 0;
+    border-radius: 0;
+}
+
+#info-button:hover,
+#back-button:hover {
+    background: #f5f5f5;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1001;
+}
+
+.modal-content {
+    position: relative;
+    background-color: white;
+    margin: calc(var(--base-size) * 5) auto;
+    padding: calc(var(--base-size) * 1);
+    width: 90%;
+    max-width: calc(var(--base-size) * 50);
+    border: var(--border);
+}
+
+.close-modal {
+    position: absolute;
+    right: calc(var(--base-size) * 0.5);
+    top: calc(var(--base-size) * 0.5);
+    font-size: calc(var(--base-size) * 1.5);
+    cursor: pointer;
+    line-height: 1;
+}
+
+.close-modal:hover {
+    color: #666;
+}
+
+.modal-body {
+    margin-top: calc(var(--base-size) * 1);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    :root { --base-size: 3vw; }
+    #main-container {
+        flex-direction: column;
+        gap: 6px;
+    }
+    #controls-panel, #sequencer-panel {
+        width: 100%;
+        min-width: 100%;
+        padding: 8px;
+        gap: 8px;
+    }
+    .track {
+        padding-bottom: 6px;
+    }
+    .waveform { width: 100%; }
+    .control-group { flex-wrap: wrap; }
+    .control-group input[type="range"] { width: 100%; }
+    #drum-machine { padding: calc(var(--base-size) * 0.2); }
+    .transport-main { flex-wrap: wrap; gap: calc(var(--base-size) * 0.2); }
+    .transport-main button, 
+    .control-group,
+    .swing-control { 
+        flex: 1; 
+        min-width: calc(var(--base-size) * 10); 
+    }
+    #tempo, #swing {
+        width: auto;
+        height: auto;
+        border-width: calc(var(--base-size) * 0.05);
+    }
+    #tempo-display, #swing-display { min-width: calc(var(--base-size) * 6); }
+    .number-control {
+        width: auto;
+    }
+    .number-control input[type="number"] {
+        width: 60px;
+    }
+    #sequencer-panel {
+        padding: 6px;
+    }
+    .sequencer-grid {
+        margin-bottom: 6px;
+    }
+    .step {
+        min-height: 24px;
+    }
+}
+
+/* Shared Button Styles */
+button, 
+.track-buttons button,
+#info-button,
+#back-button {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: var(--border);
+    background: none;
+    cursor: pointer;
+    font-size: var(--font-size-base);
+    white-space: nowrap;
+    transition: background-color var(--transition-speed) ease;
+}
+
+button:hover,
+#info-button:hover,
+#back-button:hover {
+    background: var(--color-light-gray);
+}
+
+button:active {
+    background: var(--color-lighter-gray);
+    transition: background-color 0s;
+}
+
+button.active {
+    background: var(--color-gray);
+    color: var(--color-white);
+}
+
+/* Shared Input Styles */
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    background: transparent;
+    height: 2px;
+    background: var(--color-gray);
+}
+
+input[type="range"]::-webkit-slider-thumb,
+input[type="range"]::-moz-range-thumb,
+input[type="range"]::-ms-thumb {
+    width: 12px;
+    height: 12px;
+    background: var(--color-gray);
+    border: var(--border);
+    cursor: pointer;
+}
+
+input[type="range"]:focus {
+    outline: none;
+}
+
+/* Shared Label Styles */
+.control-group label,
+.swing-control label,
+.control-pair label {
+    font-size: var(--font-size-base);
+    font-weight: normal;
+    white-space: nowrap;
+}
+
+.control-group label,
+.swing-control label {
+    width: calc(var(--base-size) * 2.5);
+    margin-right: 0.3em;
+}
+
+.control-pair label {
+    font-size: var(--font-size-sm);
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+    padding-right: var(--spacing-lg);
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1001;
+}
+
