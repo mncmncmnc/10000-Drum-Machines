@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Initial sort (original order)
-    sortItems('original');
+    sortItems('recent');
     
     // Life expectancy countdown in modal
     // Calculate days remaining until target date

@@ -141,7 +141,7 @@
       text-decoration: none;
       color: inherit;
     }
-    #helpButton {
+    #infoButton {
       bottom: 2rem;
       left: 2rem;
     }
@@ -224,7 +224,7 @@
   </style>
 </head>
 <body>
-  <button id="helpButton" class="corner-button">?</button>
+  <button id="infoButton" class="corner-button">?</button>
   <a class="corner-button" href="../../index.html" id="backButton">←</a>
 
   <div class="left-panel">
@@ -469,12 +469,12 @@
     });
   </script>
 
-  <div id="helpModal" class="modal">
+  <div id="infoModal" class="modal">
     <div class="modal-content">
       <span class="close-button" id="closeModal">&times;</span>
       <div class="modal-body">
         <p><strong>About this drum machine:</strong></p>
-        <p>“So Many Drums” is a stupid 8-channel drum sequencer using a library of 1,024 unique sounds.</p>
+        <p>"So Many Drums" is a stupid 8-channel drum sequencer using a library of 1,024 unique sounds.</p>
         <p>Big Knob: Sets a random seed (0–9999) that picks sounds and sets patterns. Adjust by dragging, using ▲/▼, or arrow keys.</p>
         <p>Channels: Each has mute/solo buttons, and volume/pan controls that persist as you move the big knob.</p>
         <p>Steps: Orange = active, Grey = muted, Red = soloed.</p>
@@ -483,10 +483,10 @@
     </div>
   </div>
   <script>
-    const helpModal = document.getElementById('helpModal');
-    document.getElementById('helpButton').onclick = () => helpModal.style.display = 'block';
-    document.getElementById('closeModal').onclick = () => helpModal.style.display = 'none';
-    window.onclick = e => { if (e.target === helpModal) helpModal.style.display = 'none'; };
+    const infoModal = document.getElementById('infoModal');
+    document.getElementById('infoButton').onclick = () => infoModal.style.display = 'block';
+    document.getElementById('closeModal').onclick = () => infoModal.style.display = 'none';
+    window.onclick = e => { if (e.target === infoModal) infoModal.style.display = 'none'; };
   </script>
 </body>
 </html>

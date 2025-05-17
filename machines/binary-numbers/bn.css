@@ -165,9 +165,9 @@ body {
     color: inherit;
 }
 
-#helpButton {
-    bottom: 2vw;
-    left: 2vw;
+#infoButton {
+    bottom: 2rem;
+    left: 2rem;
 }
 
 #backButton {

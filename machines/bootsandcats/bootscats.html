@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boots & Cats Drum Machine</title>
+    <link rel="stylesheet" href="bcstyles.css">
+</head>
+<body>
+    <a href="../../index.html" class="corner-button" id="backButton">←</a>
+
+    <div id="drop-zone">
+        <!-- Images will be dropped here -->
+    </div>
+    
+    <div class="instruction-text">(click and drag into center)</div>
+    
+    <div class="source-boxes">
+        <div class="source-box" id="boots-box">
+            <h2>BOOTS</h2>
+        </div>
+        <div class="source-box" id="cats-box">
+            <h2>CATS</h2>
+        </div>
+    </div>
+
+    <button id="playPauseBtn" class="play-pause-btn">PLAY</button>
+
+    <!-- Audio elements -->
+    <audio id="snareSound" src="bootcatsounds/snareST3T3SA.WAV" preload="auto"></audio>
+    <audio id="hihatSound" src="bootcatsounds/hihatHHOD8.WAV" preload="auto"></audio>
+    <audio id="bassSound" src="bootcatsounds/bassBTAA0D3.WAV" preload="auto"></audio>
+
+    <script src="bcscript.js"></script>
+</body>
+</html> 

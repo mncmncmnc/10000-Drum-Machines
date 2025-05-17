@@ -39,9 +39,9 @@ class DrumMachine {
     }
 
     setupModal() {
-        const modal = document.getElementById('helpModal');
-        const helpBtn = document.getElementById('helpBtn');
-        const helpBtnMobile = document.getElementById('helpBtn-mobile');
+        const modal = document.getElementById('infoModal');
+        const infoBtn = document.getElementById('infoBtn');
+        const infoBtnMobile = document.getElementById('infoBtn-mobile');
         const closeBtn = document.querySelector('.close');
 
         const openModal = () => {
@@ -52,8 +52,8 @@ class DrumMachine {
             modal.style.display = 'none';
         };
 
-        helpBtn.addEventListener('click', openModal);
-        helpBtnMobile.addEventListener('click', openModal);
+        infoBtn.addEventListener('click', openModal);
+        infoBtnMobile.addEventListener('click', openModal);
         closeBtn.addEventListener('click', closeModal);
 
         // Close modal when clicking outside

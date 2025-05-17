@@ -713,21 +713,21 @@ document.addEventListener('DOMContentLoaded', () => {
     drawAllConnections();
 });
 
-// Help Modal functionality
-const helpBtn = document.getElementById('helpBtn');
-const helpModal = document.getElementById('helpModal');
+// Info Modal functionality
+const infoBtn = document.getElementById('infoBtn');
+const infoModal = document.getElementById('infoModal');
 const closeModal = document.querySelector('.close-modal');
 
-helpBtn.addEventListener('click', () => {
-    helpModal.style.display = 'block';
+infoBtn.addEventListener('click', () => {
+    infoModal.style.display = 'block';
 });
 
 closeModal.addEventListener('click', () => {
-    helpModal.style.display = 'none';
+    infoModal.style.display = 'none';
 });
 
 window.addEventListener('click', (event) => {
-    if (event.target === helpModal) {
-        helpModal.style.display = 'none';
+    if (event.target === infoModal) {
+        infoModal.style.display = 'none';
     }
 });

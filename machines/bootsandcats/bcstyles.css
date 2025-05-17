@@ -1,0 +1,126 @@
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+}
+
+#drop-zone {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    padding: 20px;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 200px;
+}
+
+.source-boxes {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+
+}
+
+.source-box {
+    width: 150px;
+    height: 150px;
+    border: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: grab;
+    user-select: none;
+}
+
+.source-box h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.dropped-image {
+    width: auto;
+    height: auto;
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: contain;
+    flex: 1;
+    min-width: 0;
+}
+
+.ampersand {
+    font-size: 48px;
+    font-weight: bold;
+    color: black;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    padding: 0 10px;
+    margin: 0 -10px;
+}
+
+.instruction-text {
+    text-align: center;
+    color: #666;
+    font-size: 16px;
+    margin-bottom: 10px;
+    font-style: italic;
+}
+
+.play-pause-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    padding: 8px 16px;
+    border: 2px solid black;
+    background: white;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+    z-index: 1000;
+}
+
+.play-pause-btn:hover {
+    background: #f0f0f0;
+}
+
+.play-pause-btn.playing {
+    background: #f0f0f0;
+}
+
+/* Corner buttons */
+.corner-button {
+    position: fixed;
+    background: none;
+    border: 1px solid black;
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    text-decoration: none;
+    color: inherit;
+}
+
+#backButton {
+    bottom: 2rem;
+    right: 2rem;
+}
+
+.corner-button:hover {
+    background: #f0f0f0;
+}

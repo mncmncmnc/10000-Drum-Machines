@@ -48,11 +48,11 @@ async function initDrumMachine() {
     document.querySelector('.spinner-down').addEventListener('click', () => adjustBPM(-1));
     
     // Set up modal
-    const modal = document.getElementById('helpModal');
-    const helpButton = document.getElementById('helpButton');
+    const modal = document.getElementById('infoModal');
+    const infoButton = document.getElementById('infoButton');
     const closeButton = document.querySelector('.close-button');
 
-    helpButton.addEventListener('click', () => {
+    infoButton.addEventListener('click', () => {
         modal.style.display = 'block';
     });
 
