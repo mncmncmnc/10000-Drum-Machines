@@ -14,7 +14,6 @@
 	  <description>A drum machine that uses logic gates to create rhythmic patterns</description>
 	  <pubDate>Fri, 03 May 2024 00:00:00 GMT</pubDate>
 	  <guid>https://10kdrummachines.com/machines/logic-gates/lg.html</guid>
-	  <author>Maxwell Neely-Cohen</author>
 	</item>
 
 	<item>
@@ -23,7 +22,6 @@
 	  <description>A drum machine that creates rhythms based on typing and phonetic patterns</description>
 	  <pubDate>Fri, 03 May 2024 00:00:00 GMT</pubDate>
 	  <guid>https://10kdrummachines.com/machines/phonetic-drum-machine/pdm.html</guid>
-	  <author>Maxwell Neely-Cohen</author>
 	</item>
 
 	<item>
@@ -32,7 +30,6 @@
 	  <description>A drum machine that converts binary numbers into rhythmic patterns</description>
 	  <pubDate>Fri, 03 May 2024 00:00:00 GMT</pubDate>
 	  <guid>https://10kdrummachines.com/machines/binary-numbers/bn.html</guid>
-	  <author>Maxwell Neely-Cohen</author>
 	</item>
 
 	<item>
@@ -41,25 +38,22 @@
 	  <description>A drum machine designed for extremely long-term rhythmic patterns</description>
 	  <pubDate>Mon, 06 May 2024 00:00:00 GMT</pubDate>
 	  <guid>https://10kdrummachines.com/machines/longterm/longterm.html</guid>
-	  <author>Maxwell Neely-Cohen</author>
 	</item>
 
 	<item>
 	  <title>Random Drums 1</title>
 	  <link>https://jeanetteandre.ws/random-drums/</link>
 	  <description>A random drum pattern generator by Jeanette Andrews</description>
-	  <pubDate>Thu, 07 May 2024 00:00:00 GMT</pubDate>
+	  <pubDate>Tue, 07 May 2024 00:00:00 GMT</pubDate>
 	  <guid>https://jeanetteandre.ws/random-drums/</guid>
-	  <author>Jeanette Andrews</author>
 	</item>
 
 	<item>
 	  <title>Random Drums 2</title>
 	  <link>https://jeanetteandre.ws/musicalweb2024/</link>
 	  <description>Another random drum pattern generator by Jeanette Andrews</description>
-	  <pubDate>Thu, 07 May 2024 00:00:00 GMT</pubDate>
+	  <pubDate>Tue, 07 May 2024 00:00:00 GMT</pubDate>
 	  <guid>https://jeanetteandre.ws/musicalweb2024/</guid>
-	  <author>Jeanette Andrews</author>
 	</item>
 
 	<item>
@@ -68,7 +62,6 @@
 	  <description>A drum machine that uses white noise to create rhythmic patterns</description>
 	  <pubDate>Tue, 07 May 2024 00:00:00 GMT</pubDate>
 	  <guid>https://10kdrummachines.com/machines/white-noise/wn.html</guid>
-	  <author>Maxwell Neely-Cohen</author>
 	</item>
 
 	<item>
@@ -77,7 +70,6 @@
 	  <description>A noise machine inspired by the White Album</description>
 	  <pubDate>Thu, 16 May 2024 00:00:00 GMT</pubDate>
 	  <guid>https://10kdrummachines.com/machines/white-album-noise-machine/wa.html</guid>
-	  <author>Maxwell Neely-Cohen</author>
 	</item>
 
 	<item>
@@ -86,7 +78,6 @@
 	  <description>A drum sequencer based on the Knight's Tour chess problem</description>
 	  <pubDate>Thu, 09 May 2024 00:00:00 GMT</pubDate>
 	  <guid>https://10kdrummachines.com/machines/knights-tour/kn.html</guid>
-	  <author>Maxwell Neely-Cohen</author>
 	</item>
 
 	<item>
@@ -95,7 +86,6 @@
 	  <description>A drum machine using De Bruijn sequences for pattern generation</description>
 	  <pubDate>Fri, 10 May 2024 00:00:00 GMT</pubDate>
 	  <guid>https://10kdrummachines.com/machines/db-drums/dbn.html</guid>
-	  <author>Tom Whitwell</author>
 	</item>
 
 	<item>
@@ -104,7 +94,6 @@
 	  <description>A drum machine with an extensive collection of sounds</description>
 	  <pubDate>Sun, 12 May 2024 00:00:00 GMT</pubDate>
 	  <guid>https://10kdrummachines.com/machines/so-many-drums/smd.html</guid>
-	  <author>Tom Whitwell</author>
 	</item>
 
 	<item>
@@ -113,7 +102,6 @@
 	  <description>A drum machine based on the "boots and cats" beatboxing pattern</description>
 	  <pubDate>Fri, 17 May 2024 00:00:00 GMT</pubDate>
 	  <guid>https://10kdrummachines.com/machines/bootsandcats/bootscats.html</guid>
-	  <author>Maxwell Neely-Cohen, Jessie Char, and May-Li Khoe</author>
 	</item>
 
   </channel>
