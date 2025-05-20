@@ -8,60 +8,22 @@
 	<lastBuildDate>Tue, 20 May 2025 12:00:00 GMT</lastBuildDate>
 	<atom:link href="https://10kdrummachines.com/feed.xml" rel="self" type="application/rss+xml" />
 
+<!-- LIST STARTS HERE, NEWEST ITEMS GO FIRST -->
+
 	<item>
-	  <title>Logic Gate Drum Machine</title>
-	  <link>https://10kdrummachines.com/machines/logic-gates/lg.html</link>
-	  <description>A drum machine that uses logic gates to create rhythmic patterns</description>
-	  <pubDate>Fri, 03 May 2025 00:00:00 GMT</pubDate>
-	  <guid>https://10kdrummachines.com/machines/logic-gates/lg.html</guid>
+	  <title>No Common Time</title>
+	  <link>https://10kdrummachines.com/machines/no-common-time/nct.html</link>
+	  <description>A drum machine that explores unusual time signatures and rhythmic patterns</description>
+	  <pubDate>Tue, 20 May 2025 12:00:00 GMT</pubDate>
+	  <guid>https://10kdrummachines.com/machines/no-common-time/nct.html</guid>
 	</item>
 
 	<item>
-	  <title>Typing/Phonetic Drum Machine</title>
-	  <link>https://10kdrummachines.com/machines/phonetic-drum-machine/pdm.html</link>
-	  <description>A drum machine that creates rhythms based on typing and phonetic patterns</description>
-	  <pubDate>Fri, 03 May 2025 00:00:00 GMT</pubDate>
-	  <guid>https://10kdrummachines.com/machines/phonetic-drum-machine/pdm.html</guid>
-	</item>
-
-	<item>
-	  <title>Binary Number Conversion Drum Machine</title>
-	  <link>https://10kdrummachines.com/machines/binary-numbers/bn.html</link>
-	  <description>A drum machine that converts binary numbers into rhythmic patterns</description>
-	  <pubDate>Fri, 03 May 2025 00:00:00 GMT</pubDate>
-	  <guid>https://10kdrummachines.com/machines/binary-numbers/bn.html</guid>
-	</item>
-
-	<item>
-	  <title>Extremely Long-Term Drum Machine</title>
-	  <link>https://10kdrummachines.com/machines/longterm/longterm.html</link>
-	  <description>A drum machine designed for extremely long-term rhythmic patterns</description>
-	  <pubDate>Mon, 06 May 2025 00:00:00 GMT</pubDate>
-	  <guid>https://10kdrummachines.com/machines/longterm/longterm.html</guid>
-	</item>
-
-	<item>
-	  <title>Random Drums 1</title>
-	  <link>https://jeanetteandre.ws/random-drums/</link>
-	  <description>A random drum pattern generator by Jeanette Andrews</description>
-	  <pubDate>Tue, 07 May 2025 00:00:00 GMT</pubDate>
-	  <guid>https://jeanetteandre.ws/random-drums/</guid>
-	</item>
-
-	<item>
-	  <title>Random Drums 2</title>
-	  <link>https://jeanetteandre.ws/musicalweb2024/</link>
-	  <description>Another random drum pattern generator by Jeanette Andrews</description>
-	  <pubDate>Tue, 07 May 2025 00:00:00 GMT</pubDate>
-	  <guid>https://jeanetteandre.ws/musicalweb2024/</guid>
-	</item>
-
-	<item>
-	  <title>White Noise (Drum) Machine</title>
-	  <link>https://10kdrummachines.com/machines/white-noise/wn.html</link>
-	  <description>A drum machine that uses white noise to create rhythmic patterns</description>
-	  <pubDate>Tue, 07 May 2025 00:00:00 GMT</pubDate>
-	  <guid>https://10kdrummachines.com/machines/white-noise/wn.html</guid>
+	  <title>Centre of Mass Drums</title>
+	  <link>https://10kdrummachines.com/machines/comdrums.html</link>
+	  <description>A drum sequencer based on setting the 'centre of mass' of the drum pattern, by Chris Johnson</description>
+	  <pubDate>Tue, 20 May 2025 12:00:00 GMT</pubDate>
+	  <guid>https://10kdrummachines.com/machines/comdrums.html</guid>
 	</item>
 
 	<item>
@@ -73,19 +35,11 @@
 	</item>
 
 	<item>
-	  <title>Knight's Tour Drum Sequencer</title>
-	  <link>https://10kdrummachines.com/machines/knights-tour/kn.html</link>
-	  <description>A drum sequencer based on the Knight's Tour chess problem</description>
-	  <pubDate>Thu, 09 May 2025 00:00:00 GMT</pubDate>
-	  <guid>https://10kdrummachines.com/machines/knights-tour/kn.html</guid>
-	</item>
-
-	<item>
-	  <title>De Bruijn Sequence Drum Machine</title>
-	  <link>https://10kdrummachines.com/machines/db-drums/dbn.html</link>
-	  <description>A drum machine using De Bruijn sequences for pattern generation</description>
-	  <pubDate>Fri, 10 May 2025 00:00:00 GMT</pubDate>
-	  <guid>https://10kdrummachines.com/machines/db-drums/dbn.html</guid>
+	  <title>Boots And Cats Drum Machine</title>
+	  <link>https://10kdrummachines.com/machines/bootsandcats/bootscats.html</link>
+	  <description>A drum machine based on the "boots and cats" beatboxing pattern</description>
+	  <pubDate>Fri, 17 May 2024 00:00:00 GMT</pubDate>
+	  <guid>https://10kdrummachines.com/machines/bootsandcats/bootscats.html</guid>
 	</item>
 
 	<item>
@@ -97,21 +51,76 @@
 	</item>
 
 	<item>
-	  <title>Boots And Cats Drum Machine</title>
-	  <link>https://10kdrummachines.com/machines/bootsandcats/bootscats.html</link>
-	  <description>A drum machine based on the "boots and cats" beatboxing pattern</description>
-	  <pubDate>Fri, 17 May 2024 00:00:00 GMT</pubDate>
-	  <guid>https://10kdrummachines.com/machines/bootsandcats/bootscats.html</guid>
+	  <title>De Bruijn Sequence Drum Machine</title>
+	  <link>https://10kdrummachines.com/machines/db-drums/dbn.html</link>
+	  <description>A drum machine using De Bruijn sequences for pattern generation</description>
+	  <pubDate>Fri, 10 May 2025 00:00:00 GMT</pubDate>
+	  <guid>https://10kdrummachines.com/machines/db-drums/dbn.html</guid>
 	</item>
-	
+
 	<item>
-	  <title>Centre of Mass Drums</title>
-	  <link>https://10kdrummachines.com/machines/comdrums.html</link>
-	  <description>A drum sequencer based on setting the 'centre of mass' of the drum pattern, by Chris Johnson</description>
-	  <pubDate>Tue, 20 May 2025 12:00:00 GMT</pubDate>
-	  <guid>https://10kdrummachines.com/machines/bootsandcats/bootscats.html</guid>
+	  <title>Knight's Tour Drum Sequencer</title>
+	  <link>https://10kdrummachines.com/machines/knights-tour/kn.html</link>
+	  <description>A drum sequencer based on the Knight's Tour chess problem</description>
+	  <pubDate>Thu, 09 May 2025 00:00:00 GMT</pubDate>
+	  <guid>https://10kdrummachines.com/machines/knights-tour/kn.html</guid>
 	</item>
-	
+
+	<item>
+	  <title>White Noise (Drum) Machine</title>
+	  <link>https://10kdrummachines.com/machines/white-noise/wn.html</link>
+	  <description>A drum machine that uses white noise to create rhythmic patterns</description>
+	  <pubDate>Tue, 07 May 2025 00:00:00 GMT</pubDate>
+	  <guid>https://10kdrummachines.com/machines/white-noise/wn.html</guid>
+	</item>
+
+	<item>
+	  <title>Random Drums 2</title>
+	  <link>https://jeanetteandre.ws/musicalweb2024/</link>
+	  <description>Another random drum pattern generator by Jeanette Andrews</description>
+	  <pubDate>Tue, 07 May 2025 00:00:00 GMT</pubDate>
+	  <guid>https://jeanetteandre.ws/musicalweb2024/</guid>
+	</item>
+
+	<item>
+	  <title>Random Drums 1</title>
+	  <link>https://jeanetteandre.ws/random-drums/</link>
+	  <description>A random drum pattern generator by Jeanette Andrews</description>
+	  <pubDate>Tue, 07 May 2025 00:00:00 GMT</pubDate>
+	  <guid>https://jeanetteandre.ws/random-drums/</guid>
+	</item>
+
+	<item>
+	  <title>Extremely Long-Term Drum Machine</title>
+	  <link>https://10kdrummachines.com/machines/longterm/longterm.html</link>
+	  <description>A drum machine designed for extremely long-term rhythmic patterns</description>
+	  <pubDate>Mon, 06 May 2025 00:00:00 GMT</pubDate>
+	  <guid>https://10kdrummachines.com/machines/longterm/longterm.html</guid>
+	</item>
+
+	<item>
+	  <title>Binary Number Conversion Drum Machine</title>
+	  <link>https://10kdrummachines.com/machines/binary-numbers/bn.html</link>
+	  <description>A drum machine that converts binary numbers into rhythmic patterns</description>
+	  <pubDate>Fri, 03 May 2025 00:00:00 GMT</pubDate>
+	  <guid>https://10kdrummachines.com/machines/binary-numbers/bn.html</guid>
+	</item>
+
+	<item>
+	  <title>Typing/Phonetic Drum Machine</title>
+	  <link>https://10kdrummachines.com/machines/phonetic-drum-machine/pdm.html</link>
+	  <description>A drum machine that creates rhythms based on typing and phonetic patterns</description>
+	  <pubDate>Fri, 03 May 2025 00:00:00 GMT</pubDate>
+	  <guid>https://10kdrummachines.com/machines/phonetic-drum-machine/pdm.html</guid>
+	</item>
+
+	<item>
+	  <title>Logic Gate Drum Machine</title>
+	  <link>https://10kdrummachines.com/machines/logic-gates/lg.html</link>
+	  <description>A drum machine that uses logic gates to create rhythmic patterns</description>
+	  <pubDate>Fri, 03 May 2025 00:00:00 GMT</pubDate>
+	  <guid>https://10kdrummachines.com/machines/logic-gates/lg.html</guid>
+	</item>
 
   </channel>
 </rss>
