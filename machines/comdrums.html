@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=640, initial-scale=0.5" />
+  <meta name="title" content="CoM Drums" />
+  <meta name="author" content="Chris Johnson" />
+  <meta name="description" content="Drum sequencer based on setting the 'centre of mass' of the drum pattern. " />
+  <title>CoM Drums</title>
+  <style>
+        body {
+            background: #333;
+            text-align: center;
+            margin: 0;
+            overflow-x: hidden;
+			touch-action: none;
+			overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        #tracksContainer {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0px;
+            justify-content: center;
+            padding: 0px;
+			width: 640px;
+			margin: 0px auto;
+        }
+        .track {
+            margin: 00px;
+        }
+        svg {
+            background: #333;
+            margin: 0px auto;
+        }
+        .controls {
+            padding: 10px;
+            text-align: center;
+            margin: 0px auto;
+            width: 400px;
+            position: sticky;
+            top: 0;
+            background: #333;
+            z-index: 100;
+        }
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 300px;
+            margin: 20px 0px;
+            background: transparent;
+        }
+		p {color:#888;}
+        input[type="range"]::-webkit-slider-runnable-track {
+            height: 2px;
+            background: #888;
+            border-radius: 1px;
+        }
+        input[type="range"]::-moz-range-track {
+            height: 2px;
+            background: #888;
+            border-radius: 1px;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 24px;
+            width: 24px;
+            background: #888;
+            border-radius: 50%;
+            margin-top: -12px;
+        }
+        input[type="range"]::-moz-range-thumb {
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            background: #888;
+        }
+        label {
+            width: 400px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: Arial, sans-serif;
+            color: #666;
+            font-size: 14px;
+        }
+        button {
+            padding: 8px 16px;
+            margin: 5px;
+            background: #666;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+      </style>
+	</head>
+<body>
+  <div class="controls">
+	<p>Use mouse wheel/two-finger pinch, and drag</p>
+    <button id="playButton">Play</button>
+    <label><input type="range" id="tempo" min="60" max="240" value="120"><div>Tempo</div></label>
+    <label><input type="range" id="swing" min="0" max="50" value="25"><div>Swing</div></label>
+  </div>
+  <div id="tracksContainer"></div>
+
+  <script>
+	const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+let isPlaying = false;
+let currentStep = 0;
+let nextNoteTime = 0.0;
+const tracks = [];
+let startX=0, startY=0;
+
+class KDNode {
+    constructor(point, axis) {
+        this.point = point;
+        this.axis = axis;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+class KDTree {
+    constructor(points, indices) {
+		this.indices = indices;
+        this.root = this.buildTree(points);
+    }
+
+    buildTree(points, depth = 0) {
+        if (points.length === 0) return null;
+        
+        const k = 3;
+        const axis = depth % k;
+        
+        // Sort points and choose median
+        points.sort((a, b) => a[this.indices[axis]] - b[this.indices[axis]]);
+        const median = Math.floor(points.length / 2);
+        
+        const node = new KDNode(points[median], axis);
+        node.left = this.buildTree(points.slice(0, median), depth + 1);
+        node.right = this.buildTree(points.slice(median + 1), depth + 1);
+        
+        return node;
+    }
+
+	
+    nearestNeighborInt(query, node = this.root, best = null) {
+        if (node === null) return best;
+        
+        // Update best if current node is closer
+        const dist = this.squaredDistance(query, node.point);
+        if (!best || dist < best.dist) {
+            best = { point: node.point, dist: dist };
+        }
+        
+        // Search subtrees
+        const axis = node.axis;
+        const side = query[axis] < node.point[this.indices[axis]] ? 'left' : 'right';
+        best = this.nearestNeighborInt(query, node[side], best);
+        
+        // Check other side if needed
+        const otherSide = side === 'left' ? 'right' : 'left';
+        const diff = query[axis] - node.point[this.indices[axis]];
+        if (diff * diff < best.dist) {
+            best = this.nearestNeighborInt(query, node[otherSide], best);
+        }
+        return best;
+    }
+
+	nearestNeighbor(query, node = this.root, best = null)
+	{
+		return this.nearestNeighborInt(query,node,best).point;
+	}
+	
+    squaredDistance(query, a) {
+        let sum = 0;
+        for (let i = 0; i < 3; i++) {
+            sum += (a[this.indices[i]] - query[i]) ** 2;
+        }
+        return sum;
+    }
+}
+
+function dotProduct(a, b) {
+    return a.reduce((sum, val, idx) => sum + val * b[idx], 0);
+}
+
+
+// Global Pattern Data and KD-Tree
+const nsteps = 16;
+let data = [];
+let tree = null;
+// Generate all possible patterns
+function numToList(k, n) {
+    const list = new Array(n).fill(0);
+    let i = 0;
+    while (k > 0 && i < n) {
+        list[n - i - 1] = k % 2;
+        i++;
+        k = Math.floor(k / 2);
+    }
+    return list;
+}
+(function initGlobalData() {
+    // Precompute trigonometric tables
+    const [sinv, cosv, sinv2, cosv2, sinv3, cosv3, sinv4, cosv4] = 
+          [2, 4, 6, 8].map(multiplier => {
+              const angle = x => x * Math.PI * multiplier / nsteps;
+              return {
+                  sin: Array.from({length: nsteps}, (_, x) => Math.sin(angle(x))),
+                  cos: Array.from({length: nsteps}, (_, x) => Math.cos(angle(x)))
+              };
+          }).flatMap(obj => [obj.sin, obj.cos]);
+
+	
+
+    for (let i = 0; i < (1 << nsteps); i++) {
+        const l = numToList(i, nsteps);
+        const count = l.filter(bit => bit === 1).length;
+        const safeDiv = (val) => count === 0 ? 0 : val / count;
+        
+        data.push([
+            i,
+            count,
+            safeDiv(dotProduct(sinv, l)),
+            safeDiv(dotProduct(cosv, l)),
+            safeDiv(dotProduct(sinv2, l)),
+            safeDiv(dotProduct(cosv2, l)),
+            safeDiv(dotProduct(sinv3, l)),
+            safeDiv(dotProduct(cosv3, l)),
+            safeDiv(dotProduct(sinv4, l)),
+            safeDiv(dotProduct(cosv4, l)),
+        ]);
+    }
+
+    // Build KD-Tree
+    tree = new KDTree(data, [1, 2, 3]);
+})();
+
+class Track {
+    constructor(id, name) {
+        this.id = id;
+        this.currentPattern = new Array(16).fill(0);
+        this.currentRadius = 10;
+        this.outerRadius = 100;
+        this.isDragging = false;
+        this.touchId = null;
+        this.initialPinchDistance = null;
+        this.bitRects = [];
+        this.soundGenerator = null;
+        this.inner=null;
+        this.createSVG(name);
+        this.createBitMarkers();
+        this.setupEventListeners();
+        this.updateCallback(0, 0, 0.0);
+
+		this.touchId = null;
+		this.initialPinchDistance = null;
+		
+		this.dcn = audioContext.createDynamicsCompressor();
+		this.dcn.connect(audioContext.destination);
+		
+    }
+
+	setAsHiHat()
+	{
+		this.soundGenerator = this.createHiHat();
+	}
+
+	setAsKick()
+	{
+		this.soundGenerator = this.createKick();
+	}
+	setAsSnareClap()
+	{
+		this.soundGenerator = this.createSnareClap();
+	}
+
+	setAsClaveShaker()
+	{
+		this.soundGenerator = this.createClaveShaker();
+	}
+    createSVG(name) {
+        this.svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        this.svg.setAttribute('width', '320');
+        this.svg.setAttribute('height', '320');
+        this.svg.setAttribute('viewBox', '-160 -160 320 320');
+        this.svg.classList.add('track');
+
+        const outer = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        outer.setAttribute('cx', '0');
+        outer.setAttribute('cy', '0');
+        outer.setAttribute('r', '100');
+        outer.setAttribute('fill', 'none');
+        outer.setAttribute('stroke', '#888');
+        outer.setAttribute('stroke-width', '2');
+
+        this.inner = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        this.inner.setAttribute('cx',0);
+        this.inner.setAttribute('cy', 0);
+        this.inner.setAttribute('r', '10');
+        this.inner.setAttribute('fill', '#fc6');
+        this.inner.style.cursor = 'grabbing';
+
+		
+        const tel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        tel.setAttribute('x',0);
+        tel.setAttribute('y', '90');
+        tel.setAttribute('fill', '#888');
+		tel.textContent=name;
+		tel.setAttribute('text-anchor','middle');
+						
+        this.svg.appendChild(this.inner);
+        this.svg.appendChild(outer);
+        this.svg.appendChild(tel);
+        document.getElementById('tracksContainer').appendChild(this.svg);
+    }
+
+    createBitMarkers() {
+        const bitWidth = 36;
+        const bitHeight = 18;
+        
+        for(let i = 0; i < 16; i++) {
+            const angle = i * 22.5;
+            const rad = angle * Math.PI / 180;
+            const x = Math.cos(rad) * (this.outerRadius + 22);
+            const y = Math.sin(rad) * (this.outerRadius + 22);
+            
+            const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+            rect.setAttribute('class', 'bit-rect');
+            rect.setAttribute('width', bitWidth);
+            rect.setAttribute('height', bitHeight);
+            rect.setAttribute('x', -bitWidth/2);
+            rect.setAttribute('y', -bitHeight/2);
+            rect.setAttribute('transform', `rotate(${angle} ${x} ${y}) translate(${x} ${y})`);
+            rect.setAttribute('fill', '#444');
+            
+            this.svg.insertBefore(rect, this.inner);
+            this.bitRects.push(rect);
+        }
+    }
+
+    updateBitColors(bitsArray) {
+        this.bitRects.forEach((rect, index) => {
+            rect.setAttribute('fill', bitsArray[index] ? '#fc6' : '#444');
+            rect.setAttribute('filter', bitsArray[index] ? 'drop-shadow(0 0 7px rgba(255,180,50,.9))' : '');
+        });
+    }
+
+    updateCallback(x, y, radius) {
+        const ang = Math.atan2(y, x);
+        const r = Math.sqrt(x*x + y*y);
+        const query = [
+            radius * 16,
+            1.5 * r * Math.sin(ang) / this.outerRadius,
+            1.5 * r * Math.cos(ang) / this.outerRadius
+        ];
+        
+        const nearest = tree.nearestNeighbor(query);
+        const bits = numToList(nearest[0], nsteps);
+        this.currentPattern = bits;
+        this.updateBitColors(bits);
+    }
+
+    createHiHat() {
+        const noiseDuration = 0.5;
+        const buffer = audioContext.createBuffer(1, audioContext.sampleRate * noiseDuration, audioContext.sampleRate);
+        const channel = buffer.getChannelData(0);
+        
+        for (let i = 0; i < buffer.length; i++) {
+            channel[i] = (Math.random() * 2 - 1);
+        }
+        
+        const filter = audioContext.createBiquadFilter();
+        filter.type = 'highpass';
+        filter.frequency.value = 5000;
+        
+        return (time) => {
+            const noise = audioContext.createBufferSource();
+            noise.buffer = buffer;
+            const gainNode = audioContext.createGain();
+            gainNode.gain.setValueAtTime(0.1+Math.random()*0.2, time);
+            gainNode.gain.exponentialRampToValueAtTime(0.0001, time + noiseDuration * (0.3+Math.random()*0.3));
+            
+            noise.connect(gainNode);
+            gainNode.connect(filter);
+            filter.connect(this.dcn);
+            noise.start(time);
+            noise.stop(time + noiseDuration);
+        };
+    }
+
+	createKick() {
+		return (time) => {
+			const osc = audioContext.createOscillator();
+			const gain = audioContext.createGain();
+			const gain2 = audioContext.createGain();
+			const distortion = audioContext.createWaveShaper();
+			
+			// Create distortion curve
+			const drive = 10; // 1-5 for subtle to heavy distortion
+			const distortionCurve = new Float32Array(44100);
+			for (let i = 0; i < 44100; i++) {
+				const x = (i - 22050) / 22050;
+				distortionCurve[i] = Math.atan(drive * x) * 0.8;
+			}
+			distortion.curve = distortionCurve;
+
+			
+			osc.type = 'sine';
+			osc.frequency.setValueAtTime(120+10*Math.random(), time);
+			osc.frequency.exponentialRampToValueAtTime(40+5*Math.random(), time + 0.15);
+			
+			gain2.gain.setValueAtTime(0.3,time);
+			gain.gain.setValueAtTime(0.2+0.2*Math.random(), time);
+			gain.gain.exponentialRampToValueAtTime(0.001, time + 0.5);
+			
+			osc.connect(gain);
+			gain.connect(distortion);
+			distortion.connect(gain2);
+			gain2.connect(this.dcn);
+			osc.start(time);
+			osc.stop(time + 0.5);
+		};
+	}
+	createSnareClap() {
+
+		const noiseBuffer = audioContext.createBuffer(1, 44100 * 0.3, 44100);
+		const channel = noiseBuffer.getChannelData(0);
+		for (let i = 0; i < channel.length; i++) {
+			channel[i] = Math.random() * 2 - 1;
+		}
+
+		return function(time) {
+			// Create snare body oscillator
+			const bodyOsc = audioContext.createOscillator();
+			bodyOsc.type = 'triangle';
+			bodyOsc.frequency.value = 180;
+			
+			// Create combined filter
+			const snareFilter = audioContext.createBiquadFilter();
+			snareFilter.type = 'bandpass';
+			snareFilter.frequency.value = 800+Math.random()*200;
+			snareFilter.Q.value = 1;
+			// Snare body
+			const bodyGain = audioContext.createGain();
+			bodyOsc.frequency.setValueAtTime(120+60*Math.random(), time);
+			bodyOsc.frequency.exponentialRampToValueAtTime(100, time + 0.15);
+			bodyGain.gain.setValueAtTime(0.3+0.3*Math.random(), time);
+			bodyGain.gain.exponentialRampToValueAtTime(0.001, time + 0.2);
+			
+
+			// Create 3 staggered claps
+			[0].forEach(offset => {
+				const clap = audioContext.createBufferSource();
+				clap.buffer = noiseBuffer;
+				const gain = audioContext.createGain();
+				gain.gain.setValueAtTime(0.5+Math.random()*0.5, time + offset);
+				gain.gain.exponentialRampToValueAtTime(0.001, time + 0.2 + offset);
+				
+				clap.connect(gain)
+				//	.connect(snareFilter)
+					.connect(this.dcn);
+				clap.start(time + offset);
+			});
+
+			bodyOsc.connect(bodyGain)
+				.connect(snareFilter)
+				.connect(this.dcn);
+			bodyOsc.start(time);
+			bodyOsc.stop(time + 0.2);
+		};
+	}
+
+	createClaveShaker() {
+		const noiseBuffer = audioContext.createBuffer(1, 44100 * 0.2, 44100);
+		const channel = noiseBuffer.getChannelData(0);
+		for (let i = 0; i < channel.length; i++) {
+			channel[i] = Math.random() * 2 - 1;
+		}
+
+		// Create filters
+		const highPass = audioContext.createBiquadFilter();
+		highPass.type = 'highpass';
+		highPass.frequency.value = 500;
+
+		return function(time) {
+
+			const freq = 3000+50*Math.random();
+			const clickOsc = audioContext.createOscillator();
+			clickOsc.type = 'sine';
+			clickOsc.frequency.setValueAtTime(freq, time-0.1);
+
+			const clickOsc2 = audioContext.createOscillator();
+			clickOsc2.type = 'sine';
+			clickOsc2.frequency.setValueAtTime(2.01*freq, time-0.1);
+
+			const clickOsc3 = audioContext.createOscillator();
+			clickOsc3.type = 'sine';
+			clickOsc3.frequency.setValueAtTime(2.99*freq, time-0.1);
+
+			// Shaker noise
+			const noise = audioContext.createBufferSource();
+			noise.buffer = noiseBuffer;
+			
+			// Envelope
+			const env = audioContext.createGain();
+			env.gain.setValueAtTime(0.1, time);
+			env.gain.exponentialRampToValueAtTime(0.0001, time + 0.05+0.1*Math.random());
+
+			const envn = audioContext.createGain();
+			envn.gain.setValueAtTime(0.3, time);
+			envn.gain.exponentialRampToValueAtTime(0.0001, time + 0.01+0.02*Math.random());
+			
+			const env2 = audioContext.createGain();
+			env2.gain.setValueAtTime(0.2, time);
+			env2.gain.exponentialRampToValueAtTime(0.0001, time + 0.05+0.15*Math.random());
+			
+			// Envelope
+			const env3 = audioContext.createGain();
+			env3.gain.setValueAtTime(0.4, time);
+			env3.gain.exponentialRampToValueAtTime(0.0001, time + 0.01+0.05*Math.random());
+			
+			
+			noise.connect(envn)
+				.connect(highPass)
+				.connect(this.dcn);
+			
+			clickOsc.connect(env).connect(this.dcn);
+			clickOsc2.connect(env2).connect(this.dcn);
+			clickOsc3.connect(env3).connect(this.dcn);
+			
+			// Start
+			noise.start(time);
+			noise.stop(time + 0.15);
+			clickOsc.start(time);
+			clickOsc.stop(time + 0.15);
+			clickOsc2.start(time);
+			clickOsc2.stop(time + 0.15);
+			clickOsc3.start(time);
+			clickOsc3.stop(time + 0.15);
+		};
+	}
+    setupEventListeners() {
+        // Mouse events
+        this.svg.addEventListener('mousedown', (e) => this.startDrag(e));
+        document.addEventListener('mousemove', (e) => this.drag(e));
+        document.addEventListener('mouseup', () => this.endDrag());
+
+        // Touch events
+        this.svg.addEventListener('touchstart', (e) => this.startTouchDrag(e));
+        document.addEventListener('touchmove', (e) => this.handleTouchMove(e));
+        document.addEventListener('touchend', () => this.endTouchDrag());
+        document.addEventListener('touchcancel', () => this.endTouchDrag());
+
+		
+		// Mouse wheel/touch pinch for radius adjustment
+		this.svg.addEventListener('wheel', (e) => this.adjustRadiusMouse(e));
+		this.svg.addEventListener('touchmove', (e)=> this.handlePinch(e));
+    }
+
+
+	// Pinch-to-zoom radius adjustment
+	handlePinch(event) {
+		if ((event.touches.length === 2)) {
+			event.preventDefault();
+			const t1 = event.touches[0];
+			const t2 = event.touches[1];
+			const currentDistance = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
+			
+			if (!this.initialPinchDistance) {
+				this.initialPinchDistance = currentDistance;
+				return;
+			}
+			const delta = (currentDistance - this.initialPinchDistance) * 0.5;
+			this.adjustRadius({ deltaY: -delta, preventDefault: () => {} });
+			this.initialPinchDistance = currentDistance;
+		} else {
+			this.initialPinchDistance = null;
+		}
+	}
+
+	
+
+	adjustRadius(event)
+	{
+		event.preventDefault();
+		const delta = (event.deltaMode === 1) ? event.deltaY * 16 : event.deltaY;
+		this.currentRadius = Math.min(Math.max(this.currentRadius - delta * 0.5, 10), this.outerRadius - 1);
+		
+		this.inner.setAttribute('r', this.currentRadius);
+		const cx = parseFloat(this.inner.getAttribute('cx'));
+		const cy = parseFloat(this.inner.getAttribute('cy'));
+		const constrained = this.constrainPosition(cx, cy, this.currentRadius);
+		this.inner.setAttribute('cx', constrained.x);
+		this.inner.setAttribute('cy', constrained.y);
+		this.updateCallback(constrained.x, constrained.y, (this.currentRadius-10)/(this.outerRadius-10));
+	}
+
+	// Convert mouse coordinates to SVG coordinate system
+	getSVGPoint(event) {
+		const pt = this.svg.createSVGPoint();
+		pt.x = event.clientX;
+		pt.y = event.clientY;
+		return pt.matrixTransform(this.svg.getScreenCTM().inverse());
+	}
+
+	getSVGPointFromTouch(touch) {
+		const pt = this.svg.createSVGPoint();
+		pt.x = touch.clientX;
+		pt.y = touch.clientY;
+		return pt.matrixTransform(this.svg.getScreenCTM().inverse());
+	}
+	startTouchDrag(event) {
+		event.preventDefault();
+		if (event.touches.length === 1) {
+			const touch = event.touches[0];
+			this.touchId = touch.identifier;
+			const pt = this.getSVGPointFromTouch(touch);
+			startX = pt.x - parseFloat(this.inner.getAttribute('cx'));
+			startY = pt.y - parseFloat(this.inner.getAttribute('cy'));
+			this.isDragging = true;
+		}
+	}
+
+	handleTouchMove(event) {
+		if (!this.isDragging) return;
+		event.preventDefault();
+		
+		const touch = Array.from(event.touches).find(t => t.identifier === this.touchId);
+		if (!touch) return;
+		
+		const pt = this.getSVGPointFromTouch(touch);
+		let newX = pt.x - startX;
+		let newY = pt.y - startY;
+		
+		const constrained = this.constrainPosition(newX, newY, this.currentRadius);
+		this.inner.setAttribute('cx', constrained.x);
+		this.inner.setAttribute('cy', constrained.y);
+		this.updateCallback(constrained.x, constrained.y, (this.currentRadius-10)/(this.outerRadius-10));
+	}
+
+	endTouchDrag() {
+		this.isDragging = false;
+		this.touchId = null;
+	}
+	
+	startDrag(event) {
+		this.isDragging = true;
+		const pt = this.getSVGPoint(event);
+		startX = pt.x - parseFloat(this.inner.getAttribute('cx'));
+		startY = pt.y - parseFloat(this.inner.getAttribute('cy'));
+	}
+
+	drag(event) {
+		if (!this.isDragging) return;
+		const pt = this.getSVGPoint(event);
+		let newX = pt.x - startX;
+		let newY = pt.y - startY;
+		
+		// Apply constraints
+		const constrained = this.constrainPosition(newX, newY, this.currentRadius);
+		this.inner.setAttribute('cx', constrained.x);
+		this.inner.setAttribute('cy', constrained.y);
+		
+		// Trigger callback with raw values
+		this.updateCallback(constrained.x, constrained.y, (this.currentRadius-10)/(this.outerRadius-10));
+	}
+
+	endDrag() {
+		this.isDragging = false;
+	}
+	constrainPosition(x, y, radius) {
+		const maxDistance = this.outerRadius - radius;
+		const distance = Math.sqrt(x*x + y*y);
+		
+		if (distance > maxDistance) {
+			const scale = maxDistance / distance;
+			return {
+				x: x * scale,
+				y: y * scale
+			};
+		}
+		return {x, y};
+	}
+
+	
+	adjustRadiusMouse(event) {
+		event.preventDefault();
+		const delta = Math.sign(event.deltaY) * -0.05;
+		this.currentRadius = Math.min(Math.max(this.currentRadius + delta * this.outerRadius, 10), this.outerRadius - 1);
+
+		// Update inner circle radius
+		this.inner.setAttribute('r', this.currentRadius);
+		
+		// Constrain position with new radius
+		const cx = parseFloat(this.inner.getAttribute('cx'));
+		const cy = parseFloat(this.inner.getAttribute('cy'));
+		const constrained = this.constrainPosition(cx, cy, this.currentRadius);
+		this.inner.setAttribute('cx', constrained.x);
+		this.inner.setAttribute('cy', constrained.y);
+		
+		// Trigger callback
+		this.updateCallback(constrained.x, constrained.y, (this.currentRadius-10)/(this.outerRadius-10));
+	}
+
+
+	updateStepIndicator(step) {
+		this.bitRects.forEach((rect, index) => {
+			let f = rect.getAttribute('fill');
+			
+			if (index==step)
+			{
+				if (f == '#fc6')
+				{
+					rect.setAttribute('fill','#fff');
+					rect.setAttribute('filter', 'drop-shadow( 0px 0px 15px rgba(255, 255,255, .9))');
+				}
+				else if (f == '#444')
+				{
+					rect.setAttribute('fill','#555');
+				}
+			}
+			else
+			{
+				if (f == '#fff')
+				{
+					rect.setAttribute('fill','#fc6');
+					rect.setAttribute('filter', 'drop-shadow( 0px 0px 7px rgba(255, 180, 50, .9))');
+				}
+				else if (f == '#555')
+				{
+					rect.setAttribute('fill','#444');
+				}
+			}	
+		});
+	}
+}
+
+
+document.getElementById('playButton').addEventListener('click', () => {
+    if (!isPlaying) {
+        if (audioContext.state === 'suspended') audioContext.resume();
+        isPlaying = true;
+          nextNoteTime = audioContext.currentTime;
+		  document.getElementById('playButton').innerHTML='Stop';
+        scheduler();
+    } else {
+        isPlaying = false;
+		  document.getElementById('playButton').innerHTML='Play';
+    }
+});
+
+
+function scheduler() {
+    if (!isPlaying) return;
+    
+    const tempo = parseInt(document.getElementById('tempo').value);
+    const swing = parseInt(document.getElementById('swing').value) / 200;
+    const stepDuration = 60 / tempo / 4;
+    
+    while (nextNoteTime < audioContext.currentTime + 0.1) {
+        const swingOffset = (currentStep % 2) ? swing * stepDuration : 0;
+        
+        tracks.forEach(track => {
+            if (track.currentPattern[currentStep]) {
+                track.soundGenerator(nextNoteTime + swingOffset);
+            }
+            track.updateStepIndicator(currentStep);
+        });
+        
+        currentStep = (currentStep + 1) % 16;
+        nextNoteTime += stepDuration;
+    }
+    requestAnimationFrame(scheduler);
+}
+
+// Initialize first track
+tracks.push(new Track(0,'Hat'));
+tracks.push(new Track(1,'Kick'));
+tracks.push(new Track(2,'Snare'));
+tracks.push(new Track(3,'Bell'));
+tracks[0].setAsHiHat();
+tracks[1].setAsKick();
+tracks[2].setAsSnareClap();
+tracks[3].setAsClaveShaker();
+var siteWidth = 640;
+var scale = screen.width /siteWidth;
+
+document.querySelector('meta[name="viewport"]').setAttribute('content', 'width='+siteWidth+', initial-scale='+scale+'');
+  </script>
+</body>
+</html>
