@@ -315,8 +315,11 @@ class DrumMachine {
         const steps = this.getStepsForTimeSignature(this.currentTimeSignature);
         this.currentStep = 0;
 
+        // Cancel any existing scheduled events before creating new ones
+        Tone.Transport.cancel();
+
         // Create a single loop for all drums
-        Tone.Transport.scheduleRepeat((time) => {
+        this.scheduledEvent = Tone.Transport.scheduleRepeat((time) => {
             // Update visual feedback
             this.updateStepHighlight(this.currentStep);
             
@@ -347,6 +350,7 @@ class DrumMachine {
         if (!this.isPlaying) return;
 
         Tone.Transport.pause();
+        // Don't cancel the scheduled event, just pause it
         this.isPlaying = false;
         this.playPauseButton.textContent = 'Play';
     }
@@ -356,6 +360,7 @@ class DrumMachine {
 
         Tone.Transport.stop();
         Tone.Transport.cancel();
+        this.scheduledEvent = null;  // Clear the reference to the scheduled event
         this.isPlaying = false;
         this.currentStep = 0;
         this.playPauseButton.textContent = 'Play';
