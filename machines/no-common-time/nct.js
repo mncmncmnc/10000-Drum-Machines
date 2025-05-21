@@ -7,6 +7,7 @@ class DrumMachine {
         this.currentSound = 'drum1';
         this.isPainting = false;  // Add painting state
         this.paintValue = false;  // Track whether we're painting on or off
+        this.scheduledEventId = null;  // Add this line to track the scheduled event
         this.sequences = {
             drum1: new Set(),
             drum2: new Set(),
@@ -313,33 +314,36 @@ class DrumMachine {
         Tone.Transport.bpm.value = this.bpm;
         
         const steps = this.getStepsForTimeSignature(this.currentTimeSignature);
-        this.currentStep = 0;
+        
+        // Only reset currentStep and recreate scheduled event if we're starting fresh
+        if (Tone.Transport.state === 'stopped') {
+            this.currentStep = 0;
+            // Cancel any existing scheduled events before creating new ones
+            Tone.Transport.cancel();
 
-        // Cancel any existing scheduled events before creating new ones
-        Tone.Transport.cancel();
+            // Create a single loop for all drums
+            Tone.Transport.scheduleRepeat((time) => {
+                // Update visual feedback
+                this.updateStepHighlight(this.currentStep);
+                
+                // Trigger sounds based on sequence
+                if (this.sequences.drum1.has(this.currentStep)) {
+                    this.bassDrum.triggerAttackRelease("C1", "16n", time);
+                }
+                if (this.sequences.drum2.has(this.currentStep)) {
+                    this.snare.triggerAttackRelease("16n", time);
+                }
+                if (this.sequences.drum3.has(this.currentStep)) {
+                    this.hihat.triggerAttackRelease("C6", "16n", time);
+                }
+                if (this.sequences.drum4.has(this.currentStep)) {
+                    this.shaker.triggerAttackRelease("C5", "16n", time);
+                }
 
-        // Create a single loop for all drums
-        this.scheduledEvent = Tone.Transport.scheduleRepeat((time) => {
-            // Update visual feedback
-            this.updateStepHighlight(this.currentStep);
-            
-            // Trigger sounds based on sequence
-            if (this.sequences.drum1.has(this.currentStep)) {
-                this.bassDrum.triggerAttackRelease("C1", "16n", time);
-            }
-            if (this.sequences.drum2.has(this.currentStep)) {
-                this.snare.triggerAttackRelease("16n", time);
-            }
-            if (this.sequences.drum3.has(this.currentStep)) {
-                this.hihat.triggerAttackRelease("C6", "16n", time);
-            }
-            if (this.sequences.drum4.has(this.currentStep)) {
-                this.shaker.triggerAttackRelease("C5", "16n", time);
-            }
-
-            // Move to next step
-            this.currentStep = (this.currentStep + 1) % steps;
-        }, '16n');
+                // Move to next step
+                this.currentStep = (this.currentStep + 1) % steps;
+            }, '16n');
+        }
 
         Tone.Transport.start();
         this.isPlaying = true;
@@ -359,8 +363,10 @@ class DrumMachine {
         if (!this.isPlaying) return;
 
         Tone.Transport.stop();
-        Tone.Transport.cancel();
-        this.scheduledEvent = null;  // Clear the reference to the scheduled event
+        if (this.scheduledEventId !== null) {
+            Tone.Transport.clear(this.scheduledEventId);
+            this.scheduledEventId = null;
+        }
         this.isPlaying = false;
         this.currentStep = 0;
         this.playPauseButton.textContent = 'Play';
