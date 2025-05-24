@@ -5,10 +5,18 @@
 	<link>https://10kdrummachines.com/</link>
 	<description>An ever-growing collection of web-based drum machines and sequencers</description>
 	<language>en-us</language>
-	<lastBuildDate>Tue, 20 May 2025 12:00:00 GMT</lastBuildDate>
+	<lastBuildDate>Tue, 24 May 2025 12:00:00 GMT</lastBuildDate>
 	<atom:link href="https://10kdrummachines.com/feed.xml" rel="self" type="application/rss+xml" />
 
 <!-- LIST STARTS HERE, NEWEST ITEMS GO FIRST -->
+
+	<item>
+	  <title>Famous Number Sequences Drum Machine</title>
+	  <link>https://10kdrummachines.com/machines/famous-numbers/fn.html</link>
+	  <description>A drum machine that generates rhythms based on famous mathematical number sequences</description>
+	  <pubDate>Tue, 24 May 2025 12:00:00 GMT</pubDate>
+	  <guid>https://10kdrummachines.com/machines/famous-numbers/fn.html</guid>
+	</item>
 
 	<item>
 	  <title>No Common Time</title>

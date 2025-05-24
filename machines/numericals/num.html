@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Famous Number Sequences Drum Machine</title>
+    <link rel="stylesheet" href="num.css">
+</head>
+<body>
+    <div class="container">
+        <div class="drum-tabs">
+            <div class="tab-buttons">
+                <button class="tab-button active" data-tab="drum1">Drum 1</button>
+                <button class="tab-button" data-tab="drum2">Drum 2</button>
+                <button class="tab-button" data-tab="drum3">Drum 3</button>
+                <button class="tab-button" data-tab="drum4">Drum 4</button>
+                <button class="tab-button" data-tab="drum5">Drum 5</button>
+                <button class="tab-button" data-tab="drum6">Drum 6</button>
+                <div class="nav-buttons">
+                    <button id="info-button" class="nav-button">?</button>
+                    <button id="back-button" class="nav-button">←</button>
+                </div>
+            </div>
+
+            <div class="tab-content">
+                <div class="tab-pane active" id="drum1">
+                    <div class="sequence-controls">
+                        <select class="sequence-select">
+                            <option value="">Select a sequence...</option>
+                            <option value="odd">Odd Numbers</option>
+                            <option value="even">Even Numbers</option>
+                            <option value="prime">Prime Numbers</option>
+                            <option value="fibonacci">Fibonacci Sequence</option>
+                            <option value="lucas">Lucas Numbers</option>
+                            <option value="triangular">Triangular Numbers</option>
+                            <option value="square">Square Numbers</option>
+                            <option value="cubic">Cubic Numbers</option>
+                            <option value="tetrahedral">Tetrahedral Numbers</option>
+                            <option value="pentagonal">Pentagonal Numbers</option>
+                            <option value="hexagonal">Hexagonal Numbers</option>
+                            <option value="centered-hexagonal">Centered Hexagonal Numbers</option>
+                            <option value="factorial">Factorials</option>
+                            <option value="double-factorial">Double Factorials</option>
+                            <option value="powers-of-2">Powers of 2</option>
+                            <option value="powers-of-10">Powers of 10</option>
+                            <option value="schroder">Schröder Numbers</option>
+                            <option value="look-and-say">Look-and-Say Sequence</option>
+                            <option value="sylvester">Sylvester's Sequence</option>
+                            <option value="ulam">Ulam Sequence</option>
+                            <option value="happy">Happy Numbers</option>
+                            <option value="perfect">Perfect Numbers</option>
+                            <option value="mersenne">Mersenne Primes</option>
+                            <option value="sophie-germain">Sophie Germain Primes</option>
+                            <option value="noble-gases">Atomic Numbers of Noble Gases</option>
+                            <option value="alkali-metals">Atomic Numbers of Alkali Metals</option>
+                            <option value="east-west-highways">Major East-West U.S. Interstate Highways</option>
+                            <option value="north-south-highways">Major North-South U.S. Interstate Highways</option>
+                            <option value="manhattan-6">6 Train Numbered Street Stops In Manhattan</option>
+                        </select>
+                        <select class="sound-select">
+                            <option value="bassdrumBTAAADA.WAV">Bass Drum</option>
+                            <option value="snareST0TASA.WAV">Snare Drum</option>
+                            <option value="closedhihatHHCD2.WAV">Closed Hi-Hat</option>
+                            <option value="openhihatHHOD2.WAV">Open Hi-Hat</option>
+                            <option value="rideRIDED4.WAV">Ride Cymbal</option>
+                            <option value="crashCSHD2.WAV">Crash Cymbal</option>
+                            <option value="rimRIM63.WAV">Rim Shot</option>
+                            <option value="handclapHANDCLP2.WAV">Hand Clap</option>
+                        </select>
+                        <button class="learn-more">LEARN MORE ABOUT THIS SEQUENCE</button>
+                    </div>
+                    <div class="sequence-display"></div>
+                </div>
+                <div class="tab-pane" id="drum2">
+                    <div class="sequence-controls">
+                        <select class="sequence-select">
+                            <option value="">Select a sequence...</option>
+                            <option value="odd">Odd Numbers</option>
+                            <option value="even">Even Numbers</option>
+                            <option value="prime">Prime Numbers</option>
+                            <option value="fibonacci">Fibonacci Sequence</option>
+                            <option value="lucas">Lucas Numbers</option>
+                            <option value="triangular">Triangular Numbers</option>
+                            <option value="square">Square Numbers</option>
+                            <option value="cubic">Cubic Numbers</option>
+                            <option value="tetrahedral">Tetrahedral Numbers</option>
+                            <option value="pentagonal">Pentagonal Numbers</option>
+                            <option value="hexagonal">Hexagonal Numbers</option>
+                            <option value="centered-hexagonal">Centered Hexagonal Numbers</option>
+                            <option value="factorial">Factorials</option>
+                            <option value="double-factorial">Double Factorials</option>
+                            <option value="powers-of-2">Powers of 2</option>
+                            <option value="powers-of-10">Powers of 10</option>
+                            <option value="schroder">Schröder Numbers</option>
+                            <option value="look-and-say">Look-and-Say Sequence</option>
+                            <option value="sylvester">Sylvester's Sequence</option>
+                            <option value="ulam">Ulam Sequence</option>
+                            <option value="happy">Happy Numbers</option>
+                            <option value="perfect">Perfect Numbers</option>
+                            <option value="mersenne">Mersenne Primes</option>
+                            <option value="sophie-germain">Sophie Germain Primes</option>
+                            <option value="noble-gases">Atomic Numbers of Noble Gases</option>
+                            <option value="alkali-metals">Atomic Numbers of Alkali Metals</option>
+                            <option value="east-west-highways">Major East-West U.S. Interstate Highways</option>
+                            <option value="north-south-highways">Major North-South U.S. Interstate Highways</option>
+                            <option value="manhattan-6">6 Train Numbered Street Stops In Manhattan</option>
+                        </select>
+                        <select class="sound-select">
+                            <option value="snareST0TASA.WAV">Snare Drum</option>
+                            <option value="bassdrumBTAAADA.WAV">Bass Drum</option>
+                            <option value="closedhihatHHCD2.WAV">Closed Hi-Hat</option>
+                            <option value="openhihatHHOD2.WAV">Open Hi-Hat</option>
+                            <option value="rideRIDED4.WAV">Ride Cymbal</option>
+                            <option value="crashCSHD2.WAV">Crash Cymbal</option>
+                            <option value="rimRIM63.WAV">Rim Shot</option>
+                            <option value="handclapHANDCLP2.WAV">Hand Clap</option>
+                        </select>
+                        <button class="learn-more">LEARN MORE ABOUT THIS SEQUENCE</button>
+                    </div>
+                    <div class="sequence-display"></div>
+                </div>
+                <div class="tab-pane" id="drum3">
+                    <div class="sequence-controls">
+                        <select class="sequence-select">
+                            <option value="">Select a sequence...</option>
+                            <option value="odd">Odd Numbers</option>
+                            <option value="even">Even Numbers</option>
+                            <option value="prime">Prime Numbers</option>
+                            <option value="fibonacci">Fibonacci Sequence</option>
+                            <option value="lucas">Lucas Numbers</option>
+                            <option value="triangular">Triangular Numbers</option>
+                            <option value="square">Square Numbers</option>
+                            <option value="cubic">Cubic Numbers</option>
+                            <option value="tetrahedral">Tetrahedral Numbers</option>
+                            <option value="pentagonal">Pentagonal Numbers</option>
+                            <option value="hexagonal">Hexagonal Numbers</option>
+                            <option value="centered-hexagonal">Centered Hexagonal Numbers</option>
+                            <option value="factorial">Factorials</option>
+                            <option value="double-factorial">Double Factorials</option>
+                            <option value="powers-of-2">Powers of 2</option>
+                            <option value="powers-of-10">Powers of 10</option>
+                            <option value="schroder">Schröder Numbers</option>
+                            <option value="look-and-say">Look-and-Say Sequence</option>
+                            <option value="sylvester">Sylvester's Sequence</option>
+                            <option value="ulam">Ulam Sequence</option>
+                            <option value="happy">Happy Numbers</option>
+                            <option value="perfect">Perfect Numbers</option>
+                            <option value="mersenne">Mersenne Primes</option>
+                            <option value="sophie-germain">Sophie Germain Primes</option>
+                            <option value="noble-gases">Atomic Numbers of Noble Gases</option>
+                            <option value="alkali-metals">Atomic Numbers of Alkali Metals</option>
+                            <option value="east-west-highways">Major East-West U.S. Interstate Highways</option>
+                            <option value="north-south-highways">Major North-South U.S. Interstate Highways</option>
+                            <option value="manhattan-6">6 Train Numbered Street Stops In Manhattan</option>
+                        </select>
+                        <select class="sound-select">
+                            <option value="closedhihatHHCD2.WAV">Closed Hi-Hat</option>
+                            <option value="bassdrumBTAAADA.WAV">Bass Drum</option>
+                            <option value="snareST0TASA.WAV">Snare Drum</option>
+                            <option value="openhihatHHOD2.WAV">Open Hi-Hat</option>
+                            <option value="rideRIDED4.WAV">Ride Cymbal</option>
+                            <option value="crashCSHD2.WAV">Crash Cymbal</option>
+                            <option value="rimRIM63.WAV">Rim Shot</option>
+                            <option value="handclapHANDCLP2.WAV">Hand Clap</option>
+                        </select>
+                        <button class="learn-more">LEARN MORE ABOUT THIS SEQUENCE</button>
+                    </div>
+                    <div class="sequence-display"></div>
+                </div>
+                <div class="tab-pane" id="drum4">
+                    <div class="sequence-controls">
+                        <select class="sequence-select">
+                            <option value="">Select a sequence...</option>
+                            <option value="odd">Odd Numbers</option>
+                            <option value="even">Even Numbers</option>
+                            <option value="prime">Prime Numbers</option>
+                            <option value="fibonacci">Fibonacci Sequence</option>
+                            <option value="lucas">Lucas Numbers</option>
+                            <option value="triangular">Triangular Numbers</option>
+                            <option value="square">Square Numbers</option>
+                            <option value="cubic">Cubic Numbers</option>
+                            <option value="tetrahedral">Tetrahedral Numbers</option>
+                            <option value="pentagonal">Pentagonal Numbers</option>
+                            <option value="hexagonal">Hexagonal Numbers</option>
+                            <option value="centered-hexagonal">Centered Hexagonal Numbers</option>
+                            <option value="factorial">Factorials</option>
+                            <option value="double-factorial">Double Factorials</option>
+                            <option value="powers-of-2">Powers of 2</option>
+                            <option value="powers-of-10">Powers of 10</option>
+                            <option value="schroder">Schröder Numbers</option>
+                            <option value="look-and-say">Look-and-Say Sequence</option>
+                            <option value="sylvester">Sylvester's Sequence</option>
+                            <option value="ulam">Ulam Sequence</option>
+                            <option value="happy">Happy Numbers</option>
+                            <option value="perfect">Perfect Numbers</option>
+                            <option value="mersenne">Mersenne Primes</option>
+                            <option value="sophie-germain">Sophie Germain Primes</option>
+                            <option value="noble-gases">Atomic Numbers of Noble Gases</option>
+                            <option value="alkali-metals">Atomic Numbers of Alkali Metals</option>
+                            <option value="east-west-highways">Major East-West U.S. Interstate Highways</option>
+                            <option value="north-south-highways">Major North-South U.S. Interstate Highways</option>
+                            <option value="manhattan-6">6 Train Numbered Street Stops In Manhattan</option>
+                        </select>
+                        <select class="sound-select">
+                            <option value="openhihatHHOD2.WAV">Open Hi-Hat</option>
+                            <option value="bassdrumBTAAADA.WAV">Bass Drum</option>
+                            <option value="snareST0TASA.WAV">Snare Drum</option>
+                            <option value="closedhihatHHCD2.WAV">Closed Hi-Hat</option>
+                            <option value="rideRIDED4.WAV">Ride Cymbal</option>
+                            <option value="crashCSHD2.WAV">Crash Cymbal</option>
+                            <option value="rimRIM63.WAV">Rim Shot</option>
+                            <option value="handclapHANDCLP2.WAV">Hand Clap</option>
+                        </select>
+                        <button class="learn-more">LEARN MORE ABOUT THIS SEQUENCE</button>
+                    </div>
+                    <div class="sequence-display"></div>
+                </div>
+                <div class="tab-pane" id="drum5">
+                    <div class="sequence-controls">
+                        <select class="sequence-select">
+                            <option value="">Select a sequence...</option>
+                            <option value="odd">Odd Numbers</option>
+                            <option value="even">Even Numbers</option>
+                            <option value="prime">Prime Numbers</option>
+                            <option value="fibonacci">Fibonacci Sequence</option>
+                            <option value="lucas">Lucas Numbers</option>
+                            <option value="triangular">Triangular Numbers</option>
+                            <option value="square">Square Numbers</option>
+                            <option value="cubic">Cubic Numbers</option>
+                            <option value="tetrahedral">Tetrahedral Numbers</option>
+                            <option value="pentagonal">Pentagonal Numbers</option>
+                            <option value="hexagonal">Hexagonal Numbers</option>
+                            <option value="centered-hexagonal">Centered Hexagonal Numbers</option>
+                            <option value="factorial">Factorials</option>
+                            <option value="double-factorial">Double Factorials</option>
+                            <option value="powers-of-2">Powers of 2</option>
+                            <option value="powers-of-10">Powers of 10</option>
+                            <option value="schroder">Schröder Numbers</option>
+                            <option value="look-and-say">Look-and-Say Sequence</option>
+                            <option value="sylvester">Sylvester's Sequence</option>
+                            <option value="ulam">Ulam Sequence</option>
+                            <option value="happy">Happy Numbers</option>
+                            <option value="perfect">Perfect Numbers</option>
+                            <option value="mersenne">Mersenne Primes</option>
+                            <option value="sophie-germain">Sophie Germain Primes</option>
+                            <option value="noble-gases">Atomic Numbers of Noble Gases</option>
+                            <option value="alkali-metals">Atomic Numbers of Alkali Metals</option>
+                            <option value="east-west-highways">Major East-West U.S. Interstate Highways</option>
+                            <option value="north-south-highways">Major North-South U.S. Interstate Highways</option>
+                            <option value="manhattan-6">6 Train Numbered Street Stops In Manhattan</option>
+                        </select>
+                        <select class="sound-select">
+                            <option value="handclapHANDCLP2.WAV">Hand Clap</option>
+                            <option value="bassdrumBTAAADA.WAV">Bass Drum</option>
+                            <option value="snareST0TASA.WAV">Snare Drum</option>
+                            <option value="closedhihatHHCD2.WAV">Closed Hi-Hat</option>
+                            <option value="openhihatHHOD2.WAV">Open Hi-Hat</option>
+                            <option value="rideRIDED4.WAV">Ride Cymbal</option>
+                            <option value="crashCSHD2.WAV">Crash Cymbal</option>
+                            <option value="rimRIM63.WAV">Rim Shot</option>
+                        </select>
+                        <button class="learn-more">LEARN MORE ABOUT THIS SEQUENCE</button>
+                    </div>
+                    <div class="sequence-display"></div>
+                </div>
+                <div class="tab-pane" id="drum6">
+                    <div class="sequence-controls">
+                        <select class="sequence-select">
+                            <option value="">Select a sequence...</option>
+                            <option value="odd">Odd Numbers</option>
+                            <option value="even">Even Numbers</option>
+                            <option value="prime">Prime Numbers</option>
+                            <option value="fibonacci">Fibonacci Sequence</option>
+                            <option value="lucas">Lucas Numbers</option>
+                            <option value="triangular">Triangular Numbers</option>
+                            <option value="square">Square Numbers</option>
+                            <option value="cubic">Cubic Numbers</option>
+                            <option value="tetrahedral">Tetrahedral Numbers</option>
+                            <option value="pentagonal">Pentagonal Numbers</option>
+                            <option value="hexagonal">Hexagonal Numbers</option>
+                            <option value="centered-hexagonal">Centered Hexagonal Numbers</option>
+                            <option value="factorial">Factorials</option>
+                            <option value="double-factorial">Double Factorials</option>
+                            <option value="powers-of-2">Powers of 2</option>
+                            <option value="powers-of-10">Powers of 10</option>
+                            <option value="schroder">Schröder Numbers</option>
+                            <option value="look-and-say">Look-and-Say Sequence</option>
+                            <option value="sylvester">Sylvester's Sequence</option>
+                            <option value="ulam">Ulam Sequence</option>
+                            <option value="happy">Happy Numbers</option>
+                            <option value="perfect">Perfect Numbers</option>
+                            <option value="mersenne">Mersenne Primes</option>
+                            <option value="sophie-germain">Sophie Germain Primes</option>
+                            <option value="noble-gases">Atomic Numbers of Noble Gases</option>
+                            <option value="alkali-metals">Atomic Numbers of Alkali Metals</option>
+                            <option value="east-west-highways">Major East-West U.S. Interstate Highways</option>
+                            <option value="north-south-highways">Major North-South U.S. Interstate Highways</option>
+                            <option value="manhattan-6">6 Train Numbered Street Stops In Manhattan</option>
+                        </select>
+                        <select class="sound-select">
+                            <option value="rimRIM63.WAV">Rim Shot</option>
+                            <option value="bassdrumBTAAADA.WAV">Bass Drum</option>
+                            <option value="snareST0TASA.WAV">Snare Drum</option>
+                            <option value="closedhihatHHCD2.WAV">Closed Hi-Hat</option>
+                            <option value="openhihatHHOD2.WAV">Open Hi-Hat</option>
+                            <option value="rideRIDED4.WAV">Ride Cymbal</option>
+                            <option value="crashCSHD2.WAV">Crash Cymbal</option>
+                            <option value="handclapHANDCLP2.WAV">Hand Clap</option>
+                        </select>
+                        <button class="learn-more">LEARN MORE ABOUT THIS SEQUENCE</button>
+                    </div>
+                    <div class="sequence-display"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="global-controls">
+            <div class="control-group">
+                <button id="play-pause" class="play-pause-button">PLAY</button>
+            </div>
+            <div class="control-group">
+                <label for="sequence-length">Sequence Length (4-128):</label>
+                <input type="number" id="sequence-length" min="4" max="128" value="128">
+            </div>
+            <div class="control-group">
+                <label for="bpm">BPM:</label>
+                <input type="number" id="bpm" min="30" max="300" value="120">
+            </div>
+            <div class="control-group">
+                <label for="show-step-numbers">Show Step Numbers:</label>
+                <input type="checkbox" id="show-step-numbers" checked>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="info-modal">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <div class="modal-body">
+                <br>
+                <p>This drum machine uses a variety of famous number sequences to generate patterns.</p> 
+                <br>
+                <p>Instead of toggling individual steps, pick a sequence for each sound, try different combinations, and modify the overall sequence length to create interesting rhythms.</p>
+                <br>
+                <p>If you are a mathematician, and I got something wrong, please let <a href="https://maxy.world/">me</a> know! And if you are a mathematician (or not) and want to make a drum machine, we would love to have you as part of the <a href="https://10kdrummachines.com/">10,000 Drum Machines project</a>.
+                <br>
+            </div>
+        </div>
+    </div>
+
+    <script src="num.js"></script>
+</body>
+</html> 
