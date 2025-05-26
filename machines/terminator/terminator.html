@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminator Drum Machine</title>
+    <!-- Load Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Optional: Add OrbitControls for camera manipulation -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <link href="terminator.css" rel="stylesheet">
+</head>
+<body>
+    <div class="top-right-controls">
+        <button class="info-button">?</button>
+        <a href="https://10kdrummachines.com/" class="back-button">←</a>
+    </div>
+    <div id="globeContainer"></div>
+    <div id="controls">
+        <div class="controls-container">
+            <div class="control-group">
+                <label for="rotationSpeed">Rotation Speed:</label>
+                <input type="range" id="rotationSpeed" min="0.1" max="30000" value="1" step="100">
+                <span id="speedValue">1x</span>
+            </div>
+            <div class="control-group">
+                <label for="cityInput">Enter City Name:</label>
+                <input type="text" id="cityInput" placeholder="Enter city name" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+            </div>
+            <div class="control-group toggle-group">
+                <div class="toggle-item">
+                    <input type="checkbox" id="nightToggle" checked>
+                    <label for="nightToggle">Day/Night Lights</label>
+                </div>
+                <div class="toggle-item">
+                    <input type="checkbox" id="cloudsToggle" checked>
+                    <label for="cloudsToggle">Atmosphere</label>
+                </div>
+                <div class="toggle-item">
+                    <input type="checkbox" id="terminatorToggle" checked>
+                    <label for="terminatorToggle">Terminator</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="city-list-container">
+        <button id="toggleCityList" class="toggle-button">Show Cities ▼</button>
+        <div id="cityList" class="collapsed"></div>
+    </div>
+
+    <!-- Modal content template -->
+    <div id="modalContent" style="display: none;">
+        <p>Select cities on the rotating Earth. When a pinned city passes through <a href="https://en.wikipedia.org/wiki/Terminator_(solar)"target="_blank">the terminator</a> into daylight, it will trigger an assignable sound. Change the multiplier of the Earth's rotation to speed up or slow down the pattern.</p>
+        <p>This drum machine was inspired by the time spent watching <a href="https://eol.jsc.nasa.gov/esrs/hdev/" target="_blank">NASA's HDEV project</a>, the fictional Mercurian city of Terminator as imagined Kim Stanley Robinson in <i><a href="https://en.wikipedia.org/wiki/2312_(novel)"target="_blank">2312</a></i>, and my childhood love affair with <a href="https://en.wikipedia.org/wiki/Bryce_(software)"target="_blank">Bryce3D</a>.</p>
+        <p>City latitudes and longitudes were sourced from <a href="https://www.geonames.org/"target="_blank">GeoNames</a>. The Earth model was created from <a href="https://threejs.org/">three.js</a> by riffing on this <a href="https://threejs-journey.com/lessons/earth-shaders"target="_blank">example</a> and stealing from Mr. Doob's <a href="https://threejs.org/examples/?q=earth#webgpu_tsl_earth"target="blank">reimagining</a>. Earth textures are from <a href="https://www.solarsystemscope.com/textures/"target="_blank">Solar System Scope</a>. The drum sounds are from me plundering random forgotten corners of my DAW.</p>
+        <p>This is part of the <a href="https://10kdrummachines.com/">10,000 Drum Machines project</a>. Please reach out if you ever want to contribute a drum machine!</p>
+       
+    </div>
+
+    <!-- Load our script -->
+    <script src="terminator.js"></script>
+</body>
+</html> 

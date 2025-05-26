@@ -5,16 +5,23 @@
 	<link>https://10kdrummachines.com/</link>
 	<description>An ever-growing collection of web-based drum machines and sequencers</description>
 	<language>en-us</language>
-	<lastBuildDate>Tue, 24 May 2025 12:00:00 GMT</lastBuildDate>
+	<lastBuildDate>Sun, 25 May 2025 22:00:00 GMT</lastBuildDate>
 	<atom:link href="https://10kdrummachines.com/feed.xml" rel="self" type="application/rss+xml" />
 
 <!-- LIST STARTS HERE, NEWEST ITEMS GO FIRST -->
-
+	<item>
+	  <title>Terminator</title>
+	  <link>https://10kdrummachines.com/machines/terminator/terminator.html</link>
+	  <description>A drum machine based on cities rotating into daylight</description>
+	  <pubDate>Sun, 25 May 2025 22:00:00 GMT</pubDate>
+	  <guid>https://10kdrummachines.com/machines/terminator/terminator.html</guid>
+	</item>
+	
 	<item>
 	  <title>Famous Number Sequences Drum Machine</title>
 	  <link>https://10kdrummachines.com/machines/famous-numbers/fn.html</link>
 	  <description>A drum machine that generates rhythms based on famous mathematical number sequences</description>
-	  <pubDate>Tue, 24 May 2025 12:00:00 GMT</pubDate>
+	  <pubDate>Sat, 24 May 2025 12:00:00 GMT</pubDate>
 	  <guid>https://10kdrummachines.com/machines/famous-numbers/num.html</guid>
 	</item>
 

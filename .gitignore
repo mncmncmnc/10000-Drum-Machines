@@ -1,3 +1,7 @@
 .DS_Store
 
 machines/no-common-time/notation_backup.md
+
+# Ignore source data and utility scripts
+machines/terminator/cities15000.txt
+machines/terminator/filtercities.py
