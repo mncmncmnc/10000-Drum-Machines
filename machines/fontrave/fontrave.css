@@ -1,0 +1,653 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: white;
+}
+
+.toolbar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 63px;
+    border-right: 1px solid black;
+    padding: 21px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    z-index: 10000;
+    background: white;
+    isolation: isolate;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+}
+
+.toolbar-divider {
+    width: 42px;
+    height: 0;
+    border-top: 1px solid black;
+    margin: 10.5px 0;
+    min-height: 1px;
+    flex-shrink: 0;
+}
+
+.tool {
+    position: relative;
+    width: 56px;
+    min-height: 42px;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: white;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0;
+    padding: 1px;
+    text-align: center;
+    line-height: 1.1;
+    white-space: nowrap;
+    z-index: 10001;
+}
+
+.tool svg {
+    width: 25.2px;
+    height: 25.2px;
+    pointer-events: none;
+}
+
+.tool.active {
+    background: black;
+    color: white;
+}
+
+.tool:not(.active) svg path {
+    stroke: black;
+}
+
+/* Special styling for tools with longer labels */
+#random-fonts-tool,
+#random-sequence-tool {
+    font-size: 12px;
+    padding: 1px;
+    line-height: 1.1;
+}
+
+/* Play tool styles */
+#play-tool {
+    padding: 1px;
+    line-height: 1.1;
+    font-size: 16px;
+}
+
+#play-tool.playing {
+    background: black;
+    color: white;
+}
+
+/* BPM tool styles */
+#bpm-tool {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#bpm-input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: transparent;
+    text-align: center;
+    font-size: 12px;
+    font-family: monospace;
+    padding: 0;
+    -moz-appearance: textfield;
+}
+
+#bpm-input::-webkit-outer-spin-button,
+#bpm-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Back tool styles */
+#back-tool {
+    text-decoration: none;
+    color: inherit;
+    font-size: 14px;
+    padding: 0;
+    line-height: 42px;
+}
+
+#back-tool:hover {
+    background: #f0f0f0;
+}
+
+#back-tool.active {
+    background: black;
+    color: white;
+}
+
+/* Info and Back tool styles */
+#info-tool {
+    font-size: 14px;
+    padding: 0;
+    line-height: 42px;
+}
+
+.canvas {
+    position: fixed;
+    left: 60px;
+    top: 0;
+    right: 0;
+    bottom: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateX(-30px);
+}
+
+.text-container {
+    position: absolute;
+    display: inline-block;
+    border: 1px solid transparent;
+    user-select: none;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    min-height: 0;
+    cursor: default;
+    z-index: 1;
+    perspective: 1000px;
+    transform: translate(-50%, -50%);
+}
+
+.text-container.selected {
+    border-color: black;
+}
+
+/* Show dashed border when pan tool is active */
+body:has(#pan-tool.active) .text-container.selected {
+    border-style: dashed;
+}
+
+/* Show dotted border when distort tool is active */
+body:has(#distort-tool.active) .text-container.selected {
+    border-style: dotted;
+}
+
+/* Show solid border for other tools */
+body:has(#resize-tool.active) .text-container.selected,
+body:has(#sequence-tool.active) .text-container.selected {
+    border-style: solid;
+}
+
+/* Show resize handles when resize or distort tool is active */
+body:has(#resize-tool.active) .text-container.selected .resize-handle,
+body:has(#distort-tool.active) .text-container.selected .resize-handle {
+    display: block;
+}
+
+/* Show distort handles when distort tool is active */
+body:has(#distort-tool.active) .text-container.selected .distort-handle {
+    display: block;
+}
+
+.text-container.selected:not(:has(.resize-handle:hover):not(:has(.distort-handle:hover))) {
+    cursor: move;
+}
+
+.text-element {
+    font-size: 48px;
+    color: black;
+    white-space: nowrap;
+    display: inline-block;
+    transform-origin: center center;
+    will-change: transform, font-size;
+    line-height: 1;
+    padding: 0;
+    margin: 0;
+    user-select: none;
+    -webkit-user-select: none;  /* Safari */
+    -moz-user-select: none;     /* Firefox */
+    -ms-user-select: none;      /* IE/Edge */
+}
+
+.resize-handle {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: black;
+    border: 1px solid white;
+    z-index: 1000;
+    display: none;
+    touch-action: none;
+    cursor: move;
+}
+
+.resize-handle.top-left { 
+    top: -6px; 
+    left: -6px; 
+    cursor: nwse-resize; 
+}
+
+.resize-handle.top-right { 
+    top: -6px; 
+    right: -6px; 
+    cursor: nesw-resize; 
+}
+
+.resize-handle.bottom-left { 
+    bottom: -6px; 
+    left: -6px; 
+    cursor: nesw-resize; 
+}
+
+.resize-handle.bottom-right { 
+    bottom: -6px; 
+    right: -6px; 
+    cursor: nwse-resize; 
+}
+
+.distort-handle {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: white;
+    border: 1px dotted black;
+    z-index: 1000;
+    display: none;
+    touch-action: none;
+    cursor: move;
+}
+
+.distort-handle.top-left { 
+    top: -6px; 
+    left: -6px; 
+    cursor: nwse-resize; 
+}
+
+.distort-handle.top-right { 
+    top: -6px; 
+    right: -6px; 
+    cursor: nesw-resize; 
+}
+
+.distort-handle.bottom-left { 
+    bottom: -6px; 
+    left: -6px; 
+    cursor: nesw-resize; 
+}
+
+.distort-handle.bottom-right { 
+    bottom: -6px; 
+    right: -6px; 
+    cursor: nwse-resize; 
+}
+
+/* Sequencer styles */
+.sequencer-panel {
+    position: absolute;
+    left: 50%;
+    bottom: -25px;
+    transform: translateX(-50%);
+    background: transparent;
+    padding: 5px;
+    z-index: 1000;
+    transition: opacity 0.2s ease-in-out;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Show all sequencer panels when sequence tool is active */
+body:has(#sequence-tool.active) .sequencer-panel {
+    opacity: 0.6;
+    pointer-events: auto;  /* Only enable pointer-events in sequence mode */
+}
+
+/* Make selected container's sequencer panel fully visible and interactive */
+body:has(#sequence-tool.active) .text-container.selected .sequencer-panel {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Ensure steps are clickable only in sequence mode */
+body:has(#sequence-tool.active) .step {
+    pointer-events: auto;
+}
+
+.steps {
+    display: flex;
+    gap: 2px;
+    height: 15px;
+}
+
+/* Font and Echo panels should maintain their original pointer-events behavior */
+.font-panel, .echo-panel {
+    pointer-events: none;
+}
+
+body:has(#font-tool.active) .text-container.selected .font-panel,
+body:has(#echo-tool.active) .text-container.selected .echo-panel {
+    pointer-events: auto;
+}
+
+.step {
+    width: 15px;
+    height: 15px;
+    border: 1px solid black;
+    background: white;
+    cursor: pointer;
+    transition: background-color 0.1s ease;
+}
+
+/* Make steps in non-selected containers more transparent */
+body:has(#sequence-tool.active) .text-container:not(.selected) .step {
+    border-color: rgba(0, 0, 0, 0.6);
+}
+
+body:has(#sequence-tool.active) .text-container:not(.selected) .step.active {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+/* Ensure current step indicator is always visible */
+.step.current {
+    border-color: #ff0000 !important;
+    background: #ff0000 !important;
+    opacity: 1 !important;
+}
+
+.step.current.active {
+    background: #ff0000 !important;
+    border-color: #ff0000 !important;
+    opacity: 1 !important;
+}
+
+.step:hover {
+    background: #eee;
+}
+
+.step.active {
+    background: black;
+}
+
+/* Hide border when sequence tool is active */
+body:has(#sequence-tool.active) .text-container.selected {
+    border-color: transparent;
+}
+
+/* Hide border when echo tool is active */
+body:has(#echo-tool.active) .text-container.selected {
+    border-color: transparent;
+}
+
+/* Echo tool styles */
+.echo-panel {
+    position: absolute;
+    left: 50%;
+    bottom: -30px;
+    transform: translateX(-50%);
+    background: transparent;
+    padding: 5px 10px;
+    z-index: 1000;
+    transition: opacity 0.2s ease-in-out;
+    border: none;
+}
+
+.echo-panel.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.echo-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.echo-controls input[type="range"] {
+    width: 100px;
+    height: 2px;
+    -webkit-appearance: none;
+    background: black;
+    outline: none;
+}
+
+.echo-controls input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px;
+    height: 12px;
+    background: black;
+    border: 1px solid white;
+    cursor: pointer;
+}
+
+.echo-controls .echo-value {
+    font-size: 12px;
+    font-family: monospace;
+    min-width: 20px;
+    text-align: center;
+}
+
+/* Font tool styles */
+.font-panel {
+    position: absolute;
+    left: 50%;
+    bottom: -30px;
+    transform: translateX(-50%);
+    background: transparent;
+    padding: 5px 10px;
+    z-index: 1000;
+    transition: opacity 0.2s ease-in-out;
+    border: none;
+}
+
+.font-panel.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.font-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.font-select {
+    background: white;
+    border: 1px solid black;
+    padding: 2px 4px;
+    font-size: 12px;
+    cursor: pointer;
+    outline: none;
+    min-width: 150px;
+}
+
+.font-select optgroup {
+    font-weight: bold;
+    font-style: normal;
+}
+
+.font-select option {
+    font-family: inherit;
+    padding: 2px;
+}
+
+/* Hide border when font tool is active */
+body:has(#font-tool.active) .text-container.selected {
+    border-color: transparent;
+}
+
+/* Echo effect styles */
+.text-element.echo-enabled {
+    position: relative;
+}
+
+.text-element.echo-enabled::before {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: transparent;
+    z-index: -1;
+}
+
+/* Generate echo layers with different offsets and opacities using individual text-shadows */
+.text-element.echo-enabled[data-echo-layers="1"]::before {
+    text-shadow: 
+        4px 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+.text-element.echo-enabled[data-echo-layers="2"]::before {
+    text-shadow: 
+        4px 4px 0 rgba(0, 0, 0, 0.2),
+        8px 8px 0 rgba(0, 0, 0, 0.15),
+        12px 12px 0 rgba(0, 0, 0, 0.1);
+}
+
+.text-element.echo-enabled[data-echo-layers="3"]::before {
+    text-shadow: 
+        4px 4px 0 rgba(0, 0, 0, 0.2),
+        8px 8px 0 rgba(0, 0, 0, 0.15),
+        12px 12px 0 rgba(0, 0, 0, 0.1),
+        16px 16px 0 rgba(0, 0, 0, 0.05),
+        20px 20px 0 rgba(0, 0, 0, 0.025);
+}
+
+.text-element.echo-enabled[data-echo-layers="4"]::before {
+    text-shadow: 
+        4px 4px 0 rgba(0, 0, 0, 0.2),
+        8px 8px 0 rgba(0, 0, 0, 0.15),
+        12px 12px 0 rgba(0, 0, 0, 0.1),
+        16px 16px 0 rgba(0, 0, 0, 0.05),
+        20px 20px 0 rgba(0, 0, 0, 0.025),
+        24px 24px 0 rgba(0, 0, 0, 0.0125);
+}
+
+.text-element.echo-enabled[data-echo-layers="5"]::before {
+    text-shadow: 
+        4px 4px 0 rgba(0, 0, 0, 0.2),
+        8px 8px 0 rgba(0, 0, 0, 0.15),
+        12px 12px 0 rgba(0, 0, 0, 0.1),
+        16px 16px 0 rgba(0, 0, 0, 0.05),
+        20px 20px 0 rgba(0, 0, 0, 0.025),
+        24px 24px 0 rgba(0, 0, 0, 0.0125),
+        28px 28px 0 rgba(0, 0, 0, 0.00625);
+}
+
+.text-element.echo-enabled[data-echo-layers="6"]::before {
+    text-shadow: 
+        4px 4px 0 rgba(0, 0, 0, 0.2),
+        8px 8px 0 rgba(0, 0, 0, 0.15),
+        12px 12px 0 rgba(0, 0, 0, 0.1),
+        16px 16px 0 rgba(0, 0, 0, 0.05),
+        20px 20px 0 rgba(0, 0, 0, 0.025),
+        24px 24px 0 rgba(0, 0, 0, 0.0125),
+        28px 28px 0 rgba(0, 0, 0, 0.00625),
+        32px 32px 0 rgba(0, 0, 0, 0.003125);
+}
+
+/* Hide border when flip tool is active */
+body:has(#flip-tool.active) .text-container.selected {
+    border-color: transparent;
+}
+
+/* Muted state styles */
+.text-element.muted {
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
+/* Hide border when mute tool is active */
+body:has(#mute-tool.active) .text-container.selected {
+    border-color: transparent;
+}
+
+/* Modal styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10002;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    position: relative;
+    max-width: 80%;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.close-modal {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+}
+
+.close-modal:hover {
+    color: #000;
+}
+
+.modal-body {
+    margin-top: 20px;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/* Mobile breakpoint for phones */
+@media screen and (max-width: 480px) {
+    .canvas {
+        transform: translateX(-10px); /* Further reduce the left offset */
+        bottom: 60px; /* Give more space at bottom */
+    }
+
+    .text-container {
+        transform: translate(-50%, -50%) scale(0.45); /* Scale down text containers more aggressively */
+    }
+
+    /* Adjust sequencer panel position for mobile */
+    .sequencer-panel {
+        bottom: -15px; /* Move up more */
+    }
+
+    /* Adjust echo and font panels for mobile */
+    .echo-panel,
+    .font-panel {
+        bottom: -20px; /* Move up more */
+    }
+
+    /* Adjust text element size for mobile */
+    .text-element {
+        font-size: 36px; /* Reduce base font size */
+    }
+}
