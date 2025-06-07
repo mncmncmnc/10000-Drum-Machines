@@ -1,0 +1,11 @@
+{
+  "name": "seismic-drum",
+  "version": "1.0.0",
+  "description": "A seismic activity drum machine visualization",
+  "scripts": {
+    "dev": "npx http-server -c-1"
+  },
+  "dependencies": {
+    "http-server": "^14.1.1"
+  }
+} 

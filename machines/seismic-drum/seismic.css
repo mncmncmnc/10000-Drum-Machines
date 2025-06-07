@@ -1,0 +1,1098 @@
+/* CSS Custom Properties for ultra minimalist black and white theme */
+:root {
+    --primary-bg: #ffffff;
+    --secondary-bg: #ffffff;
+    --accent-color: #000000;
+    --text-light: #000000;
+    --text-dim: #666666;
+    --map-land: #ffffff;
+    --map-water: #ffffff;
+    --map-grid: #000000;
+    --grid-gap: 1rem;
+    --border-radius: 0px;
+    --shadow: none;
+    --glow: none;
+    --thin-border: 1px solid #000000;
+    --base-font: 0.8rem;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: monospace;
+    text-transform: uppercase;
+    font-size: var(--base-font);
+}
+
+body {
+    font-family: monospace;
+    background: #ffffff;
+    color: #000000;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.title {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 1rem;
+    font-size: 2rem;
+    font-weight: normal;
+    color: #000000;
+    margin: .25rem;
+    width: 100%;
+    border: var(--thin-border);
+}
+
+.title h1 {
+    font-size: 2rem;
+}
+
+.help {
+    display: flex;
+    font-size: 1rem;
+    justify-content: flex-end;
+    color:black;
+    text-decoration: none
+}
+
+
+
+.help h3 {
+    display: flex;
+    flex-direction: row;
+    height: 20px;
+    width: 20px;
+    justify-content: center;
+    align-items: center;
+    border: var(--thin-border);
+    
+}
+
+.help h3:hover {
+    color:white;
+    background-color: black;
+}
+
+.title h4 {
+    font-size: .5rem;
+    color: black;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    background: #ffffff;
+}
+
+.panel {
+    display: flex;
+    width: 100vw;
+    padding:.25rem;
+    flex-direction: row;
+}
+
+.playback-controls {
+    display: flex;
+    flex-direction: column;
+    padding: .25rem;
+    width: 25%;
+    gap:.25rem;
+    justify-content: space-between;
+}
+
+ .monitors {
+    flex-direction: row;
+    width:100%;
+    height:100%;
+    align-items: space-between;
+}
+
+
+.play-button {
+    width: 100%;
+    background: #000000;
+    color: #ffffff;
+    border: var(--thin-border);
+    font-family: monospace;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+}
+
+.play-button:hover {
+    background: black;
+    color: #00ff00;
+}
+
+.play-icon {
+    font-size: 3rem;
+    line-height: 1;
+    display: block;
+}
+
+.play-text {
+    display: none;
+}
+
+.date-control {
+    position: relative;
+    display: flex;
+    width:100%;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.5rem;
+    background: #ffffff;
+    padding: 0.25rem;
+    border: var(--thin-border);
+}
+
+.date-input-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: end;
+    gap: 0.25rem;
+}
+
+.date-selector {
+    width: 100%;
+    font-family: monospace;
+    font-size: 0.8rem;
+    padding: 0.25rem;
+    border: var(--thin-border);
+    background: #ffffff;
+    color: #000000;
+    outline: none;
+}
+
+/* Override default date input styles */
+.date-selector::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    opacity: 0.5;
+}
+
+.date-selector:focus {
+    border-color: #00ff00;
+    box-shadow: 0 0 0 1px #00ff00;
+}
+
+/* Override system highlight colors */
+.date-selector::selection {
+    background-color: #00ff00;
+    color: #ffffff;
+}
+
+/* For Firefox */
+.date-selector::-moz-selection {
+    background-color: #00ff00;
+    color: #ffffff;
+}
+
+/* Override calendar colors */
+::-webkit-datetime-edit-fields-wrapper { color: #000000; }
+::-webkit-datetime-edit { color: #000000; }
+::-webkit-datetime-edit-text { color: #000000; }
+::-webkit-datetime-edit-month-field { color: #000000; }
+::-webkit-datetime-edit-day-field { color: #000000; }
+::-webkit-datetime-edit-year-field { color: #000000; }
+::-webkit-inner-spin-button { display: none; }
+::-webkit-calendar-picker-indicator { 
+    background-color: #000000;
+    padding: 0.2rem;
+    border-radius: 0;
+}
+
+.bpm-controls {
+    display: flex;
+    flex-direction: column;
+    width:100%;
+    gap: 0.5rem;
+    border: var(--thin-border);
+    padding: 0.5rem;
+}
+
+.bpm-controls label {
+    font-family: monospace;
+    font-size: 0.8rem;
+    font-weight: normal;
+    color: var(--text-light);
+}
+
+.bpm-slider {
+    width: 100%;
+    height: 2px;
+    background: #000000;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.bpm-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 10px;
+    height: 10px;
+    background: white;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.bpm-slider::-moz-range-thumb {
+    width: 10px;
+    height: 10px;
+    background: white;
+    border: 1px solid black;
+    border-radius: 0;
+    cursor: pointer;
+}
+
+.magnitude-controls {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+    gap: 0.5rem;
+    width: 100%;
+    border: var(--thin-border);
+
+}
+
+.magnitude-input-group {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.magnitude-btn {
+    font-family: monospace;
+    font-size: 0.8rem;
+    padding: 0.25rem 0.5rem;
+    background: var(--primary-bg);
+    border: var(--thin-border);
+    cursor: pointer;
+    color: var(--text-light);
+    min-width: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.magnitude-btn:hover {
+    background: #000000;
+    color: #ffffff;
+}
+
+#minMagnitudeValue {
+    flex: 1;
+    text-align: center;
+    font-family: monospace;
+    font-size: 0.8rem;
+    padding: 0.25rem;
+    border: var(--thin-border);
+    background: var(--primary-bg);
+    color: var(--text-light);
+    width: 4rem;
+    -moz-appearance: textfield;
+    outline: none;
+}
+
+#minMagnitudeValue:focus {
+    border-color: #00ff00;
+    box-shadow: 0 0 0 1px #00ff00;
+}
+
+#minMagnitudeValue::-webkit-outer-spin-button,
+#minMagnitudeValue::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.sequencer-container {
+    display: flex;
+    flex-direction: column;
+    width: 55%;
+    background: var(--primary-bg);
+    border: var(--thin-border);
+    margin: .25rem;
+    padding: .5rem;
+}
+
+.sequencer-container h3 {
+    font-family: monospace;
+    font-size: .8rem;
+    font-weight: normal;
+    padding-bottom:.5rem;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.sequencer-container h4 {
+    font-family: monospace;
+    font-size: .8rem;
+    font-weight: normal;
+    margin: 0;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.control-btn {
+    padding: 0.5rem 1rem;
+    background: #ffffff;
+    color: #000000;
+    border: var(--thin-border);
+    font-family: monospace;
+    font-weight: normal;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+}
+
+
+
+.earthquake-counter {
+    background: #ffffff;
+    padding: 0.5rem;
+    border: var(--thin-border);
+    font-family: monospace;
+    font-weight: normal;
+        font-size: 0.8rem;
+}
+
+.date-nav-btn {
+    font-family: monospace;
+    font-size: 1rem;
+    height:24px;
+    padding: 0.25rem;
+    background: var(--primary-bg);
+    border: var(--thin-border);
+    cursor: pointer;
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    align-self: flex-end;
+}
+
+.date-nav-btn:hover {
+    background: var(--accent-color);
+    color: var(--primary-bg);
+}
+
+.date-control label {
+    font-family: monospace;
+    font-weight: normal;
+    font-size: 0.8rem;
+    color: #000000;
+}
+
+
+
+.birthday-message {
+    position: absolute;
+    top: calc(100% + 0.25rem);
+    left: 0;
+    right: 0;
+    text-align: center;
+    background-color: #4CAF50;
+    color: white;
+    font-family: monospace;
+    padding: .5rem;
+    font-size: .6rem;
+    width:100%;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    z-index: 10;
+}
+
+.birthday-message:hover {
+    background-color: #45a049;
+}
+
+.birthday-message.visible {
+    display: block;
+}
+
+.activity-section {
+    grid-area: activity;
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem;
+}
+
+.activity-section .current-activity {
+    width: 100%;
+    max-width: 800px;
+    border: var(--thin-border);
+    background: var(--primary-bg);
+    padding: 1rem;
+    height: auto;
+}
+
+.activity-section .activity-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: var(--thin-border);
+}
+
+.activity-section .activity-header h3 {
+    font-family: monospace;
+    font-size: 1rem;
+    font-weight: normal;
+    margin: 0;
+    color: var(--text-light);
+}
+
+.current-earthquake {
+    font-family: monospace;
+    font-size: 0.9rem;
+    padding: 0.5rem;
+    background: var(--primary-bg);
+    border: var(--thin-border);
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.current-earthquake.active {
+    background: var(--accent-color);
+    color: var(--primary-bg);
+}
+
+.current-earthquake p {
+    margin: 0;
+    color: var(--text-dim);
+}
+
+.map-section {
+    height: 60vh;
+    width: 100%;
+    order: 1;
+}
+
+.right-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--grid-gap);
+}
+
+.map-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border: var(--thin-border);
+    overflow: hidden;
+}
+
+.d3-map {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--map-water);
+}
+
+/* Add specific styling for map paths */
+.d3-map path {
+    fill: var(--map-land);
+    stroke: var(--accent-color);
+    stroke-width: 0.5;
+}
+
+.d3-map path.country {
+    fill: var(--map-land);
+    stroke: var(--map-land);
+    stroke-width: 0.25;
+}
+
+.d3-map path.continent {
+    fill: none;
+    stroke: var(--accent-color);
+    stroke-width: 1;
+}
+
+.marker-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.earthquake-marker {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    pointer-events: auto;
+    will-change: transform;
+}
+
+.earthquake-marker.pulse {
+    animation: markerPulse 0.4s ease-out;
+}
+
+.earthquake-marker:hover {
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+.earthquake-marker:hover::after {
+    content: "M" attr(data-magnitude) " - " attr(data-place) " - " attr(data-time);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #000000;
+    color: #ffffff;
+    padding: 4px 8px;
+    font-size: 12px;
+    font-family: monospace;
+    white-space: nowrap;
+    border-radius: 2px;
+    margin-bottom: 8px;
+    z-index: 1000;
+    pointer-events: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Sequencer Styles - Rebuilt for continent-first approach */
+.sequencer-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background: var(--primary-bg);
+}
+
+.continent-sequencer {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.continent-track {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.track-info {
+    display: flex;
+    height: 16px;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+.continent-name {
+    font-family: monospace;
+    font-size: 0.8rem;
+    text-align: right;
+    font-weight: normal;
+    margin: 0;
+    color: var(--text-light);
+    min-width: 50px;
+    flex-shrink: 0;
+}
+
+.instrument-select {
+    border: var(--thin-border);
+    color: var(--text-light);
+    cursor: pointer;
+    max-width: 80px;
+    height:20px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'><polygon points='0,0 8,0 4,6' fill='black'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 0.5rem center;
+    padding-right: 1.5rem;
+    padding-left:.5rem;
+    outline: none;
+}
+
+.instrument-select:hover {
+    background-color: #000000;
+    color: #ffffff;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'><polygon points='0,0 8,0 4,6' fill='white'/></svg>");
+}
+
+/* Style the dropdown options */
+.instrument-select option {
+    font-family: monospace;
+    font-size: var(--base-font);
+    padding: 0.5rem;
+    background: var(--primary-bg);
+    color: var(--text-light);
+}
+
+.instrument-select option:hover,
+.instrument-select option:focus,
+.instrument-select option:checked {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.instrument-select:hover {
+    background: var(--accent-color);
+    color: var(--primary-bg);
+}
+
+.track-steps {
+    display: grid;
+    grid-template-columns: repeat(24, 1fr);
+    gap: 1px;
+    height: 20px;
+    background: var(--primary-bg);
+    flex: 1;
+}
+
+.step-cell {
+    display: flex;
+    height: 20px;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    background: var(--primary-bg);
+    border: 1px solid var(--accent-color);
+    transition: all 0.1s ease-out;
+    position: relative;
+    overflow: visible;
+}
+
+.step-cell.has-earthquake {
+    background: var(--accent-color);
+    color: var(--primary-bg);
+    font-weight: bold;
+}
+
+.step-cell.playing {
+    border: 1px solid #00ff00;
+    z-index: 1;
+}
+
+.step-cell:hover {
+    transform: none;
+}
+
+.step-cell.highlighted {
+    z-index: 10;
+}
+
+.earthquake-marker.highlighted {
+    z-index: 1000;
+}
+
+.custom-tooltip {
+    position: absolute;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #000000;
+    color: #ffffff;
+    padding: 4px 8px;
+    font-size: 10px;
+    font-family: monospace;
+    white-space: pre;
+    border-radius: 2px;
+    z-index: 1001;
+    pointer-events: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.subdivision-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background-color: var(--primary-bg);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.subdivision-element {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background-color: transparent;
+    z-index: 3;
+    transition: background-color 0.1s ease;
+}
+
+/* Recent Activity - now in sidebar */
+.recent-activity h3 {
+    font-family: monospace;
+    font-size: 1rem;
+    font-weight: normal;
+    margin-bottom: 1rem;
+    border-bottom: var(--thin-border);
+    padding-bottom: 0.5rem;
+}
+
+.activity-list p {
+    font-family: monospace;
+    font-size: 0.8rem;
+    margin: 0;
+    padding: 0.25rem;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+/* Continent Sequencer */
+
+.seismograph-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 15%;
+    border: var(--thin-border);
+    padding: .5rem;
+    margin: .25rem;
+    order: 2;
+}
+
+.seismograph-container {
+    width: 100%;
+    border: none;
+    background: var(--primary-bg);
+    padding: 0;
+    height: auto;
+}
+
+.seismograph-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: .5rem;
+}
+
+.seismograph-header h3 {
+    font-family: monospace;
+    font-size: .8rem;
+    font-weight: normal;
+    margin: 0;
+    color: var(--text-light);
+}
+
+.seismograph-status {
+    display: none;
+}
+
+.seismograph-channels {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2rem;
+    height: auto;
+}
+
+.seismograph-channel {
+    display: flex;
+    align-items: flex-end;
+    gap: 0;
+    height: 20px;
+    justify-content: center;
+    padding: 2px 0;
+    position: relative;
+    background: var(--primary-bg);
+    overflow: hidden;
+}
+
+.seismograph-canvas {
+    width: 100%;
+    height: 16px;
+    background: var(--primary-bg);
+    border: none;
+    display: block;
+    flex: 1;
+    margin: 0;
+    position: relative;
+    image-rendering: pixelated;
+}
+
+.bpm-control-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border: var(--thin-border);
+}
+
+.controls-group {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+/* Keyframe Animations */
+@keyframes markerPulse {
+    0% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.2); }
+    100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+
+.monitors {
+    display: flex;
+    height:100%;
+}
+
+.earthquake-beat {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: transparent;
+    transition: background-color 0.1s ease;
+}
+
+.step-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    background: var(--primary-bg);
+    border: 1px solid var(--accent-color);
+    transition: all 0.1s ease-out;
+    position: relative;
+    overflow: visible;
+}
+
+.subdivision-element {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background-color: transparent;
+    z-index: 3;
+    transition: background-color 0.1s ease;
+}
+
+/* Media Queries for Responsive Controls */
+@media (max-width: 1200px) {
+    .controls {
+        gap: 0.5rem;
+    }
+
+    .controls-sidebar {
+        min-width: 180px;
+    }
+
+    .play-icon {
+        font-size: 2rem;
+    }
+
+    .main-controls {
+        padding: 0.5rem;
+        gap: 0.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .panel {
+        display: flex;
+        flex-direction: row;
+    }
+    
+    .play-button {
+        aspect-ratio: 2/1;
+    
+        }
+
+    .controls-sidebar {
+        flex-direction: row;
+        gap: 0.5rem;
+    }
+
+    .main-controls {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: flex-start;
+        flex: 1;
+    }
+    
+    .date-control {
+        
+    }
+    
+    .bpm-controls {
+        width:100%;
+    }
+
+
+ 
+
+    .monitors {
+        flex-direction: column;
+        align-items: space-around;
+    }
+    
+    sequencer-container {
+    }
+    
+    .continent-sequencer {
+     
+        gap: .5rem;
+    }
+
+    .map-section {
+        height: 400px;
+    }
+
+    .seismograph-section {
+        flex: none;
+        width: 100%;
+    }
+    
+    .seismograph-header {
+        margin-bottom: 0;
+    }
+    
+    .seismograph-channels {
+  
+        gap: 0rem;
+    }
+
+ 
+
+    .magnitude-controls label,
+    .bpm-controls label {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .controls-sidebar {
+        flex-direction: column;
+    }
+    
+    .bpm-controls {
+        width:100%;
+    }
+
+    .main-controls {
+        width: 100%;
+        flex-direction: column;
+    }
+    .play-button {
+        width:100%;
+        height: 5vh;
+    }
+
+   
+
+    .magnitude-input-group {
+        justify-content: space-around;
+    }
+
+    .map-section {
+        height: 300px;
+    }
+    
+    .panel {
+        flex-direction: column;
+    }
+    
+    .playback-controls {
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 100%;
+        gap: .5rem;
+    }
+    
+    
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    backdrop-filter: blur(2px);
+}
+
+.modal.show {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: var(--primary-bg);
+    border: var(--thin-border);
+    width: 90%;
+    max-width: 600px;
+    position: relative;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: var(--thin-border);
+}
+
+.modal-header h2 {
+    font-size: 1rem;
+    font-weight: normal;
+    margin: 0;
+}
+
+.modal-close {
+    background: none;
+    border: var(--thin-border);
+    cursor: pointer;
+    font-size: 1.5rem;
+    padding: 0 0.5rem;
+    color: var(--text-light);
+}
+
+.modal-close:hover {
+    background: var(--accent-color);
+    color: var(--primary-bg);
+}
+
+.modal-body {
+    padding: 1rem;
+}
+
+.modal-body p {
+    font-size: var(--base-font);
+    line-height: 1.5;
+    margin: 0;
+} 
