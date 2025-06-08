@@ -1,0 +1,18 @@
+body {
+  font-family: monospace;
+  background: #f0f0f0;
+  margin: 0;
+  padding: 20px;
+}
+
+button {
+  cursor: pointer;
+}
+
+input[type="range"] {
+  cursor: pointer;
+}
+
+select {
+  cursor: pointer;
+}
