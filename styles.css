@@ -106,3 +106,26 @@ body {
         transform: scale(1);
     }
 }
+
+
+.back-btn {
+    display: inline-block;
+    border: 1px solid black;
+    padding: 2px 8px;
+    color: black;
+    cursor: pointer;
+    outline: none;
+    text-align: center;
+    font-family: "Times New Roman", Times, serif;
+    font-style: italic;
+    font-size: 1rem;
+    background: white;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+    transition: background 0.2s;
+}
+.back-btn:hover {
+    background: #eee;
+}
