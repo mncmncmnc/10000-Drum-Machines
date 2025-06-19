@@ -5,13 +5,23 @@
 	<link>https://10kdrummachines.com/</link>
 	<description>An ever-growing collection of web-based drum machines and sequencers</description>
 	<language>en-us</language>
-	<lastBuildDate>Sat, 07 Jun 2025 06:01:00 GMT</lastBuildDate>
+	<lastBuildDate>Thu, 19 Jun 2025 21:00:00 GMT</lastBuildDate>
 	<atom:link href="https://10kdrummachines.com/feed.xml" rel="self" type="application/rss+xml" />
 
 <!-- LIST STARTS HERE, NEWEST ITEMS GO FIRST -->
 
+
 	<item>
-	  <title><< Grab Me</title>
+		<title><Stochastic Drum Machine</title>
+		<link>https://10kdrummachines.com/machines/quantumdrums/stochastic.html</link>
+		<description>Stochastic Drum Machine</description>
+		<pubDate>Thu, 19 Jun 2025 21:00:00 GMT</pubDate>
+		<guid>https://10kdrummachines.com/machines/quantumdrums/stochastic.html</guid>
+	</item>
+
+
+	<item>
+	  <title><Grab Me</title>
 	  <link>https://rosebud.ai/p/3683087f-5fed-4e2c-9db2-d31831a5cf46</link>
 	  <description><< Grab Me by Alan Ang</description>
 	  <pubDate>Sun, 08 Jun 2025 21:31:00 GMT</pubDate>
