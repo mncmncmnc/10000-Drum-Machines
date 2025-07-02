@@ -1,0 +1,295 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <link rel="icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAAAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAGAAAAAAAAAMAAAAAAAAAAAAAAAAD///8A" type="image/x-icon">
+  <meta charset="utf-8">
+  <title>Moving Drum Machine</title>
+  <style>
+    /* 全体レイアウト */
+
+    body {
+        font-family: sans-serif;
+        background: #a88989;
+        color: #cbccd2;
+        display: flex;             
+        flex-direction: column;    
+        align-items: center;       
+        justify-content: center;  
+        min-height: 80vh;          
+        padding: 20px;
+    }
+    /* ボタンと入力 */
+    button,
+    input {
+      width: 50px; /* または100pxなど、好みの幅 */
+      margin: 10px;
+      padding: 8px;
+      font-size: 14px;
+      border-radius: 6px;
+      border: none;
+      background: #222;
+      color: #eee;
+      cursor: pointer;
+    }
+
+    /* シーケンサーコンテナ */
+    #steps {
+      display: flex;
+      flex-direction: column;
+      margin-top: 20px;
+    }
+
+    /* 各トラック行 */
+    .row {
+      display: flex;
+      align-items: center;
+      margin: 2px 0;
+    }
+
+    /* トラック名ラベル */
+    .label {
+      width: 60px;
+      text-align: right;
+      margin-right: 8px;
+    }
+
+    /* 各ステップセル */
+    .step {
+      width: 20px;
+      height: 20px;
+      margin: 2px;
+      border: 2px solid #444;
+      box-sizing: border-box;
+      cursor: pointer;
+      transition: background 0.1s, border-color 0.1s;
+      transition: margin-left 0.2s ease-out, margin-right 0.2s ease-out;
+
+    }
+
+    /* ON状態 */
+    .step.active {
+      background: #0d6efd;
+    }
+    .step.active.hit     { 
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+    /* 再生中のステップ（枠色のみ変更） */
+    .step.playing {
+      border-color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+    <h1>Moving Drum Machine</h1>
+  <div>
+    <label for="bpm">BPM</label>
+    <input id="bpm" type="number" value="120" min="60" max="200">
+    <button id="play">Play</button>
+    <button id="stop">Stop</button>
+  </div>
+
+  <div id="steps"></div>
+    
+<script>
+    // AudioContextの初期化
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    /*=========================================================
+       汎用ホワイトノイズ・バッファ生成
+    =========================================================*/
+    function createWhiteNoise(duration = 0.2) {
+      const src = audioCtx.createBufferSource();
+      const len = Math.floor(duration * audioCtx.sampleRate);
+      const buf = audioCtx.createBuffer(1, len, audioCtx.sampleRate);
+      const data = buf.getChannelData(0);
+      for (let i = 0; i < len; i++) data[i] = Math.random() * 2 - 1;
+      src.buffer = buf;
+      return src; 
+    }
+
+
+
+
+    /* =========================================================
+       ドラム音源
+    ========================================================= */
+
+    function createKick() {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(500, audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(150, audioCtx.currentTime + 0.01);
+      osc.frequency.exponentialRampToValueAtTime(45, audioCtx.currentTime + 0.1);
+
+      gain.gain.setValueAtTime(1, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
+      osc.connect(gain).connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.5);
+    }
+
+    function createSnare() {
+      const noise = audioCtx.createBufferSource();
+      const buffer = audioCtx.createBuffer(1, audioCtx.sampleRate * 0.2, audioCtx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1;
+      noise.buffer = buffer;
+
+      const bandpass = audioCtx.createBiquadFilter();
+      bandpass.type = 'bandpass';
+      bandpass.frequency.value = 1800;
+
+      const gain = audioCtx.createGain();
+      gain.gain.setValueAtTime(1, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.2);
+
+      noise.connect(bandpass).connect(gain).connect(audioCtx.destination);
+      noise.start();
+      noise.stop(audioCtx.currentTime + 0.2);
+    }
+
+    function createHiHat() {
+      const noise = createWhiteNoise(0.2)
+
+      const highpass = audioCtx.createBiquadFilter();
+      highpass.type = 'highpass';
+      highpass.frequency.value = 8000;
+
+      const gain = audioCtx.createGain();
+      gain.gain.setValueAtTime(0.5, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+
+      noise.connect(highpass).connect(gain).connect(audioCtx.destination);
+      noise.start();
+      noise.stop(audioCtx.currentTime + 0.05);
+    }
+    // トラック設定
+    const tracks = [
+      { name: 'Kick', sound: createKick },
+      { name: 'Snare', sound: createSnare },
+      { name: 'HiHat', sound: createHiHat }
+    ];
+   // DOM要素取得
+    const stepsContainer = document.getElementById('steps');
+    const bpmInput = document.getElementById('bpm');
+    const playButton = document.getElementById('play');
+    const stopButton = document.getElementById('stop');
+
+    // セル参照用配列
+    const cells = tracks.map(() => Array(16));
+    let currentStep = 0;
+    let timerId = null;
+
+    // シーケンサUI生成 ページ読み込み時に一回だけ実行される。
+    // トラックの行を作る。 tracks.forEachは3回ループする。
+    // アロー関数は ES6（EcmaScript 2015）で導入された、
+    // 匿名関数（関数オブジェクト）を簡潔に書くための構文。
+    //forEach のように「関数を引数に渡す場面」で多用される。
+    tracks.forEach((track, trackIndex) => {
+    
+    // div クラス row要素を作成。3つ。
+      const row = document.createElement('div');
+      row.className = 'row';    
+    
+    // ラベルの追加。rowの子要素として追加される。
+      const label = document.createElement('span');
+      label.className = 'label';
+      label.textContent = track.name;
+      row.appendChild(label);
+
+    //ステップセルを作って画面と配列に登録する部分。
+      for (let step = 0; step < 16; step++) {
+        //ブロックスコープの中で宣言しているのでループのたびに新しい要素
+        // 　div要素を動的に生成
+        const cell = document.createElement('div');
+        // cssのstepをあてはめるため。
+        cell.className = 'step';
+        // trackIndex 0~2 ,step: 0~15 のどれかの属性を持つ。
+        cell.dataset.track = trackIndex;
+        cell.dataset.step = step;
+        
+        // cellにクリックされた時の処理を登録する。
+        // 第二引数のアロー関数 () => … がコールバックで、実行されると…
+        //cell.classList.toggle('active') が走り、.active クラスが付いていなければ付ける（セルが青くなる）付いていれば外す（元に戻る）
+        cell.addEventListener('click', () => cell.classList.toggle('active'));
+        
+        //生成したcell要素を親要素rowの子ノードとして登録
+        //画面上に並べる
+        row.appendChild(cell);
+        
+        // DOMと同じ要素の参照をcellsに作成する。
+        cells[trackIndex][step] = cell;
+      }
+      
+      // 一回ループするごとにrowが作成されるのでそれを格納する。
+      stepsContainer.appendChild(row);
+    });
+
+
+    // シーケンス実行
+    //
+    function tick() {
+      // bpmは入力欄の数値を取り出し数値化する。未入力やnanの時は120を使う。
+      const bpm = Number(bpmInput.value) || 120;
+      // 1ステップの間隔 16分音符の間隔を計算する。
+      const interval = 60000 / bpm / 4;
+
+      //各トラックの再生中ハイライト
+      tracks.forEach((track, trackIndex) => {
+
+        cells[trackIndex].forEach((cell, idx) => {
+         
+            //element.classList.toggle(クラス名, 条件) そうならplayingクラスを付け、そうでないなら外す。
+          cell.classList.toggle('playing', idx === currentStep);
+        });
+        const cell = cells[trackIndex][currentStep];
+        // そのセルがクラス 'active'を持っているか。
+        if (cells[trackIndex][currentStep].classList.contains('active')) {
+          
+            //tracks配列に格納した関数参照:soundをトリガーする。一つずつトリガーするが聴覚上は同期している。
+            track.sound();
+            cell.classList.add('hit');
+            setTimeout(() => cell.classList.remove('hit'), 250);
+        }
+      });
+
+      //ステップを進める。
+      currentStep = (currentStep + 1) % 16;
+
+      //setTimeoutは一定時間後に引数の関数を実行する。 timerIdには数字などが返される。今回はnullかどうかをフラグとして使っている。
+      timerId = setTimeout(tick, interval);
+    }
+
+
+    // 再生・停止ボタン
+    playButton.addEventListener('click', () => {
+      
+      // nullなら実行される。
+      if (!timerId) {
+        audioCtx.resume().then(() => {
+          //step=0にしてtick()を一回だけトリガー。以後は自動的にtick()が続いていく。
+          currentStep = 0;
+          tick();
+        });
+      }
+    });
+
+    //　ストップボタン
+    stopButton.addEventListener('click', () => {
+      //setTimeoutを止める。フラグをnullにする。
+      clearTimeout(timerId);
+      timerId = null;
+
+      //48要素の一次元配列にしてから playingを取り除く。
+      cells.flat().forEach(cell => cell.classList.remove('playing'));
+    });
+
+
+</script>
+</body>
+</html>
+
