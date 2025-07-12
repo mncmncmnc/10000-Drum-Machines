@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Search Drum Machine</title>
+    <link rel="stylesheet" href="wordsearch.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Control Panel 1: Basic Settings -->
+        <div class="control-panel">
+            <div class="setting-group">
+                <label for="work-select">Pick a work:</label>
+                <select id="work-select">
+                    <option value="mobydick">Moby Dick</option>
+                    <option value="littlewomen">Little Women</option>
+                    <option value="emma">Emma</option>
+                    <option value="wutheringheights">Wuthering Heights</option>
+                    <option value="leaguesunderthesea">20,000 Leagues Under the Sea</option>
+                    <option value="thegreatgatsby">The Great Gatsby</option>
+                    <option value="crimeandpunishment">Crime and Punishment</option>
+                    <option value="romeoandjuliet">Romeo and Juliet</option>
+                    <option value="frankenstein">Frankenstein</option>
+                    <option value="doriangray">The Picture of Dorian Gray</option>
+                </select>
+                <div class="panel-buttons">
+                    <button id="info-btn">?</button>
+                    <a href="../../index.html" class="back-btn">←</a>
+                </div>
+            </div>
+            <div class="setting-group">
+                <label for="scroll-rate">Scroll Rate:</label>
+                <input type="range" id="scroll-rate" min="1" max="100" value="90">
+                <span id="scroll-rate-value">90</span> <span class="words-per-second">words/second</span>
+            </div>
+            <div class="setting-group">
+                <label for="excerpt-size">Excerpt Size:</label>
+                <select id="excerpt-size">
+                    <option value="250">250 words</option>
+                    <option value="500">500 words</option>
+                    <option value="1000">1000 words</option>
+                    <option value="5000">5000 words</option>
+                    <option value="10000">10000 words</option>
+                    <option value="full">Full text</option>
+                </select>
+            </div>
+            <div class="setting-group">
+                <button id="play-btn">Start</button>
+            </div>
+        </div>
+
+        <!-- Control Panel 2: Word-Sound Rules -->
+        <div class="control-panel">
+            <h2>Word-Sound Rules</h2>
+            <div id="rules-container">
+                <div class="rule-row">
+                    <input type="text" class="word-input" placeholder="Enter word..." autocapitalize="off" autocorrect="off" spellcheck="false">
+                    <select class="sound-select">
+                        <option value="BassDrum1">Bass Drum 1</option>
+                        <option value="Snare1">Snare 1</option>
+                        <option value="HhC">Hi-Hat Closed</option>
+                        <option value="HhO">Hi-Hat Open</option>
+                        <option value="HandClap">Hand Clap</option>
+                        <option value="HiTom">High Tom</option>
+                        <option value="MedTom">Medium Tom</option>
+                        <option value="LowTom">Low Tom</option>
+                        <option value="RimShot">Rim Shot</option>
+                        <option value="Crash">Crash</option>
+                        <option value="Ride">Ride</option>
+                        <option value="CowBell">Cow Bell</option>
+                        <option value="Tamb">Tambourine</option>
+                    </select>
+                    <button class="remove-rule">×</button>
+                </div>
+            </div>
+            <button id="add-rule">+ Add Rule</button>
+            <button id="clear-all-rules">Clear All Rules</button>
+        </div>
+
+        <!-- Text Display Area -->
+        <div class="text-display">
+            <div id="text-container"></div>
+        </div>
+    </div>
+
+    <!-- Info Modal -->
+    <div id="info-modal" class="modal">
+        <div class="modal-content">
+            <button id="close-modal">×</button>
+            <div class="modal-body">
+                <br>
+                <br>
+                <p>This is a drum machine where you can search classic literary works for specific words at a defined rate, triggering drums each time your favored terms are found. 
+                <br>
+                <br>
+                <p>This one is a little half-baked admittedly, it doesn't create reliably groovy patterns in the way I hoped it might, and took some real hackery to deal with full text sizes, but it's fun as a first draft.</p>
+                <br>
+                <p>The texts were sourced from the lovely efforts over at <a href="https://www.gutenberg.org/"target="_blank">Project Gutenberg</a>. The drum sounds are recorded from a Roland TR-707 over at <a href="http://machines.hyperreal.org/" target="_blank">Music Machines</a>.</p>
+                <br>
+                <p>This is part of the <a href="https://10kdrummachines.com/">10,000 Drum Machines project</a>. Please reach out if you ever want to contribute a drum machine!</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="wordsearch.js"></script>
+</body>
+</html> 

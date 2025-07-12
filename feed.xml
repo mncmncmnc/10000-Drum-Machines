@@ -5,10 +5,26 @@
 	<link>https://10kdrummachines.com/</link>
 	<description>An ever-growing collection of web-based drum machines and sequencers</description>
 	<language>en-us</language>
-	<lastBuildDate>Sun, 29 Jun 2025 10:00:00 GMT</lastBuildDate>
+	<lastBuildDate>Sun, 12 Jul 2025 21:00:00 GMT</lastBuildDate>
 	<atom:link href="https://10kdrummachines.com/feed.xml" rel="self" type="application/rss+xml" />
 
 <!-- LIST STARTS HERE, NEWEST ITEMS GO FIRST -->
+
+	<item>
+		<title>found objects</title>
+		<link>https://www.foundobjects.org/</link>
+		<description>by Paul Hembree</description>
+		<pubDate>Sun, 12 Jul 2025 21:01:00 GMT</pubDate>
+		<guid>https://www.foundobjects.org/</guid>
+	</item>
+
+	<item>
+		<title>Word Search Drum Machine</title>
+		<link>https://10kdrummachines.com/machines/wordsearch/wordsearch.html</link>
+		<description></description>
+		<pubDate>Sun, 12 Jul 2025 21:00:00 GMT</pubDate>
+		<guid>https://10kdrummachines.com/machines/wordsearch/wordsearch.html</guid>
+	</item>
 
 	<item>
 		<title>Minesweeper Drum Machine</title>
