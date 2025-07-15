@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DVD Bouncing Logo Screensaver</title>
+    <link rel="stylesheet" href="dvdlogo.css">
+</head>
+<body>
+    <div class="control-panel" id="controlPanel">
+        <div class="control-header">
+            <h3>Controls</h3>
+            <button class="collapse-btn" id="collapseBtn">−</button>
+        </div>
+        <div class="control-content" id="controlContent">
+            <div class="control-group">
+                <label for="angleVariance">Angle Variance:</label>
+                <input type="range" id="angleVariance" min="0" max="45" value="5" step="1">
+                <span class="value-display" id="angleVarianceValue">5°</span>
+            </div>
+            <div class="control-group">
+                <label for="speedVariance">Speed Variance:</label>
+                <input type="range" id="speedVariance" min="0" max="100" value="10" step="5">
+                <span class="value-display" id="speedVarianceValue">10%</span>
+            </div>
+                        <div class="control-group">
+                <label for="globalSpeed">Global Speed:</label>
+                <input type="range" id="globalSpeed" min="1" max="100" value="1" step="1">
+                <span class="value-display" id="globalSpeedValue">1x</span>
+            </div>
+            
+            <div class="control-group">
+                <label for="logoCount">Number of Logos:</label>
+                <div class="number-control">
+                    <button id="decreaseLogos" class="number-btn">−</button>
+                    <span class="value-display" id="logoCountValue">1</span>
+                    <button id="increaseLogos" class="number-btn">+</button>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <label for="topEdge">Top Edge:</label>
+                <select id="topEdge" class="sound-select">
+                    <option value="">No Sound</option>
+                    <option value="tr606kit/606BASS.WAV" selected>Bass Drum</option>
+                    <option value="tr606kit/606SNAR.WAV">Snare Drum</option>
+                    <option value="tr606kit/606OHAT.WAV">Open Hi-Hat</option>
+                    <option value="tr606kit/606CHAT.WAV">Closed Hi-Hat</option>
+                    <option value="tr606kit/606MHAT.WAV">Combi Hi-Hat</option>
+                    <option value="tr606kit/606LTOM.WAV">Low Tom</option>
+                    <option value="tr606kit/606HTOM.WAV">High Tom</option>
+                    <option value="tr606kit/606CYMB.WAV">Cymbal</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label for="leftEdge">Left Edge:</label>
+                <select id="leftEdge" class="sound-select">
+                    <option value="">No Sound</option>
+                    <option value="tr606kit/606BASS.WAV">Bass Drum</option>
+                    <option value="tr606kit/606SNAR.WAV" selected>Snare Drum</option>
+                    <option value="tr606kit/606OHAT.WAV">Open Hi-Hat</option>
+                    <option value="tr606kit/606CHAT.WAV">Closed Hi-Hat</option>
+                    <option value="tr606kit/606MHAT.WAV">Combi Hi-Hat</option>
+                    <option value="tr606kit/606LTOM.WAV">Low Tom</option>
+                    <option value="tr606kit/606HTOM.WAV">High Tom</option>
+                    <option value="tr606kit/606CYMB.WAV">Cymbal</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label for="rightEdge">Right Edge:</label>
+                <select id="rightEdge" class="sound-select">
+                    <option value="">No Sound</option>
+                    <option value="tr606kit/606BASS.WAV">Bass Drum</option>
+                    <option value="tr606kit/606SNAR.WAV">Snare Drum</option>
+                    <option value="tr606kit/606OHAT.WAV" selected>Open Hi-Hat</option>
+                    <option value="tr606kit/606CHAT.WAV">Closed Hi-Hat</option>
+                    <option value="tr606kit/606MHAT.WAV">Combi Hi-Hat</option>
+                    <option value="tr606kit/606LTOM.WAV">Low Tom</option>
+                    <option value="tr606kit/606HTOM.WAV">High Tom</option>
+                    <option value="tr606kit/606CYMB.WAV">Cymbal</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label for="bottomEdge">Bottom Edge:</label>
+                <select id="bottomEdge" class="sound-select">
+                    <option value="">No Sound</option>
+                    <option value="tr606kit/606BASS.WAV">Bass Drum</option>
+                    <option value="tr606kit/606SNAR.WAV">Snare Drum</option>
+                    <option value="tr606kit/606OHAT.WAV">Open Hi-Hat</option>
+                    <option value="tr606kit/606CHAT.WAV">Closed Hi-Hat</option>
+                    <option value="tr606kit/606MHAT.WAV">Combi Hi-Hat</option>
+                    <option value="tr606kit/606LTOM.WAV" selected>Low Tom</option>
+                    <option value="tr606kit/606HTOM.WAV">High Tom</option>
+                    <option value="tr606kit/606CYMB.WAV">Cymbal</option>
+                </select>
+            </div>
+ 
+        </div>
+    </div>
+
+    <canvas id="dvdCanvas"></canvas>
+
+    <script src="dvdlogo.js"></script>
+</body>
+</html> 
