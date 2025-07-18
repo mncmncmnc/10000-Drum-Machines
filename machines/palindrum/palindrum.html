@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palindrum - Drum Machine</title>
+    <link rel="stylesheet" href="palindrum.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header-section">
+            <div class="left-side">
+                <header>
+                    <h1>Palindrum</h1>
+                </header>
+                
+                <div class="controls">
+                    <div class="transport">
+                        <button id="playBtn" class="btn btn-primary">Play</button>
+                        <div class="tempo-control">
+                            <label for="tempo">Tempo: <span id="tempoValue">120</span> BPM</label>
+                            <input type="range" id="tempo" min="60" max="200" value="120">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="right-side">
+                <header>
+                    <h1 class="mirror">Palindrum</h1>
+                </header>
+                
+                <div class="controls">
+                    <div class="transport">
+                        <button class="btn btn-primary mirror">Play</button>
+                        <div class="tempo-control">
+                            <label class="mirror">Tempo: <span>120</span> BPM</label>
+                            <input type="range" class="mirror" min="60" max="200" value="120">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sequencer">
+            <div class="sequencer-header">
+                <div class="track-label-header"></div>
+                <div class="step-indicators-container">
+                    <div class="step-indicator">1</div>
+                    <div class="step-indicator">2</div>
+                    <div class="step-indicator">3</div>
+                    <div class="step-indicator">4</div>
+                    <div class="step-indicator">5</div>
+                    <div class="step-indicator">6</div>
+                    <div class="step-indicator">7</div>
+                    <div class="step-indicator">8</div>
+                    <div class="step-indicator palindrome mirror">8</div>
+                    <div class="step-indicator palindrome mirror">7</div>
+                    <div class="step-indicator palindrome mirror">6</div>
+                    <div class="step-indicator palindrome mirror">5</div>
+                    <div class="step-indicator palindrome mirror">4</div>
+                    <div class="step-indicator palindrome mirror">3</div>
+                    <div class="step-indicator palindrome mirror">2</div>
+                    <div class="step-indicator palindrome mirror">1</div>
+                </div>
+                <div class="track-label-header"></div>
+            </div>
+            
+            <div class="tracks">
+                <!-- Bass Drum Track -->
+                <div class="track" data-track="bass">
+                    <div class="track-label">Bass</div>
+                    <div class="track-steps">
+                        <div class="step" data-step="0"></div>
+                        <div class="step" data-step="1"></div>
+                        <div class="step" data-step="2"></div>
+                        <div class="step" data-step="3"></div>
+                        <div class="step" data-step="4"></div>
+                        <div class="step" data-step="5"></div>
+                        <div class="step" data-step="6"></div>
+                        <div class="step" data-step="7"></div>
+                        <div class="step palindrome" data-step="8"></div>
+                        <div class="step palindrome" data-step="9"></div>
+                        <div class="step palindrome" data-step="10"></div>
+                        <div class="step palindrome" data-step="11"></div>
+                        <div class="step palindrome" data-step="12"></div>
+                        <div class="step palindrome" data-step="13"></div>
+                        <div class="step palindrome" data-step="14"></div>
+                        <div class="step palindrome" data-step="15"></div>
+                    </div>
+                    <div class="track-label mirror">Bass</div>
+                </div>
+                
+                <!-- Kick Drum Track -->
+                <div class="track" data-track="kick">
+                    <div class="track-label">Kick</div>
+                    <div class="track-steps">
+                        <div class="step" data-step="0"></div>
+                        <div class="step" data-step="1"></div>
+                        <div class="step" data-step="2"></div>
+                        <div class="step" data-step="3"></div>
+                        <div class="step" data-step="4"></div>
+                        <div class="step" data-step="5"></div>
+                        <div class="step" data-step="6"></div>
+                        <div class="step" data-step="7"></div>
+                        <div class="step palindrome" data-step="8"></div>
+                        <div class="step palindrome" data-step="9"></div>
+                        <div class="step palindrome" data-step="10"></div>
+                        <div class="step palindrome" data-step="11"></div>
+                        <div class="step palindrome" data-step="12"></div>
+                        <div class="step palindrome" data-step="13"></div>
+                        <div class="step palindrome" data-step="14"></div>
+                        <div class="step palindrome" data-step="15"></div>
+                    </div>
+                    <div class="track-label mirror">Kick</div>
+                </div>
+                
+                <!-- Snare Track -->
+                <div class="track" data-track="snare">
+                    <div class="track-label">Snare</div>
+                    <div class="track-steps">
+                        <div class="step" data-step="0"></div>
+                        <div class="step" data-step="1"></div>
+                        <div class="step" data-step="2"></div>
+                        <div class="step" data-step="3"></div>
+                        <div class="step" data-step="4"></div>
+                        <div class="step" data-step="5"></div>
+                        <div class="step" data-step="6"></div>
+                        <div class="step" data-step="7"></div>
+                        <div class="step palindrome" data-step="8"></div>
+                        <div class="step palindrome" data-step="9"></div>
+                        <div class="step palindrome" data-step="10"></div>
+                        <div class="step palindrome" data-step="11"></div>
+                        <div class="step palindrome" data-step="12"></div>
+                        <div class="step palindrome" data-step="13"></div>
+                        <div class="step palindrome" data-step="14"></div>
+                        <div class="step palindrome" data-step="15"></div>
+                    </div>
+                    <div class="track-label mirror">Snare</div>
+                </div>
+                
+                <!-- HiHat Track -->
+                <div class="track" data-track="hihat">
+                    <div class="track-label">HiHat</div>
+                    <div class="track-steps">
+                        <div class="step" data-step="0"></div>
+                        <div class="step" data-step="1"></div>
+                        <div class="step" data-step="2"></div>
+                        <div class="step" data-step="3"></div>
+                        <div class="step" data-step="4"></div>
+                        <div class="step" data-step="5"></div>
+                        <div class="step" data-step="6"></div>
+                        <div class="step" data-step="7"></div>
+                        <div class="step palindrome" data-step="8"></div>
+                        <div class="step palindrome" data-step="9"></div>
+                        <div class="step palindrome" data-step="10"></div>
+                        <div class="step palindrome" data-step="11"></div>
+                        <div class="step palindrome" data-step="12"></div>
+                        <div class="step palindrome" data-step="13"></div>
+                        <div class="step palindrome" data-step="14"></div>
+                        <div class="step palindrome" data-step="15"></div>
+                    </div>
+                    <div class="track-label mirror">HiHat</div>
+                </div>
+                
+                <!-- Clap Track -->
+                <div class="track" data-track="clap">
+                    <div class="track-label">Clap</div>
+                    <div class="track-steps">
+                        <div class="step" data-step="0"></div>
+                        <div class="step" data-step="1"></div>
+                        <div class="step" data-step="2"></div>
+                        <div class="step" data-step="3"></div>
+                        <div class="step" data-step="4"></div>
+                        <div class="step" data-step="5"></div>
+                        <div class="step" data-step="6"></div>
+                        <div class="step" data-step="7"></div>
+                        <div class="step palindrome" data-step="8"></div>
+                        <div class="step palindrome" data-step="9"></div>
+                        <div class="step palindrome" data-step="10"></div>
+                        <div class="step palindrome" data-step="11"></div>
+                        <div class="step palindrome" data-step="12"></div>
+                        <div class="step palindrome" data-step="13"></div>
+                        <div class="step palindrome" data-step="14"></div>
+                        <div class="step palindrome" data-step="15"></div>
+                    </div>
+                    <div class="track-label mirror">Clap</div>
+                </div>
+                
+                <!-- Shake Track -->
+                <div class="track" data-track="shake">
+                    <div class="track-label">Shake</div>
+                    <div class="track-steps">
+                        <div class="step" data-step="0"></div>
+                        <div class="step" data-step="1"></div>
+                        <div class="step" data-step="2"></div>
+                        <div class="step" data-step="3"></div>
+                        <div class="step" data-step="4"></div>
+                        <div class="step" data-step="5"></div>
+                        <div class="step" data-step="6"></div>
+                        <div class="step" data-step="7"></div>
+                        <div class="step palindrome" data-step="8"></div>
+                        <div class="step palindrome" data-step="9"></div>
+                        <div class="step palindrome" data-step="10"></div>
+                        <div class="step palindrome" data-step="11"></div>
+                        <div class="step palindrome" data-step="12"></div>
+                        <div class="step palindrome" data-step="13"></div>
+                        <div class="step palindrome" data-step="14"></div>
+                        <div class="step palindrome" data-step="15"></div>
+                    </div>
+                    <div class="track-label mirror">Shake</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="palindrum.js"></script>
+</body>
+</html> 
