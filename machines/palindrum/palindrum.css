@@ -354,8 +354,12 @@ header p {
     }
     
     .header-section {
-        flex-direction: column;
-        gap: 20px;
+        flex-direction: row;
+        gap: 10px;
+    }
+    
+    .left-side, .right-side {
+        flex: 1;
     }
     
     .right-side {
@@ -363,12 +367,12 @@ header p {
     }
     
     header h1 {
-        font-size: 2rem;
+        font-size: 1.5rem;
     }
     
     .transport {
         flex-direction: column;
-        gap: 15px;
+        gap: 10px;
     }
     
     .right-side .transport {
