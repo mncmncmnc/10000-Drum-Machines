@@ -5,10 +5,18 @@
 	<link>https://10kdrummachines.com/</link>
 	<description>An ever-growing collection of web-based drum machines and sequencers</description>
 	<language>en-us</language>
-	<lastBuildDate>Fri, 18 Jul 2025 06:01:00 GMT</lastBuildDate>
+	<lastBuildDate>Mon, 29 Jul 2025 03:21:00 GMT</lastBuildDate>
 	<atom:link href="https://10kdrummachines.com/feed.xml" rel="self" type="application/rss+xml" />
 
 <!-- LIST STARTS HERE, NEWEST ITEMS GO FIRST -->
+	<item>
+		<title>Particle Box Drum Machine by Andrew Boylan</title>
+		<link>https://particle-box-drum-machine.vercel.app/</link>
+		<description></description>
+		<pubDate>Mon, 29 Jul 2025 03:21:00 GMT</pubDate>
+		<guid>https://particle-box-drum-machine.vercel.app/</guid>
+	</item>
+
 	<item>
 		<title>Palindrum by Jessie Char</title>
 		<link>https://10kdrummachines.com/machines/palindrum/palindrum.html</link>
