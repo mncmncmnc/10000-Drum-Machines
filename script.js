@@ -48,8 +48,8 @@ document.addEventListener('DOMContentLoaded', function() {
         sortItems(e.target.value);
     });
     
-    // Initial sort based on selected option
-    sortItems(sortSelect.value);
+    // Initial sort (original order)
+    sortItems('recent');
     
     // Life expectancy countdown in modal
     // Calculate days remaining until target date
