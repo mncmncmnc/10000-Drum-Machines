@@ -5,10 +5,17 @@
 	<link>https://10kdrummachines.com/</link>
 	<description>An ever-growing collection of web-based drum machines and sequencers</description>
 	<language>en-us</language>
-	<lastBuildDate>Mon, 29 Jul 2025 03:21:00 GMT</lastBuildDate>
+	<lastBuildDate>Tue, 9 Sep 2025 12:21:00 GMT</lastBuildDate>
 	<atom:link href="https://10kdrummachines.com/feed.xml" rel="self" type="application/rss+xml" />
 
 <!-- LIST STARTS HERE, NEWEST ITEMS GO FIRST -->
+	<item>
+		<title>fill harmonics by Parker Higgins and Natan Last</title>
+		<link>https://fillharmonics.com/</link>
+		<description></description>
+		<pubDate>Tue, 9 Sep 2025 12:21:00 GMT</pubDate>
+		<guid>https://fillharmonics.com/</guid>
+	</item>
 	<item>
 		<title>Particle Box Drum Machine by Andrew Boylan</title>
 		<link>https://particle-box-drum-machine.vercel.app/</link>
