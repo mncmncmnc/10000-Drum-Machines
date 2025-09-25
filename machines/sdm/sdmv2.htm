@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starke Drum Machine</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style type="text/css">
+        .currentbeat, .validation
+        {
+            background-color: Red;
+        }
+    </style>
+</head>
+<body>
+    <script type="text/javascript">
+        var cursorpoint, loop, audioContext, audioBuffers = {}, nextNoteTime = 0, scheduleAheadTime = 0.1, lookahead = 25.0, timerID = null, isPlaying = false;
+        
+        // Initialize Web Audio API
+        function initAudio() {
+            try {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                loadAudioSamples();
+            } catch(e) {
+                console.error('Web Audio API not supported');
+                // Fallback to HTML5 audio for very old browsers
+                return false;
+            }
+            return true;
+        }
+        
+        // Load all audio samples into buffers
+        function loadAudioSamples() {
+            const sampleFiles = [
+                'Bassdrum-01.wav', 'Bassdrum-02.wav', 'Bassdrum-03.wav', 'Bassdrum-04.wav', 'Bassdrum-05.wav',
+                'Cabasa.wav', 'Clap.wav', 'Claves.wav', 'Cowbell.wav', 'Crash-01.wav', 'Crash-02.wav',
+                'HatClosed.wav', 'HatOpen.wav', 'Rimshot.wav', 'Snaredrum.wav', 'TomH.wav', 'TomL.wav', 'TomM.wav'
+            ];
+            
+            const sampleIds = [
+                'bassdrum1', 'bassdrum2', 'bassdrum3', 'bassdrum4', 'bassdrum5',
+                'cabasa', 'clap', 'claves', 'cowbell', 'crash1', 'crash2',
+                'hatclosed', 'hatopen', 'rimshot', 'snaredrum', 'tomh', 'toml', 'tomm'
+            ];
+            
+            let loadedCount = 0;
+            sampleFiles.forEach((file, index) => {
+                fetch(file)
+                    .then(response => response.arrayBuffer())
+                    .then(data => audioContext.decodeAudioData(data))
+                    .then(buffer => {
+                        audioBuffers[sampleIds[index]] = buffer;
+                        loadedCount++;
+                        if (loadedCount === sampleFiles.length) {
+                            console.log('All audio samples loaded');
+                        }
+                    })
+                    .catch(e => console.error('Error loading audio:', e));
+            });
+        }
+        
+        // Play audio using Web Audio API
+        function playSample(sampleId) {
+            if (audioContext && audioBuffers[sampleId]) {
+                const source = audioContext.createBufferSource();
+                source.buffer = audioBuffers[sampleId];
+                source.connect(audioContext.destination);
+                source.start();
+            } else {
+                // Fallback to HTML5 audio
+                const audio = document.getElementById(sampleId);
+                if (audio) {
+                    audio.currentTime = 0;
+                    audio.play().catch(e => console.error('Audio play failed:', e));
+                }
+            }
+        }
+        
+        // High precision timing scheduler
+        function scheduler() {
+            while (nextNoteTime < audioContext.currentTime + scheduleAheadTime) {
+                scheduleNote();
+                nextNote();
+            }
+        }
+        
+        function scheduleNote() {
+            var tds = $('#steps').parent().children().filter(':not(:first)'), beats = tds.length, current = $(tds[cursorpoint]);
+            current.addClass('currentbeat');
+            $(tds[Math.abs(cursorpoint - 1) % beats]).removeClass('currentbeat');
+            if (cursorpoint == 0) {
+                $(tds[beats - 1]).removeClass('currentbeat');
+                samplefinder(beats);
+            } else {
+                samplefinder(cursorpoint);
+            }
+            cursorpoint = (cursorpoint + 1) % beats;
+        }
+        
+        function nextNote() {
+            var bpm = parseInt($('#bpm').val()), ticks = parseInt($('#ticks').val());
+            var secondsPerBeat = 60.0 / bpm;
+            nextNoteTime += secondsPerBeat / ticks;
+        }
+        
+        function startScheduler() {
+            if (isPlaying) return;
+            
+            isPlaying = true;
+            nextNoteTime = audioContext.currentTime;
+            timerID = setInterval(scheduler, lookahead);
+        }
+        
+        function stopScheduler() {
+            if (!isPlaying) return;
+            
+            isPlaying = false;
+            clearInterval(timerID);
+            resetcursor();
+        }
+        
+        $(function () {
+            // Initialize audio on first user interaction
+            $(document).one('click', function() {
+                if (!initAudio()) {
+                    console.log('Using HTML5 audio fallback');
+                }
+            });
+            
+            // Handle page visibility changes to pause/resume audio context
+            document.addEventListener('visibilitychange', function() {
+                if (audioContext) {
+                    if (document.hidden && audioContext.state === 'running') {
+                        audioContext.suspend();
+                    } else if (!document.hidden && audioContext.state === 'suspended') {
+                        audioContext.resume();
+                    }
+                }
+            });
+
+            hideval();
+            
+            // Auto-generate default grid on load
+            $('#grid').html('');
+            $('#channelassignment').html('');
+            var channels = 4, beats = 16;
+            var template = $('<td></td>'), gridappender = '<table>', channelappender ='';
+            for (var i = 0; i < channels + 1; i++) {
+                gridappender += '<tr data-channel-tr="'+(i+1)+'">'
+                if(i < channels){
+                   channelappender += '<div><p>Channel "'+(i+1)+'" Assignment</p>'+createsampleselect(i + 1)+'<div>';       
+                          
+                }
+                if (i == channels) {
+                    gridappender += '<td id="steps"> Step - </td>';
+                } else {
+                    gridappender += '<td> Channel ' + (i + 1) + ' - </td>';
+
+                }
+                for (var j = 0; j < beats + 1; j++) {
+                    if (j < beats) {
+                        if (i == channels) {
+                            gridappender += '<td>' + (j + 1) + '</td>';
+                        } else {
+
+                            gridappender += '<td data-channel="' + (i+1) + '" data-beat="' + (j+1) + '"><input type="checkbox" /></td>';
+                        }
+                    }
+                }
+                gridappender += '</tr>';
+            }
+            gridappender += '</table>'
+            $('#grid').append(gridappender);
+            $('#channelassignment').append(channelappender);
+            $('#sequencercontrols').show();
+            
+            // Set default sample assignments
+            $('tr[data-channel-tr="1"]').attr('data-sample-selector', 'bassdrum1');
+            $('tr[data-channel-tr="2"]').attr('data-sample-selector', 'cabasa');
+            $('tr[data-channel-tr="3"]').attr('data-sample-selector', 'hatclosed');
+            $('tr[data-channel-tr="4"]').attr('data-sample-selector', 'clap');
+            $('.channelassignselect[data-channel-assign="1"]').val('bassdrum1');
+            $('.channelassignselect[data-channel-assign="2"]').val('cabasa');
+            $('.channelassignselect[data-channel-assign="3"]').val('hatclosed');
+            $('.channelassignselect[data-channel-assign="4"]').val('clap');
+          
+            $(document).on('change', '.channelassignselect', function(){
+                var channel = $(this).attr('data-channel-assign'), sample = $(this).val();
+                $('tr[data-channel-tr="'+channel+'"]').attr('data-sample-selector', sample);      
+            });
+            
+            $('#startsequencer').on('click', function () {
+                stopScheduler();
+                resetcursor();
+                var grid = $('#grid'), bpm = parseInt($('#bpm').val()), ticks = parseInt($('#ticks').val()), allselected = true;
+                $('.channelassignselect').each(function(index, select){
+                        if($(select).val() == ''){
+                            allselected = false;
+                                }
+                        });
+                if(allselected == true){
+                    
+                    if (!isNaN(bpm) && !isNaN(ticks)) {
+                        // Ensure audio context is initialized
+                        if (!audioContext) {
+                            initAudio();
+                        }
+                        if (audioContext.state === 'suspended') {
+                            audioContext.resume();
+                        }
+                        startScheduler();
+                    } else if (isNaN(bpm)) {
+                        $('#bpmval').show();
+                    } else if (isNaN(ticks)) {
+                        $('#ticksval').show();
+                    }
+                }else{
+                                      
+                    $('#assignall').show();
+                }
+            });
+
+            $('#stopsequencer').on('click', function () {
+                stopScheduler();
+            });
+
+            $('#creategrid').on('click', function () {
+
+                hideval();
+                $('#grid').html('');
+                $('#channelassignment').html('') ;                   
+                var channels = parseInt($('#channels').val()), beats = parseInt($('#beats').val());
+
+                if (!isNaN(channels) && !isNaN(beats)) {
+                    var template = $('<td></td>'), gridappender = '<table>', channelappender ='';
+                    for (var i = 0; i < channels + 1; i++) {
+                        gridappender += '<tr data-channel-tr="'+(i+1)+'">'
+                        if(i < channels){
+                           channelappender += '<div><p>Channel "'+(i+1)+'" Assignment</p>'+createsampleselect(i + 1)+'<div>';       
+                                  
+                        }
+                        if (i == channels) {
+                            gridappender += '<td id="steps"> Step - </td>';
+                        } else {
+                            gridappender += '<td> Channel ' + (i + 1) + ' - </td>';
+
+                        }
+                        for (var j = 0; j < beats + 1; j++) {
+                            if (j < beats) {
+                                if (i == channels) {
+                                    gridappender += '<td>' + (j + 1) + '</td>';
+                                } else {
+
+                                    gridappender += '<td data-channel="' + (i+1) + '" data-beat="' + (j+1) + '"><input type="checkbox" /></td>';
+                                }
+                            }
+                        }
+                        gridappender += '</tr>';
+                    }
+                    gridappender += '</table>'
+                    $('#grid').append(gridappender);
+                    $('#channelassignment').append(channelappender);
+                    $('#sequencercontrols').show();
+                } else if (isNaN(channels)) {
+                    $('#channelsval').show();
+                } else if (isNaN(beats)) {
+                    $('#beatsval').show();
+                }
+
+            });
+        });
+
+        function hideval() {
+            $('#channelsval, #beatsval, #sequencercontrols, #bpmval, #ticksval, #assignall').hide();
+        }
+
+        // Legacy function kept for compatibility but now handled by scheduler
+        function calculateinterval() {
+            var bpm = $('#bpm').val(), ticks = $('#ticks').val();
+            return (1 / (bpm / 60) / ticks) * 1000;
+        }
+        
+        function createsampleselect(index){
+            var selectappender = '<select class="channelassignselect" data-channel-assign="'+index+'"><option value="">Not Selected</option>';
+            $('#audiodiv').children().each(function(index, audio){
+                var name = $(audio).attr('id');
+                selectappender += '<option value="'+name+'">'+name+'</option>';
+            });     
+            selectappender += '</select>';
+            return selectappender;
+        }
+        
+        function player(ae){
+            // Legacy function - now uses playSample for Web Audio API
+            if (typeof ae === 'string') {
+                playSample(ae);
+            } else if (ae && ae.id) {
+                playSample(ae.id);
+            } else {
+                // Fallback to original behavior
+                ae.play();
+            }
+        }
+        
+        function resetcursor(){
+            $('.currentbeat').removeClass('currentbeat');
+            cursorpoint = 0;
+        }
+        
+        function samplefinder(cursorpoint){
+            $('td[data-beat="'+cursorpoint+'"]').each(function(index, td){
+                var checkbox = $(td).find('input[type="checkbox"]'); 
+                if(checkbox.is(':checked')){
+                    var sample = checkbox.parent().parent().attr('data-sample-selector');
+                    if (sample) {
+                        playSample(sample);
+                    }
+                }                                    
+            });
+        }
+    </script>
+    <div id="gridcontrols">
+        Channels:
+        <input type="text" id="channels" value="4" /><p id="channelsval" class="validation">
+            Please enter a number for channels</p>
+        Beats:
+        <input type="text" id="beats" value="16" /><p id="beatsval" class="validation">
+            Please enter a number for beats</p>
+        <input type="button" id="creategrid" value="Create Grid" /></div>
+    <div id="grid">
+    </div>
+    <div id="sequencercontrols">
+        BPM:
+        <input type="text" id="bpm" value="125" /><p id="bpmval" class="validation">
+            Please enter a number for BPM</p>
+        <input type="text" id="ticks" value="4" /><p id="ticksval" class="validation">
+            Please enter a number for ticks</p>
+        <input type="button" id="startsequencer" value="Start Sequencer" />
+        <input type="button" id="stopsequencer" value="Stop Sequencer" />
+    </div>
+    <p id="assignall" class="validation">Please assign a sample to all channels</p>
+    <div id="channelassignment">
+    
+    </div>
+    <br>
+    <div id="credits">
+    Made by Nick Starke (nstarke_07@yahoo.com) as a tech demo in 2012 - 
+    Samples courtesy of the 808. <br> Modernized for current browsers in 2025 for the <a href="https://10kdrummachines.com/">10,000 Drum Machines</a> project. 
+    </div>
+    <div id="audiodiv">
+        <audio id="bassdrum1" src="Bassdrum-01.wav" preload="auto" type="audio/wav"></audio>
+        <audio id="bassdrum2" src="Bassdrum-02.wav" preload="auto" type="audio/wav"></audio>
+        <audio id="bassdrum3" src="Bassdrum-03.wav" preload="auto" type="audio/wav"></audio>
+        <audio id="bassdrum4" src="Bassdrum-04.wav" preload="auto" type="audio/wav"></audio>
+        <audio id="bassdrum5" src="Bassdrum-05.wav" preload="auto" type="audio/wav"></audio>
+        <audio id="cabasa" src="Cabasa.wav" preload="auto" type="audio/wav"></audio>
+        <audio id="clap" src="Clap.wav" preload="auto" type="audio/wav"></audio>
+        <audio id="claves" src="Claves.wav" preload="auto" type="audio/wav"></audio>
+        <audio id="cowbell" src="Cowbell.wav" preload="auto" type="audio/wav"></audio>
+        <audio id="crash1" src="Crash-01.wav" preload="auto" type="audio/wav"></audio>
+        <audio id="crash2" src="Crash-02.wav" preload="auto" type="audio/wav"></audio>
+        <audio id="hatclosed" src="HatClosed.wav" preload="auto" type="audio/wav"></audio>
+        <audio id="hatopen" src="HatOpen.wav" preload="auto" type="audio/wav"></audio>
+        <audio id="rimshot" src="Rimshot.wav" preload="auto" type="audio/wav"></audio>
+        <audio id="snaredrum" src="Snaredrum.wav" preload="auto" type="audio/wav"></audio>
+        <audio id="tomh" src="TomH.wav" preload="auto" type="audio/wav"></audio>
+        <audio id="toml" src="TomL.wav" preload="auto" type="audio/wav"></audio>
+        <audio id="tomm" src="TomM.wav" preload="auto" type="audio/wav"></audio>
+    </div>
+</body>
+</html>
