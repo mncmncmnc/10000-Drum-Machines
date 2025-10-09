@@ -1,0 +1,209 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #ffffff;
+    color: #000000;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    padding-top: 40px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Clock Section */
+.clock-section {
+    margin-bottom: 30px;
+}
+
+.clock-border {
+    border: 2px solid #000000;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+}
+
+.clock-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.clock-label {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.clock-light {
+    width: 20px;
+    height: 20px;
+    background-color: #ffffff;
+    border: 2px solid #000000;
+    transition: background-color 0.1s ease;
+}
+
+.clock-light.active {
+    background-color: #ff0000;
+}
+
+.play-pause-btn {
+    padding: 8px 16px;
+    border: 2px solid #000000;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.1s ease;
+}
+
+.play-pause-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.play-pause-btn:active {
+    background-color: #e0e0e0;
+}
+
+/* Tracks Section */
+.tracks-section {
+    border: 2px solid #000000;
+    padding: 20px;
+    background-color: #ffffff;
+}
+
+.track {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 10px 0;
+    border-bottom: 1px solid #000000;
+}
+
+.track:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+}
+
+.track-label {
+    width: 120px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.track-controls {
+    display: flex;
+    gap: 10px;
+    flex: 1;
+}
+
+.operator-select,
+.value-select {
+    padding: 5px 10px;
+    border: 2px solid #000000;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 50px;
+    /* Chrome-specific fixes */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 12px;
+    padding-right: 25px;
+}
+
+.operator-select:focus,
+.value-select:focus {
+    outline: none;
+}
+
+.track-light {
+    width: 20px;
+    height: 20px;
+    background-color: #ffffff;
+    border: 2px solid #000000;
+    margin-left: 10px;
+    transition: background-color 0.1s ease;
+}
+
+.track-light.active {
+    background-color: #ff0000;
+}
+
+/* Help Button */
+.help-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border: 2px solid #000000;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.1s ease;
+}
+
+.help-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.help-btn:active {
+    background-color: #e0e0e0;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #ffffff;
+    margin: 15% auto;
+    padding: 20px;
+    border: 2px solid #000000;
+    width: 90%;
+    max-width: 800px;
+    position: relative;
+}
+
+.close {
+    color: #000000;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.close:hover {
+    color: #666666;
+}

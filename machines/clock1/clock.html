@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock*/1</title>
+    <link rel="stylesheet" href="clock.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Clock Display -->
+        <div class="clock-section">
+            <div class="clock-border">
+                <div class="clock-label">[clock multiplication and division drum machine]</div>
+                <div class="clock-controls">
+                    <button class="play-pause-btn" id="playPauseBtn">PLAY</button>
+                    <div class="clock-light" id="clockLight"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instrument Tracks -->
+        <div class="tracks-section">
+            <div class="track" data-instrument="bass-drum">
+                <div class="track-label">Bass Drum</div>
+                <div class="track-controls">
+                    <select class="operator-select" data-track="bass-drum">
+                        <option value="">-</option>
+                        <option value="divide">÷</option>
+                        <option value="multiply">×</option>
+                    </select>
+                    <select class="value-select" data-track="bass-drum">
+                        <option value="">-</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                    </select>
+                </div>
+                <div class="track-light" id="bass-drum-light"></div>
+            </div>
+
+            <div class="track" data-instrument="closed-hihat">
+                <div class="track-label">Closed Hi-Hat</div>
+                <div class="track-controls">
+                    <select class="operator-select" data-track="closed-hihat">
+                        <option value="">-</option>
+                        <option value="divide">÷</option>
+                        <option value="multiply">×</option>
+                    </select>
+                    <select class="value-select" data-track="closed-hihat">
+                        <option value="">-</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                    </select>
+                </div>
+                <div class="track-light" id="closed-hihat-light"></div>
+            </div>
+
+            <div class="track" data-instrument="open-hihat">
+                <div class="track-label">Open Hi-Hat</div>
+                <div class="track-controls">
+                    <select class="operator-select" data-track="open-hihat">
+                        <option value="">-</option>
+                        <option value="divide">÷</option>
+                        <option value="multiply">×</option>
+                    </select>
+                    <select class="value-select" data-track="open-hihat">
+                        <option value="">-</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                    </select>
+                </div>
+                <div class="track-light" id="open-hihat-light"></div>
+            </div>
+
+            <div class="track" data-instrument="snare-drum">
+                <div class="track-label">Snare Drum</div>
+                <div class="track-controls">
+                    <select class="operator-select" data-track="snare-drum">
+                        <option value="">-</option>
+                        <option value="divide">÷</option>
+                        <option value="multiply">×</option>
+                    </select>
+                    <select class="value-select" data-track="snare-drum">
+                        <option value="">-</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                    </select>
+                </div>
+                <div class="track-light" id="snare-drum-light"></div>
+            </div>
+
+            <div class="track" data-instrument="clap">
+                <div class="track-label">Clap</div>
+                <div class="track-controls">
+                    <select class="operator-select" data-track="clap">
+                        <option value="">-</option>
+                        <option value="divide">÷</option>
+                        <option value="multiply">×</option>
+                    </select>
+                    <select class="value-select" data-track="clap">
+                        <option value="">-</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                    </select>
+                </div>
+                <div class="track-light" id="clap-light"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Help Button -->
+    <button class="help-btn" id="helpBtn">?</button>
+
+    <!-- Modal -->
+    <div class="modal" id="helpModal">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <br>
+            <p>In this drum machine, clock pulses can be divided and multiplied to make patterns.</p> 
+            <br>
+            <p>It is inspired by <a href="https://modulargrid.net/e/modules/browser?SearchName=&SearchVendor=&SearchFunction=42&SearchSecondaryfunction=&SearchHeight=&SearchTe=&SearchTemethod=max&SearchBuildtype=&SearchLifecycle=&SearchSet=&SearchMarketplace=&SearchIsmodeled=0&SearchShowothers=0&SearchShowpanel=1&order=tag&direction=asc" target="_blank">clock dividers/multipliers on modular synthesizers</a> (which I have always loved). Unmodified, these are usually bad at creating anything resembling a "groove," let alone Euclidean rhythms, yet they can lead to strange and interesting places. The utter constraint of only having the simplest of clocks, only capable of ticking, and the ability to divide and multiply those solitary ticks, can revealed brilliant patterns I have never found any other way.</p>
+            <br>
+            <p>This is part of the <a href="https://10kdrummachines.com">10,000 Drum Machines</a> project.</p>
+        </div>
+    </div>
+
+    <script src="clock.js"></script>
+</body>
+</html> 
