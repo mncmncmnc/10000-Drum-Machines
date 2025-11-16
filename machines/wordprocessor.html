@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Word Processor Drum Machine</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		body {
+			background: white;
+			font-family: monospace;
+		}
+
+		.container {
+			border: 1px solid black;
+			height: 100vh;
+			display: flex;
+			flex-direction: column;
+		}
+
+		.header {
+			border-bottom: 1px solid black;
+			padding: 10px;
+		}
+
+		.main-content {
+			flex: 1;
+			display: flex;
+			min-height: 0;
+		}
+
+		.editor-area {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			border-right: 1px solid black;
+		}
+
+		.editor {
+			flex: 1;
+			border: 1px solid black;
+			padding: 20px;
+			outline: none;
+			overflow-y: auto;
+		}
+
+		.menu {
+			width: 250px;
+			border: 1px solid black;
+			padding: 10px;
+			overflow-y: auto;
+		}
+
+		.menu-item {
+			display: flex;
+			align-items: center;
+			margin-bottom: 5px;
+		}
+
+		.menu-label {
+			width: 30px;
+		}
+
+		.menu-select {
+			flex: 1;
+			border: 1px solid black;
+			padding: 2px;
+			font-family: monospace;
+		}
+
+		.footer {
+			border-top: 1px solid black;
+			padding: 10px;
+			display: flex;
+			justify-content: space-between;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="header">
+			Word Processor Drum Machine
+		</div>
+		
+		<div class="main-content">
+			<div class="editor-area">
+				<div class="editor" id="editor" contenteditable="true"></div>
+			</div>
+			
+			<div class="menu" id="menu">
+				<div id="sound-mappings"></div>
+			</div>
+		</div>
+		
+		<div class="footer">
+			<div>Type to make beats</div>
+			<div id="cpm-counter">CPM: 0</div>
+		</div>
+	</div>
+
+	<script>
+		let audioContext = null;
+		let soundMap = {};
+		let typingStartTime = null;
+		let characterCount = 0;
+		let cpmUpdateInterval = null;
+
+		// Initialize default sound mappings
+		function initSoundMap() {
+			const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+			const defaultSounds = {
+				'a': 'kick', 'b': 'snare', 'c': 'hihat', 'd': 'tom',
+				'e': 'kick', 'f': 'snare', 'g': 'hihat', 'h': 'tom',
+				'i': 'kick', 'j': 'snare', 'k': 'hihat', 'l': 'tom',
+				'm': 'kick', 'n': 'snare', 'o': 'hihat', 'p': 'tom',
+				'q': 'kick', 'r': 'snare', 's': 'hihat', 't': 'tom',
+				'u': 'kick', 'v': 'snare', 'w': 'hihat', 'x': 'tom',
+				'y': 'kick', 'z': 'snare'
+			};
+			
+			for (let i = 0; i < alphabet.length; i++) {
+				const letter = alphabet[i];
+				soundMap[letter] = defaultSounds[letter] || 'none';
+			}
+		}
+
+		// Create sound mapping UI
+		function createSoundMappingUI() {
+			const container = document.getElementById('sound-mappings');
+			const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+			const sounds = ['none', 'kick', 'snare', 'hihat', 'tom'];
+
+			for (let i = 0; i < alphabet.length; i++) {
+				const letter = alphabet[i];
+				const menuItem = document.createElement('div');
+				menuItem.className = 'menu-item';
+
+				const label = document.createElement('div');
+				label.className = 'menu-label';
+				label.textContent = letter.toUpperCase() + ':';
+
+				const select = document.createElement('select');
+				select.className = 'menu-select';
+				select.dataset.letter = letter;
+
+				sounds.forEach(sound => {
+					const option = document.createElement('option');
+					option.value = sound;
+					option.textContent = sound;
+					select.appendChild(option);
+				});
+
+				select.value = soundMap[letter];
+				select.addEventListener('change', function() {
+					soundMap[this.dataset.letter] = this.value;
+				});
+
+				menuItem.appendChild(label);
+				menuItem.appendChild(select);
+				container.appendChild(menuItem);
+			}
+		}
+
+		function initAudio() {
+			if (!audioContext) {
+				audioContext = new (window.AudioContext || window.webkitAudioContext)();
+			}
+			if (audioContext.state === 'suspended') {
+				audioContext.resume();
+			}
+		}
+
+		function createNoiseBuffer(ctx, duration) {
+			const buffer = ctx.createBuffer(1, ctx.sampleRate * duration, ctx.sampleRate);
+			const data = buffer.getChannelData(0);
+			for (let i = 0; i < buffer.length; i++) {
+				data[i] = Math.random() * 2 - 1;
+			}
+			return buffer;
+		}
+
+		function playDrum(type) {
+			if (!audioContext || type === 'none') return;
+
+			const ctx = audioContext;
+			const now = ctx.currentTime;
+
+			if (type === 'kick') {
+				const osc = ctx.createOscillator();
+				const gain = ctx.createGain();
+				osc.frequency.setValueAtTime(150, now);
+				osc.frequency.exponentialRampToValueAtTime(0.01, now + 0.5);
+				gain.gain.setValueAtTime(1, now);
+				gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+				osc.connect(gain);
+				gain.connect(ctx.destination);
+				osc.start(now);
+				osc.stop(now + 0.5);
+			} else if (type === 'snare') {
+				const noise = ctx.createBufferSource();
+				noise.buffer = createNoiseBuffer(ctx, 0.2);
+				const noiseGain = ctx.createGain();
+				noiseGain.gain.setValueAtTime(0.3, now);
+				noiseGain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+				noise.connect(noiseGain);
+				noiseGain.connect(ctx.destination);
+				noise.start(now);
+				noise.stop(now + 0.2);
+			} else if (type === 'hihat') {
+				const noise = ctx.createBufferSource();
+				noise.buffer = createNoiseBuffer(ctx, 0.05);
+				const filter = ctx.createBiquadFilter();
+				filter.type = 'highpass';
+				filter.frequency.value = 8000;
+				const noiseGain = ctx.createGain();
+				noiseGain.gain.setValueAtTime(0.2, now);
+				noiseGain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+				noise.connect(filter);
+				filter.connect(noiseGain);
+				noiseGain.connect(ctx.destination);
+				noise.start(now);
+				noise.stop(now + 0.05);
+			} else if (type === 'tom') {
+				const osc = ctx.createOscillator();
+				const gain = ctx.createGain();
+				osc.frequency.setValueAtTime(220, now);
+				osc.frequency.exponentialRampToValueAtTime(110, now + 0.3);
+				gain.gain.setValueAtTime(0.5, now);
+				gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+				osc.connect(gain);
+				gain.connect(ctx.destination);
+				osc.start(now);
+				osc.stop(now + 0.3);
+			}
+		}
+
+		function getSoundForKey(key) {
+			const letter = key.toLowerCase();
+			return soundMap[letter] || null;
+		}
+
+		function updateCPM() {
+			const cpmCounter = document.getElementById('cpm-counter');
+			if (typingStartTime && characterCount > 0) {
+				const elapsedMinutes = (Date.now() - typingStartTime) / 60000;
+				const cpm = Math.round(characterCount / elapsedMinutes);
+				cpmCounter.textContent = `CPM: ${cpm}`;
+			} else {
+				cpmCounter.textContent = 'CPM: 0';
+			}
+		}
+
+		function startTypingTracking() {
+			if (!typingStartTime) {
+				typingStartTime = Date.now();
+				characterCount = 0;
+				cpmUpdateInterval = setInterval(updateCPM, 100);
+			}
+		}
+
+		function resetTypingTracking() {
+			typingStartTime = null;
+			characterCount = 0;
+			if (cpmUpdateInterval) {
+				clearInterval(cpmUpdateInterval);
+				cpmUpdateInterval = null;
+			}
+			updateCPM();
+		}
+
+		const editor = document.getElementById('editor');
+
+		editor.addEventListener('keydown', function(e) {
+			initAudio();
+			startTypingTracking();
+			
+			// Only count printable characters
+			if (e.key.length === 1) {
+				characterCount++;
+			}
+			
+			const sound = getSoundForKey(e.key);
+			if (sound) {
+				playDrum(sound);
+			}
+		});
+
+		editor.addEventListener('focus', function() {
+			initAudio();
+		});
+
+		// Initialize
+		initSoundMap();
+		createSoundMappingUI();
+		updateCPM();
+	</script>
+</body>
+</html>

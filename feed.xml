@@ -5,10 +5,24 @@
 	<link>https://10kdrummachines.com/</link>
 	<description>An ever-growing collection of web-based drum machines and sequencers</description>
 	<language>en-us</language>
-	<lastBuildDate>Tue, 9 Sep 2025 12:21:00 GMT</lastBuildDate>
+	<lastBuildDate>Sun, 6 Nov 2025 18:31:00 GMT</lastBuildDate>
 	<atom:link href="https://10kdrummachines.com/feed.xml" rel="self" type="application/rss+xml" />
 
 <!-- LIST STARTS HERE, NEWEST ITEMS GO FIRST -->
+	<item>
+		<title>SEQUENCEKUBB Rubik's Cube Drum Machine</title>
+		<link>https://kubb.mingus.space/</link>
+		<description>By Julien Minguely</description>
+		<pubDate>Sun, 6 Nov 2025 18:31:00 GMT</pubDate>
+		<guid>https://kubb.mingus.space/</guid>
+	</item>
+	<item>
+		<title>Word Processor Drum Machine</title>
+		<link>https://10kdrummachines.com/machines/wordprocessor.html</link>
+		<description>By Jessie Char</description>
+		<pubDate>Sun, 6 Nov 2025 18:30:00 GMT</pubDate>
+		<guid>https://10kdrummachines.com/machines/wordprocessor.html</guid>
+	</item>	
 	<item>
 		<title>fill harmonics by Parker Higgins and Natan Last</title>
 		<link>https://fillharmonics.com/</link>
