@@ -64,7 +64,7 @@ body {
     text-align: left;
 }
 
-.machine-list a:visited {
+.machine-list > li > a:visited {
     color: #0000EE;
 }
 
