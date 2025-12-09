@@ -68,6 +68,10 @@ body {
     color: #0000EE;
 }
 
+.machine-list > li > a:active {
+    color: #551A8B;
+}
+
 .attribution {
     color: #666;
     font-size: 0.4em;
