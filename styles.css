@@ -64,6 +64,10 @@ body {
     text-align: left;
 }
 
+.machine-list a:visited {
+    color: #0000EE;
+}
+
 .attribution {
     color: #666;
     font-size: 0.4em;
