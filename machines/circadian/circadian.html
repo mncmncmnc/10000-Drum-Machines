@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>circadian rhythm</title>
+    <link rel="stylesheet" href="circadian.css">
+</head>
+<body>
+    <div class="container">
+        <div class="clock" id="clock"></div>
+        <div class="sequencer">
+            <div class="instrument-row" id="bass-row">
+                <div class="step" data-step="0"></div>
+                <div class="step" data-step="1"></div>
+                <div class="step" data-step="2"></div>
+                <div class="step" data-step="3"></div>
+                <div class="step" data-step="4"></div>
+                <div class="step" data-step="5"></div>
+                <div class="step" data-step="6"></div>
+                <div class="step" data-step="7"></div>
+                <div class="step" data-step="8"></div>
+                <div class="step" data-step="9"></div>
+                <div class="step" data-step="10"></div>
+                <div class="step" data-step="11"></div>
+                <div class="step" data-step="12"></div>
+                <div class="step" data-step="13"></div>
+                <div class="step" data-step="14"></div>
+                <div class="step" data-step="15"></div>
+            </div>
+            <div class="instrument-row" id="snare-row">
+                <div class="step" data-step="0"></div>
+                <div class="step" data-step="1"></div>
+                <div class="step" data-step="2"></div>
+                <div class="step" data-step="3"></div>
+                <div class="step" data-step="4"></div>
+                <div class="step" data-step="5"></div>
+                <div class="step" data-step="6"></div>
+                <div class="step" data-step="7"></div>
+                <div class="step" data-step="8"></div>
+                <div class="step" data-step="9"></div>
+                <div class="step" data-step="10"></div>
+                <div class="step" data-step="11"></div>
+                <div class="step" data-step="12"></div>
+                <div class="step" data-step="13"></div>
+                <div class="step" data-step="14"></div>
+                <div class="step" data-step="15"></div>
+            </div>
+            <div class="instrument-row" id="hihat-row">
+                <div class="step" data-step="0"></div>
+                <div class="step" data-step="1"></div>
+                <div class="step" data-step="2"></div>
+                <div class="step" data-step="3"></div>
+                <div class="step" data-step="4"></div>
+                <div class="step" data-step="5"></div>
+                <div class="step" data-step="6"></div>
+                <div class="step" data-step="7"></div>
+                <div class="step" data-step="8"></div>
+                <div class="step" data-step="9"></div>
+                <div class="step" data-step="10"></div>
+                <div class="step" data-step="11"></div>
+                <div class="step" data-step="12"></div>
+                <div class="step" data-step="13"></div>
+                <div class="step" data-step="14"></div>
+                <div class="step" data-step="15"></div>
+            </div>
+        </div>
+        <div class="button-group">
+            <button class="play-pause-btn" id="play-pause-btn">Play</button>
+            <button class="help-btn" id="help-btn">?</button>
+        </div>
+    </div>
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close">×</button>
+            <p>This drum machine uses the current time as a seed to generate patterns for each instrument (hour = bass drum, minute = snare drum, second = hi-hat). Tempo, sound design, and other qualities also change with the time of day.</p>
+            <div class="modal-body"></div>
+        </div>
+    </div>
+    <script src="circadian.js"></script>
+</body>
+</html>
+
