@@ -19,7 +19,8 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .container {
@@ -28,6 +29,9 @@ body {
     align-items: center;
     gap: 60px;
     padding: 40px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .clock {
@@ -63,11 +67,18 @@ body {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 0 20px;
 }
 
 .instrument-row {
     display: flex;
     gap: 8px;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: nowrap;
 }
 
 .step {
@@ -171,5 +182,82 @@ body {
 .modal-body {
     color: #ffffff;
     font-family: 'Courier New', monospace;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+    .container {
+        gap: 40px;
+        padding: 20px;
+    }
+    
+    .clock {
+        font-size: 36px;
+        letter-spacing: 4px;
+    }
+    
+    .sequencer {
+        gap: 15px;
+        padding: 0 10px;
+    }
+    
+    .step {
+        width: calc((100vw - 60px - 120px) / 16);
+        min-width: 20px;
+        max-width: 40px;
+        height: calc((100vw - 60px - 120px) / 16);
+        min-height: 20px;
+        max-height: 40px;
+        aspect-ratio: 1;
+    }
+    
+    .instrument-row {
+        gap: 4px;
+    }
+    
+    .button-group {
+        gap: 8px;
+    }
+    
+    .play-pause-btn,
+    .help-btn {
+        padding: 10px 20px;
+        font-size: 12px;
+    }
+    
+    .help-btn {
+        padding: 10px;
+        width: 36px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        gap: 30px;
+        padding: 15px;
+    }
+    
+    .clock {
+        font-size: 28px;
+        letter-spacing: 2px;
+    }
+    
+    .sequencer {
+        gap: 12px;
+        padding: 0 5px;
+    }
+    
+    .step {
+        width: calc((100vw - 40px - 60px) / 16);
+        min-width: 16px;
+        max-width: 30px;
+        height: calc((100vw - 40px - 60px) / 16);
+        min-height: 16px;
+        max-height: 30px;
+    }
+    
+    .instrument-row {
+        gap: 3px;
+    }
 }
 
