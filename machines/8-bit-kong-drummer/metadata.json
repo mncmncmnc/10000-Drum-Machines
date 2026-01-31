@@ -1,0 +1,5 @@
+{
+  "name": "8-Bit Kong Drummer",
+  "description": "A retro black-and-white Donkey Kong inspired rhythm game where you place drum triggers on platforms for rolling barrels to play. Control the BPM by adjusting barrel speed and compose beats in real-time.",
+  "requestFramePermissions": []
+}
