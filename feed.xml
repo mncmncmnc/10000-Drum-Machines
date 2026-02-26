@@ -5,10 +5,17 @@
 	<link>https://10kdrummachines.com/</link>
 	<description>An ever-growing collection of web-based drum machines and sequencers</description>
 	<language>en-us</language>
-	<lastBuildDate>Fri, 19 Dec 2025 06:00:00 GMT</lastBuildDate>
+	<lastBuildDate>Thu, 26 Dec 2026 14:00:00 GMT</lastBuildDate>
 	<atom:link href="https://10kdrummachines.com/feed.xml" rel="self" type="application/rss+xml" />
 
 <!-- LIST STARTS HERE, NEWEST ITEMS GO FIRST -->
+	<item>
+		<title>Hanenbow</title>
+		<link>https://hanenbow.iimaginary.com/</link>
+		<description>By Sam Schorb</description>
+		<pubDate>Thu, 26 Dec 2026 14:00:00 GMT</pubDate>
+		<guid>https://hanenbow.iimaginary.com/</guid>
+	</item>
 	<item>
 		<title>Billiards Rack Drum Machine</title>
 		<link>https://jesschase.github.io/billiards-rack/</link>
