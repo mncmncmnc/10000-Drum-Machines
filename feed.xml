@@ -5,10 +5,17 @@
 	<link>https://10kdrummachines.com/</link>
 	<description>An ever-growing collection of web-based drum machines and sequencers</description>
 	<language>en-us</language>
-	<lastBuildDate>Thu, 26 Dec 2026 14:00:00 GMT</lastBuildDate>
+	<lastBuildDate>Tue, 17 Mar 2026 23:00:00 GMT</lastBuildDate>
 	<atom:link href="https://10kdrummachines.com/feed.xml" rel="self" type="application/rss+xml" />
 
 <!-- LIST STARTS HERE, NEWEST ITEMS GO FIRST -->
+	<item>
+		<title>Drumhaus</title>
+		<link>https://drumha.us/</link>
+		<description>By Max Fung</description>
+		<pubDate>Tue, 17 Mar 2026 23:00:00 GMT</pubDate>
+		<guid>https://drumha.us/</guid>
+	</item>
 	<item>
 		<title>Hanenbow</title>
 		<link>https://hanenbow.iimaginary.com/</link>
