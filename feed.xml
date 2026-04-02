@@ -5,10 +5,17 @@
 	<link>https://10kdrummachines.com/</link>
 	<description>An ever-growing collection of web-based drum machines and sequencers</description>
 	<language>en-us</language>
-	<lastBuildDate>Tue, 17 Mar 2026 23:00:00 GMT</lastBuildDate>
+	<lastBuildDate>Thu, 02 Apr 2026 00:52:28 GMT</lastBuildDate>
 	<atom:link href="https://10kdrummachines.com/feed.xml" rel="self" type="application/rss+xml" />
 
 <!-- LIST STARTS HERE, NEWEST ITEMS GO FIRST -->
+	<item>
+		<title>Rolling Stone</title>
+		<link>https://mifsud.org/stone/</link>
+		<description>By Nathan Mifsud</description>
+		<pubDate>Thu, 02 Apr 2026 00:52:28 GMT</pubDate>
+		<guid>https://mifsud.org/stone/</guid>
+	</item>
 	<item>
 		<title>Drumhaus</title>
 		<link>https://drumha.us/</link>
