@@ -5,10 +5,24 @@
 	<link>https://10kdrummachines.com/</link>
 	<description>An ever-growing collection of web-based drum machines and sequencers</description>
 	<language>en-us</language>
-	<lastBuildDate>Thu, 02 Apr 2026 00:52:28 GMT</lastBuildDate>
+	<lastBuildDate>Mon, 06 Apr 2026 04:55:43 GMT</lastBuildDate>
 	<atom:link href="https://10kdrummachines.com/feed.xml" rel="self" type="application/rss+xml" />
 
 <!-- LIST STARTS HERE, NEWEST ITEMS GO FIRST -->
+	<item>
+		<title>Typebeat</title>
+		<link>https://alexanderchen.github.io/typebeat/</link>
+		<description>By Alexander Chen</description>
+		<pubDate>Mon, 06 Apr 2026 04:55:43 GMT</pubDate>
+		<guid>https://alexanderchen.github.io/typebeat/</guid>
+	</item>
+	<item>
+		<title>Type Loop</title>
+		<link>https://alexanderchen.github.io/typeloop/</link>
+		<description>By Alexander Chen</description>
+		<pubDate>Mon, 06 Apr 2026 04:55:42 GMT</pubDate>
+		<guid>https://alexanderchen.github.io/typeloop/</guid>
+	</item>
 	<item>
 		<title>Rolling Stone</title>
 		<link>https://mifsud.org/stone/</link>
