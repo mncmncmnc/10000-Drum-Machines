@@ -5,10 +5,31 @@
 	<link>https://10kdrummachines.com/</link>
 	<description>An ever-growing collection of web-based drum machines and sequencers</description>
 	<language>en-us</language>
-	<lastBuildDate>Mon, 06 Apr 2026 04:55:43 GMT</lastBuildDate>
+	<lastBuildDate>Wed, 29 Apr 2026 16:23:00 GMT</lastBuildDate>
 	<atom:link href="https://10kdrummachines.com/feed.xml" rel="self" type="application/rss+xml" />
 
 <!-- LIST STARTS HERE, NEWEST ITEMS GO FIRST -->
+	<item>
+		<title>MODULO FONT</title>
+		<link>https://f-nt.eu/font/beat/mok6qfpbev#125-125-125-125-125-125-125-125-125-125_125-125-125-125-125-125-125-125-125-125-125-125_34</link>
+		<description>By Benoit Wimart</description>
+		<pubDate>Wed, 29 Apr 2026 16:23:00 GMT</pubDate>
+		<guid>https://f-nt.eu/font/beat/mok6qfpbev#125-125-125-125-125-125-125-125-125-125_125-125-125-125-125-125-125-125-125-125-125-125_34</guid>
+	</item>
+	<item>
+		<title>Ping</title>
+		<link>https://ping.iimaginary.com/</link>
+		<description>By Sam Schorb</description>
+		<pubDate>Wed, 29 Apr 2026 16:22:59 GMT</pubDate>
+		<guid>https://ping.iimaginary.com/</guid>
+	</item>
+	<item>
+		<title>Turntable</title>
+		<link>https://turntable.iimaginary.com/</link>
+		<description>By Sam Schorb</description>
+		<pubDate>Wed, 29 Apr 2026 16:22:58 GMT</pubDate>
+		<guid>https://turntable.iimaginary.com/</guid>
+	</item>
 	<item>
 		<title>Typebeat</title>
 		<link>https://alexanderchen.github.io/typebeat/</link>
