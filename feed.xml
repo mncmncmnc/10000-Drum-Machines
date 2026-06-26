@@ -5,10 +5,17 @@
 	<link>https://10kdrummachines.com/</link>
 	<description>An ever-growing collection of web-based drum machines and sequencers</description>
 	<language>en-us</language>
-	<lastBuildDate>Wed, 29 Apr 2026 16:23:00 GMT</lastBuildDate>
+	<lastBuildDate>Sat, 27 Jun 2026 12:00:00 GMT</lastBuildDate>
 	<atom:link href="https://10kdrummachines.com/feed.xml" rel="self" type="application/rss+xml" />
 
 <!-- LIST STARTS HERE, NEWEST ITEMS GO FIRST -->
+	<item>
+		<title>Windsome</title>
+		<link>https://windso.me/</link>
+		<description>By Roby Saavedra</description>
+		<pubDate>Sat, 27 Jun 2026 12:00:00 GMT</pubDate>
+		<guid>https://windso.me/</guid>
+	</item>
 	<item>
 		<title>MODULO FONT</title>
 		<link>https://f-nt.eu/font/beat/mok6qfpbev#125-125-125-125-125-125-125-125-125-125_125-125-125-125-125-125-125-125-125-125-125-125_34</link>
