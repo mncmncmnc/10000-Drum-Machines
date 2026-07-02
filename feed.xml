@@ -5,10 +5,17 @@
 	<link>https://10kdrummachines.com/</link>
 	<description>An ever-growing collection of web-based drum machines and sequencers</description>
 	<language>en-us</language>
-	<lastBuildDate>Sat, 27 Jun 2026 12:00:00 GMT</lastBuildDate>
+	<lastBuildDate>Thu, 02 Jul 2026 12:00:00 GMT</lastBuildDate>
 	<atom:link href="https://10kdrummachines.com/feed.xml" rel="self" type="application/rss+xml" />
 
 <!-- LIST STARTS HERE, NEWEST ITEMS GO FIRST -->
+	<item>
+		<title>TextXoX</title>
+		<link>https://rustleworks.com/textxox/</link>
+		<description>By Damon Holzborn</description>
+		<pubDate>Thu, 02 Jul 2026 12:00:00 GMT</pubDate>
+		<guid>https://rustleworks.com/textxox/</guid>
+	</item>
 	<item>
 		<title>Windsome</title>
 		<link>https://windso.me/</link>
