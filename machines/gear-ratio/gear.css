@@ -1,0 +1,381 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #fafafa;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#work-area {
+  flex: 1;
+  background: #fff;
+  min-height: 400px;
+  position: relative;
+}
+
+#gear-palette {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 20px;
+  padding: 24px 16px 12px 16px;
+  background: #f3f3f3;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+#lifter-palette {
+  display: grid;
+  grid-template-columns: repeat(3, 36px);
+  grid-auto-rows: auto;
+  gap: 6px 8px;
+  align-items: end;
+  justify-items: center;
+  flex-shrink: 0;
+  padding-bottom: 2px;
+}
+
+#gear-options {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 24px;
+}
+
+.palette-divider {
+  width: 1px;
+  height: 88px;
+  background: #d0d0d0;
+  align-self: center;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.gear-option,
+.lifter-option {
+  cursor: grab;
+  transition: transform 0.1s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+}
+.gear-option:active,
+.lifter-option:active {
+  transform: scale(0.95);
+}
+
+.lifter-option {
+  width: 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1px;
+}
+
+.lifter-graphic {
+  width: 28px;
+  height: 36px;
+  flex-shrink: 0;
+  transform-origin: 14px 28px;
+  line-height: 0;
+  pointer-events: none;
+}
+
+.lifter-label {
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #555;
+  line-height: 1;
+  text-align: center;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.placed-lifter {
+  position: absolute;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  touch-action: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+  z-index: 4;
+}
+
+.placed-lifter:active {
+  cursor: grabbing;
+}
+
+.placed-lifter .lifter-label {
+  position: absolute;
+  left: 50%;
+  top: calc(100% - 2px);
+  transform: translateX(-50%);
+  white-space: nowrap;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 1px 3px;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.placed-lifter.triggered .lifter-base {
+  fill: #c45c26;
+}
+
+#tempo-slider-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 0 24px 0;
+  background: #f3f3f3;
+}
+
+#tempo-slider {
+  width: 320px;
+  accent-color: #6fa8dc;
+}
+
+.square-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  outline: 3px solid black;
+  outline-offset: -3px;
+  background: #fff;
+  color: #000;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: none;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  flex-shrink: 0;
+}
+.square-btn:hover {
+  background: #f5f5f5;
+}
+
+#play-pause-btn {
+  margin-right: 18px;
+}
+
+#about-btn {
+  margin-left: 18px;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal[hidden] {
+  display: none;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.modal-panel {
+  position: relative;
+  z-index: 1;
+  width: min(720px, calc(100vw - 32px));
+  min-height: 160px;
+  background: #fff;
+  padding: 36px 24px 24px;
+  box-sizing: border-box;
+}
+
+.modal-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  color: #000;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.modal-body {
+  min-height: 80px;
+}
+
+.motor-label {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, calc(-100% - 1px));
+  font-size: 0.65rem;
+  color: #333;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  pointer-events: none;
+  background: #fff8;
+  padding: 1px 4px;
+  z-index: 3;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.gear-rpm-label {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.65rem;
+  color: #6fa8dc;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  pointer-events: none;
+  background: #fff8;
+  padding: 1px 4px;
+  z-index: 1;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+/* Motor gear: keep "motor" just above center and RPM just below */
+.placed-gear:has(.motor-label) .gear-rpm-label {
+  transform: translate(-50%, 2px);
+}
+
+.snap-highlight::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% + 8px);
+    height: calc(100% + 8px);
+    outline: 2px solid #6fa8dc66;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* New styles for gear ratio snapping */
+.snap-highlight.gear-ratio::after {
+    outline: 2px solid #ff6b6b66;
+    animation: gear-ratio-pulse 1s infinite;
+}
+
+@keyframes gear-ratio-pulse {
+    0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+    50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+}
+
+/* Style for outer gear transparency */
+.placed-gear.outer-gear {
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.placed-gear.outer-gear:hover {
+    opacity: 0.9;
+}
+
+/* Phone layout: palette stays on the bottom but stacks vertically -
+   lifters in a wide grid on top, gears in a scrollable row below. */
+@media (max-width: 600px) {
+  html, body {
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+
+  /* Work area takes whatever is left after the palette and tempo bar,
+     so the whole app fits the screen with no page scroll. Clip anything
+     dragged past its edges so it can't create scrollable overflow. */
+  #work-area {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  #gear-palette {
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 8px 4px 8px;
+    flex-shrink: 0;
+  }
+
+  #lifter-palette {
+    grid-template-columns: repeat(6, 36px);
+    gap: 2px 10px;
+    padding-bottom: 0;
+  }
+
+  .palette-divider {
+    width: 100%;
+    height: 1px;
+    align-self: center;
+  }
+
+  #gear-options {
+    max-width: 100%;
+    justify-content: flex-start;
+    gap: 10px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 4px 2px 4px;
+  }
+
+  /* zoom (unlike transform) shrinks layout size too, so the row fits;
+     dragged clones live on document.body and stay full size */
+  #gear-options .gear-option {
+    zoom: 0.45;
+  }
+
+  #tempo-slider-container {
+    padding: 6px 16px 10px 16px;
+    flex-shrink: 0;
+  }
+
+  #tempo-slider {
+    width: auto;
+    flex: 1;
+    max-width: 320px;
+  }
+
+  #play-pause-btn {
+    margin-right: 14px;
+    flex-shrink: 0;
+  }
+
+  #about-btn {
+    margin-left: 14px;
+  }
+}
