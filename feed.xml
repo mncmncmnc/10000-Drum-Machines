@@ -5,10 +5,17 @@
 	<link>https://10kdrummachines.com/</link>
 	<description>An ever-growing collection of web-based drum machines and sequencers</description>
 	<language>en-us</language>
-	<lastBuildDate>Thu, 13 Aug 2026 02:05:00 GMT</lastBuildDate>
+	<lastBuildDate>Thu, 13 Aug 2026 22:45:00 GMT</lastBuildDate>
 	<atom:link href="https://10kdrummachines.com/feed.xml" rel="self" type="application/rss+xml" />
 
 <!-- LIST STARTS HERE, NEWEST ITEMS GO FIRST -->
+	<item>
+		<title>OOAME</title>
+		<link>https://ooame.netlify.app/?s=131wum8</link>
+		<description>By dipcv</description>
+		<pubDate>Thu, 13 Aug 2026 22:45:00 GMT</pubDate>
+		<guid>https://ooame.netlify.app/?s=131wum8</guid>
+	</item>
 	<item>
 		<title>BAP</title>
 		<link>https://bap.studio/</link>
