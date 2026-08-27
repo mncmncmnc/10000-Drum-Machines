@@ -5,10 +5,17 @@
 	<link>https://10kdrummachines.com/</link>
 	<description>An ever-growing collection of web-based drum machines and sequencers</description>
 	<language>en-us</language>
-	<lastBuildDate>Mon, 24 Aug 2026 06:18:00 GMT</lastBuildDate>
+	<lastBuildDate>Thu, 27 Aug 2026 14:40:00 GMT</lastBuildDate>
 	<atom:link href="https://10kdrummachines.com/feed.xml" rel="self" type="application/rss+xml" />
 
 <!-- LIST STARTS HERE, NEWEST ITEMS GO FIRST -->
+	<item>
+		<title>DRUM?</title>
+		<link>https://drumq.netlify.app/</link>
+		<description>By dipcv</description>
+		<pubDate>Thu, 27 Aug 2026 14:40:00 GMT</pubDate>
+		<guid>https://drumq.netlify.app/</guid>
+	</item>
 	<item>
 		<title>DORO</title>
 		<link>https://doro-drum.netlify.app/</link>
