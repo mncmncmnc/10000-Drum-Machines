@@ -1,0 +1,230 @@
+:root {
+    --step: 28px;
+    --gap: 6px;
+    --pitch: calc(var(--step) + var(--gap));
+    --track: calc(16 * var(--step) + 15 * var(--gap));
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: times new roman;
+    background: #fff;
+    color: #111;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+    padding: 48px calc(8 * var(--pitch) + 24px);
+}
+
+h1 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+}
+
+.transport {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.transport button,
+.bpm input {
+    font: inherit;
+    color: inherit;
+    background: #fff;
+    border: 1px solid #111;
+    border-radius: 0;
+}
+
+.transport button {
+    padding: 4px 14px;
+    cursor: pointer;
+}
+
+.bpm {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+}
+
+.bpm input {
+    width: 4.2em;
+    padding: 4px 6px;
+}
+
+.sequencer {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 4.5em var(--track) 4.5em;
+    column-gap: 16px;
+    row-gap: 10px;
+    align-items: center;
+}
+
+.row-select {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.row-slider {
+    grid-column: 2;
+    grid-row: 1;
+    width: 100%;
+}
+
+.row-curve {
+    grid-column: 3;
+    grid-row: 1;
+}
+
+.steps {
+    grid-column: 2;
+    grid-row: 2;
+    display: flex;
+    gap: var(--gap);
+}
+
+.row[data-color="red"] { --color: #ff0000; }
+.row[data-color="green"] { --color: #00ff00; }
+.row[data-color="blue"] { --color: #0000ff; }
+
+select {
+    font: inherit;
+    color: inherit;
+    background: #fff;
+    border: 1px solid #111;
+    border-radius: 0;
+    padding: 3px 4px;
+    width: 100%;
+}
+
+.step {
+    --disp: 0;
+    flex: 0 0 var(--step);
+    height: var(--step);
+    padding: 0;
+    border: 1px solid var(--color);
+    border-radius: 0;
+    background: transparent;
+    cursor: pointer;
+    appearance: none;
+    transform: translateX(calc(var(--disp) * var(--pitch)));
+}
+
+.step.on {
+    background: var(--color);
+}
+
+.step.bump {
+    z-index: 1;
+    animation: bump 160ms ease-out;
+}
+
+@keyframes bump {
+    0% { transform: translateX(calc(var(--disp) * var(--pitch))) scale(1); }
+    35% { transform: translateX(calc(var(--disp) * var(--pitch))) scale(1.22); }
+    100% { transform: translateX(calc(var(--disp) * var(--pitch))) scale(1); }
+}
+
+.step.now:not(.on) {
+    background: color-mix(in srgb, var(--color) 35%, transparent);
+}
+
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 18px;
+    background: transparent;
+    margin: 0;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+    height: 1px;
+    background: var(--color);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 10px;
+    height: 18px;
+    margin-top: -8.5px;
+    background: var(--color);
+    border: 0;
+    border-radius: 0;
+    cursor: pointer;
+}
+
+input[type="range"]::-moz-range-track {
+    height: 1px;
+    background: var(--color);
+    border: 0;
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 10px;
+    height: 18px;
+    background: var(--color);
+    border: 0;
+    border-radius: 0;
+    cursor: pointer;
+}
+
+@media (max-width: 600px) {
+    :root {
+        --step: min(18px, calc((100vw - 7em - 28px) / 16 - 2px));
+        --gap: 2px;
+    }
+
+    body {
+        overflow-x: hidden;
+        font-size: 13px;
+    }
+
+    main {
+        gap: 16px;
+        padding: 16px 8px;
+        width: 100%;
+    }
+
+    .sequencer {
+        gap: 16px;
+        width: 100%;
+    }
+
+    .row {
+        grid-template-columns: 2.8em var(--track) 2.8em;
+        column-gap: 4px;
+        row-gap: 6px;
+        justify-content: center;
+        width: 100%;
+    }
+
+    select {
+        padding: 2px;
+    }
+}
