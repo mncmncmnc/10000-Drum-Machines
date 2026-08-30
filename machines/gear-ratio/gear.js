@@ -892,15 +892,12 @@ function findStackedGears(gear) {
     return stackedGears;
 }
 
-// Stack and mesh snaps are independent contests. A hub (cursor over a gear
-// center) always wins over a nearby mesh so stacking is not stolen by a
-// tighter pitch-circle error. Mesh error and hub distance are not comparable.
+// Modify getSnappingTarget to handle Gear 1 better
 function getSnappingTarget(x, y, radius, excludeEl) {
-    let bestStack = null;
-    let bestStackDist = Infinity;
-    let bestMesh = null;
-    let bestMeshError = Infinity;
-    let bestMeshPos = null;
+    let snapTarget = null;
+    let snapPos = null;
+    let minDist = Infinity;
+    let isGearRatio = false;
     
     const draggedSize = Number(excludeEl ? excludeEl.dataset.size : document.querySelector('.dragging')?.dataset.size);
     const draggedRadius = 15 + draggedSize * 10;
@@ -914,60 +911,63 @@ function getSnappingTarget(x, y, radius, excludeEl) {
         const dy = targetY - y;
         const dist = Math.sqrt(dx * dx + dy * dy);
         
+        // Special handling for Gear 1
         const isGear1 = gear.size === 1;
         const stackedGears = findStackedGears(gear);
         const isStacked = stackedGears.length > 0;
-        const stackThreshold = isGear1 ? 15 : 12;
         
-        if (dist < stackThreshold) {
-            // Closest hub wins. On an existing stack the centers coincide, so
-            // pick the largest gear so outer-gear preview matches updateRPMs.
-            const sameHub = bestStack && Math.abs(dist - bestStackDist) <= 0.5;
-            if (!bestStack || dist < bestStackDist - 0.5 || (sameHub && gear.radius > bestStack.radius)) {
-                bestStackDist = dist;
-                bestStack = gear;
+        // Check for stacked placement (gear ratio)
+        if ((isGear1 && dist < 15) || (!isGear1 && dist < 12)) {
+            // For stacked gears, we want to allow connection to either gear
+            if (dist < minDist) {
+                minDist = dist;
+                snapTarget = gear;
+                snapPos = { x: targetX, y: targetY };
+                isGearRatio = true;
             }
             continue;
         }
         
-        // Pitch radii touch exactly at radius1 + radius2, which is the correct
-        // center distance for two gears of the same module - no extra spacing
-        // fudge, or the teeth would not thread.
+        // Check for meshing with this gear. Pitch radii touch exactly at
+        // radius1 + radius2, which is the correct center distance for two
+        // gears of the same module - no extra spacing fudge, or the teeth
+        // would not thread.
         let targetDist = gear.radius + draggedRadius;
         
-        if (isStacked) {
+        // For Gear 1, always use its actual radius
+        if (isGear1) {
+            targetDist = gear.radius + draggedRadius;
+        } else if (isStacked) {
+            // For other stacked gears, consider both possibilities
             const otherGear = stackedGears[0];
             const maxRadius = Math.max(gear.radius, otherGear.radius);
             const minRadius = Math.min(gear.radius, otherGear.radius);
             
+            // Calculate distances for both possibilities
             const outerDist = Math.abs(dist - (maxRadius + draggedRadius));
             const innerDist = Math.abs(dist - (minRadius + draggedRadius));
             
-            targetDist = outerDist < innerDist ?
-                maxRadius + draggedRadius :
+            // Use whichever distance is closer to the target
+            targetDist = outerDist < innerDist ? 
+                maxRadius + draggedRadius : 
                 minRadius + draggedRadius;
         }
         
-        const snapThreshold = isGear1 ? 35 : 30;
-        const meshError = Math.abs(dist - targetDist);
-        if (meshError < snapThreshold && dist !== 0 && meshError < bestMeshError) {
+        const snapThreshold = isGear1 ? 35 : 30; // More forgiving threshold for Gear 1
+        if (Math.abs(dist - targetDist) < snapThreshold && dist !== 0) {
             const angle = Math.atan2(dy, dx);
-            bestMeshError = meshError;
-            bestMesh = gear;
-            bestMeshPos = {
-                x: targetX - Math.cos(angle) * targetDist,
-                y: targetY - Math.sin(angle) * targetDist
-            };
+            const snapX = targetX - Math.cos(angle) * targetDist;
+            const snapY = targetY - Math.sin(angle) * targetDist;
+            
+            if (Math.abs(dist - targetDist) < minDist) {
+                minDist = Math.abs(dist - targetDist);
+                snapTarget = gear;
+                snapPos = { x: snapX, y: snapY };
+                isGearRatio = false;
+            }
         }
     }
-    
-    if (bestStack) {
-        return { target: bestStack, pos: { x: bestStack.x, y: bestStack.y }, isGearRatio: true };
-    }
-    if (bestMesh) {
-        return { target: bestMesh, pos: bestMeshPos, isGearRatio: false };
-    }
-    return null;
+    return snapTarget ? { target: snapTarget, pos: snapPos, isGearRatio } : null;
 }
 
 let highlightedGear = null;
